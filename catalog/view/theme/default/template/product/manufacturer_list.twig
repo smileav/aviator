@@ -1,0 +1,36 @@
+{{ header }}
+<div class="container">
+  {% include('aviator/template/common/breadcrumb.twig') %}
+</div>
+<div class="container c-ban-container">
+  <div class="c-ban" style="background: #fff url('https://test.aviator.shop/image/cachewebp/category_no_image-1392x200.webp') no-repeat;">
+    <h1>{{ heading_title }}</h1>
+  </div>
+</div>
+<div id="product-manufacturer" class="container">
+  <div class="row">
+    <div id="content" class="col-sm-12">
+      <h1>{{ heading_title }}</h1>
+      {% if categories %}
+      <p><strong>{{ text_index }}</strong> {% for category in categories %}
+        &nbsp;&nbsp;&nbsp;<a href="index.php?route=product/manufacturer#{{ category.name }}">{{ category.name }}</a> {% endfor %} </p>
+      {% for category in categories %}
+      <h2 id="{{ category.name }}">{{ category.name }}</h2>
+      {% if category.manufacturer %}
+      {% for manufacturers in category.manufacturer|batch(4) %}
+      <div class="row"> {% for manufacturer in manufacturers %}
+        <div class="col-sm-3"><a href="{{ manufacturer.href }}">{{ manufacturer.name }}</a></div>
+        {% endfor %} </div>
+      {% endfor %}
+      {% endif %}
+      {% endfor %}
+      {% else %}
+      <p>{{ text_empty }}</p>
+      <div class="buttons clearfix">
+        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      </div>
+      {% endif %}
+      </div>
+    </div>
+</div>
+{{ footer }}

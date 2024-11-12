@@ -1,0 +1,446 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-category" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        {% if error_warning %}
+        <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+            </div>
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-category" class="form-horizontal">
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+                            {% if error_name %}
+                                <div class="text-danger">{{ error_name }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                        <div class="col-sm-10">
+                            <select name="status" id="input-status" class="form-control">
+                                {% if status %}
+                                <option value="1" selected="selected">{{ text_enabled }}</option>
+                                <option value="0">{{ text_disabled }}</option>
+                                {% else %}
+                                <option value="1">{{ text_enabled }}</option>
+                                <option value="0" selected="selected">{{ text_disabled }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-window-maximize"></i> {{ text_top_left }}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <input type="text" name="tl_product_name" value="{{ tl_product_name }}" placeholder="{{ entry_product_name }}" id="input-tl-product-name" class="form-control"/>
+                                            <input type="hidden" name="cyl_data[tl][p_id]" value="{{ cyl_data.tl.p_id }}"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" for="input-tl-product-image">{{ entry_product_image }}:</label>
+                                        <div class="col-sm-8">
+                                            <a href="" id="thumb-tl-product-image" data-toggle="image" class="img-thumbnail"><img src="{{ cyl_data.tl.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                                            <input type="hidden" name="cyl_data[tl][im]" value="{{ cyl_data.tl.im }}" id="input-tl-product-image"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" for="select-tl-connection-position-status">{{ entry_connection_position }}:</label>
+                                        <div class="col-sm-8">
+                                            <select name="cyl_data[tl][ps]" id="select-tl-connection-position-status" class="select-connection-position form-control">
+                                                {% if cyl_data.tl.ps %}
+                                                <option value="0">{{ text_connection_position_default }}</option>
+                                                <option value="1" selected="selected">{{ text_connection_position_custom }}</option>
+                                                {% else %}
+                                                <option value="0" selected="selected">{{ text_connection_position_default }}</option>
+                                                <option value="1">{{ text_connection_position_custom }}</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-connection-position"{% if not cyl_data.tl.ps %} style="display: none;"{% endif %}>
+                                        <label class="col-sm-4 control-label" for="input-tl-connection-position-top">Top:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="cyl_data[tl][pt]" value="{{ cyl_data.tl.pt }}" placeholder="" id="input-tl-connection-position-top" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-connection-position"{% if not cyl_data.tl.ps %} style="display: none;"{% endif %}>
+                                        <label class="col-sm-4 control-label" for="input-tl-connection-position-right">Right:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="cyl_data[tl][pr]" value="{{ cyl_data.tl.pr }}" placeholder="" id="input-tl-connection-position-right" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-window-maximize"></i> {{ text_bottom_left }}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <input type="text" name="bl_product_name" value="{{ bl_product_name }}" placeholder="{{ entry_product_name }}" id="input-bl-product-name" class="form-control"/>
+                                            <input type="hidden" name="cyl_data[bl][p_id]" value="{{ cyl_data.bl.p_id }}"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" for="input-bl-product-image">{{ entry_product_image }}:</label>
+                                        <div class="col-sm-8">
+                                            <a href="" id="thumb-bl-product-image" data-toggle="image" class="img-thumbnail"><img src="{{ cyl_data.bl.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                                            <input type="hidden" name="cyl_data[bl][im]" value="{{ cyl_data.bl.im }}" id="input-bl-product-image"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" for="select-bl-connection-position-status">{{ entry_connection_position }}:</label>
+                                        <div class="col-sm-8">
+                                            <select name="cyl_data[bl][ps]" id="select-bl-connection-position-status" class="select-connection-position form-control">
+                                                {% if cyl_data.bl.ps %}
+                                                <option value="0">{{ text_connection_position_default }}</option>
+                                                <option value="1" selected="selected">{{ text_connection_position_custom }}</option>
+                                                {% else %}
+                                                <option value="0" selected="selected">{{ text_connection_position_default }}</option>
+                                                <option value="1">{{ text_connection_position_custom }}</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-connection-position"{% if not cyl_data.bl.ps %} style="display: none;"{% endif %}>
+                                        <label class="col-sm-4 control-label" for="input-bl-connection-position-bottom">Bottom:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="cyl_data[bl][pb]" value="{{ cyl_data.bl.pb }}" placeholder="" id="input-bl-connection-position-bottom" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-connection-position"{% if not cyl_data.bl.ps %} style="display: none;"{% endif %}>
+                                        <label class="col-sm-4 control-label" for="input-bl-connection-position-right">Right:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="cyl_data[bl][pr]" value="{{ cyl_data.bl.pr }}" placeholder="" id="input-bl-connection-position-right" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-window-maximize"></i> {{ text_center }}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" for="input-c-product-image">{{ entry_product_image }}:</label>
+                                        <div class="col-sm-8">
+                                            <a href="" id="thumb-c-product-image" data-toggle="image" class="img-thumbnail"><img src="{{ cyl_data.c.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                                            <input type="hidden" name="cyl_data[c][im]" value="{{ cyl_data.c.im }}" id="input-c-product-image"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-eye"></i> {{ text_show_in_products }}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <input type="text" name="show_product" value="" placeholder="{{ text_show_in_products }}" id="input-show-in-product" class="form-control"/>
+                                            <div id="show-in-product" class="well well-sm" style="height: 150px; overflow: auto;">
+                                                {% for show_in_product in show_in_products %}
+                                                <div id="show-in-product{{ show_in_product.product_id }}"><i class="fa fa-minus-circle"></i> {{ show_in_product.name }}
+                                                    <input type="hidden" name="show_in_product[]" value="{{ show_in_product.product_id }}"/>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-window-maximize"></i> {{ text_top_right }}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <input type="text" name="tr_product_name" value="{{ tr_product_name }}" placeholder="{{ entry_product_name }}" id="input-tr-product-name" class="form-control"/>
+                                            <input type="hidden" name="cyl_data[tr][p_id]" value="{{ cyl_data.tr.p_id }}"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" for="input-tr-product-image">{{ entry_product_image }}:</label>
+                                        <div class="col-sm-8">
+                                            <a href="" id="thumb-tr-product-image" data-toggle="image" class="img-thumbnail"><img src="{{ cyl_data.tr.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                                            <input type="hidden" name="cyl_data[tr][im]" value="{{ cyl_data.tr.im }}" id="input-tr-product-image"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" for="select-tr-connection-position-bh">{{ entry_connection_position_bh }}:</label>
+                                        <div class="col-sm-8">
+                                            <select name="cyl_data[tr][con]" id="select-tr-connection-position-bh" class="form-control">
+                                                {% if cyl_data.tr.con == 1 %}
+                                                    <option value="1" selected="selected">{{ text_connection_position_body }}</option>
+                                                    <option value="2">{{ text_connection_position_head }}</option>
+                                                {% else %}
+                                                    <option value="1">{{ text_connection_position_body }}</option>
+                                                    <option value="2" selected="selected">{{ text_connection_position_head }}</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" for="select-tr-connection-position-status">{{ entry_connection_position }}:</label>
+                                        <div class="col-sm-8">
+                                            <select name="cyl_data[tr][ps]" id="select-tr-connection-position-status" class="select-connection-position form-control">
+                                                {% if cyl_data.tr.ps %}
+                                                <option value="0">{{ text_connection_position_default }}</option>
+                                                <option value="1" selected="selected">{{ text_connection_position_custom }}</option>
+                                                {% else %}
+                                                <option value="0" selected="selected">{{ text_connection_position_default }}</option>
+                                                <option value="1">{{ text_connection_position_custom }}</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-connection-position"{% if not cyl_data.tr.ps %} style="display: none;"{% endif %}>
+                                        <label class="col-sm-4 control-label" for="input-bl-connection-position-top">Top:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="cyl_data[tr][pt]" value="{{ cyl_data.tr.pt }}" placeholder="" id="input-tr-connection-position-top" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-connection-position"{% if not cyl_data.tr.ps %} style="display: none;"{% endif %}>
+                                        <label class="col-sm-4 control-label" for="input-tr-connection-position-left">Left:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="cyl_data[tr][pl]" value="{{ cyl_data.tr.pl }}" placeholder="" id="input-tr-connection-position-left" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-window-maximize"></i> {{ text_bottom_right }}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <input type="text" name="br_product_name" value="{{ br_product_name }}" placeholder="{{ entry_product_name }}" id="input-br-product-name" class="form-control"/>
+                                            <input type="hidden" name="cyl_data[br][p_id]" value="{{ cyl_data.br.p_id }}"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" for="input-br-product-image">{{ entry_product_image }}:</label>
+                                        <div class="col-sm-8">
+                                            <a href="" id="thumb-br-product-image" data-toggle="image" class="img-thumbnail"><img src="{{ cyl_data.br.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                                            <input type="hidden" name="cyl_data[br][im]" value="{{ cyl_data.br.im }}" id="input-br-product-image"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" for="select-br-connection-position-status">{{ entry_connection_position }}:</label>
+                                        <div class="col-sm-8">
+                                            <select name="cyl_data[br][ps]" id="select-br-connection-position-status" class="select-connection-position form-control">
+                                                {% if cyl_data.br.ps %}
+                                                <option value="0">{{ text_connection_position_default }}</option>
+                                                <option value="1" selected="selected">{{ text_connection_position_custom }}</option>
+                                                {% else %}
+                                                <option value="0" selected="selected">{{ text_connection_position_default }}</option>
+                                                <option value="1">{{ text_connection_position_custom }}</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-connection-position"{% if not cyl_data.br.ps %} style="display: none;"{% endif %}>
+                                        <label class="col-sm-4 control-label" for="input-br-connection-position-bottom">Top:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="cyl_data[br][pb]" value="{{ cyl_data.br.pb }}" placeholder="" id="input-br-connection-position-bottom" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-group-connection-position"{% if not cyl_data.br.ps %} style="display: none;"{% endif %}>
+                                        <label class="col-sm-4 control-label" for="input-br-connection-position-left">Left:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="cyl_data[br][pl]" value="{{ cyl_data.br.pl }}" placeholder="" id="input-br-connection-position-left" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript"><!--
+$('.select-connection-position').on('change', function() {
+    var selected = parseInt($(this).find(":selected").val());
+
+    if (selected) {
+        $(this).closest('.panel-body').find('.form-group-connection-position').show(1000);
+    } else {
+        $(this).closest('.panel-body').find('.form-group-connection-position').hide(1000);
+    }
+});
+
+// Show in Products
+$('input[name=\'show_product\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=extension/complete_your_look/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'show_product\']').val('');
+
+        $('#show-in-product' + item['value']).remove();
+
+        $('#show-in-product').append('<div id="show-in-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="show_in_product[]" value="' + item['value'] + '" /></div>');
+    }
+});
+
+$('#show-in-product').delegate('.fa-minus-circle', 'click', function() {
+    $(this).parent().remove();
+});
+
+$('input[name=\'tl_product_name\']').autocomplete({
+    'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=extension/complete_your_look/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+            success: function(json) {
+                console.log(json);
+                json.unshift({
+                    product_id: 0,
+                    name: '{{ text_none }}'
+                });
+
+                response($.map(json, function(item) {
+                    console.log(item);
+                    return {
+                        label: item['name'],
+                        value: item['product_id']
+                    }
+                }));
+            }
+		});
+	},
+    'select': function(item) {
+        $('input[name="tl_product_name"]').val(item['label']);
+        $('input[name="cyl_data[tl][p_id]"]').val(item['value']);
+    }
+});
+$('input[name=\'bl_product_name\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=extension/complete_your_look/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
+                json.unshift({
+                    product_id: 0,
+                    name: '{{ text_none }}'
+                });
+
+                response($.map(json, function(item) {
+                    console.log(item);
+                    return {
+                        label: item['name'],
+                        value: item['product_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name="bl_product_name"]').val(item['label']);
+        $('input[name="cyl_data[bl][p_id]"]').val(item['value']);
+    }
+});
+$('input[name=\'tr_product_name\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=extension/complete_your_look/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
+                json.unshift({
+                    product_id: 0,
+                    name: '{{ text_none }}'
+                });
+
+                response($.map(json, function(item) {
+                    console.log(item);
+                    return {
+                        label: item['name'],
+                        value: item['product_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name="tr_product_name"]').val(item['label']);
+        $('input[name="cyl_data[tr][p_id]"]').val(item['value']);
+    }
+});
+$('input[name=\'br_product_name\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=extension/complete_your_look/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                console.log(json);
+                json.unshift({
+                    product_id: 0,
+                    name: '{{ text_none }}'
+                });
+
+                response($.map(json, function(item) {
+                    console.log(item);
+                    return {
+                        label: item['name'],
+                        value: item['product_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name="br_product_name"]').val(item['label']);
+        $('input[name="cyl_data[br][p_id]"]').val(item['value']);
+    }
+});
+//--></script>
+{{ footer }}

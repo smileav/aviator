@@ -1,0 +1,73 @@
+{{ header }}
+<style>
+  .success-in {
+    padding: 32px;
+    border: 1px solid #c0c2c9;
+    width: 100%;
+    max-width: 688px;
+    margin: 0 auto 24px auto;
+
+  }
+  .success-in > div:first-child {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 100%;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .success-text, .success-thanks {
+    font-size: 14px;
+    line-height: 20px;
+    color: #7c7c7c;
+
+  }
+  .success-text {
+    margin-bottom: 12px;
+  }
+  .success-button .btn-b {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: uppercase;
+    color: #fff;
+    width: 100%;
+    max-width: 410px;
+    height: 76px;
+    margin: auto;
+  }
+  @media (max-width: 991px) {
+    .success-in {
+      padding: 24px;
+    }
+    .success-in > div:first-child {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+    .success-button .btn-b {
+      font-size: 16px;
+      height: 62px;
+    }
+  }
+  @media (max-width: 767px) {
+    .success-in {
+      padding: 16px;
+    }
+    .success-button .btn-b {
+      max-width: unset;
+      width: 100%;
+    }
+  }
+
+</style>
+<div class="container">
+{% include('aviator/template/common/breadcrumb.twig') %}
+</div>
+<div id="common-success" class="container">
+  <div class="row">
+    <div id="content" class="col-sm-12">
+      <div class="success-in">{{ text_message }}</div>
+      <div class="success-button"><a href="{{ continue }}" class="btn-b d-f ai-c jc-c">{{ button_continue }}</a></div>
+    </div>
+  </div>
+</div>
+{{ footer }}

@@ -1,0 +1,13 @@
+{% if category_id %}
+<ul class="list-unstyled">
+{% for child in children %}
+<li><a href="{{ child.href }}">{{ child.name }}</a></li>
+{% endfor %}
+</ul>
+{% else %}
+<ul class="list-unstyled row">
+{% for child in children %}
+<li class="col-sm-4 col-xs-6" style="padding-right: 15px; padding-left: 15px;"><a href="{{ child.href }}"><img src="{{ child.image }}" alt="{{ child.name }}" width="150" height="84" class="img-responsive"/></a></li>
+{% endfor %}
+</ul>
+{% endif %}

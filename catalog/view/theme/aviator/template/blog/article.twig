@@ -1,0 +1,71 @@
+{{ header }}
+<div class="container">
+{% include('aviator/template/common/breadcrumb.twig') %}
+</div>
+<style>
+#content h1{font-size:40px;font-weight:500;line-height:100%;letter-spacing:-.02em;text-transform:uppercase;margin-top:0;margin-bottom:24px}#content h2{font-size:32px;line-height:normal;margin:40px 0 24px}#content img{display:block;max-width:100%;height:auto}#content p{color:#7c7c7c;font-size:14px}#content ul{color:#7c7c7c;font-size:14px}.article-btn>a{display:-webkit-inline-flex;display:inline-flex;-webkit-align-items:center;align-items:center;font-size:16px;font-weight:500;line-height:normal;text-transform:uppercase;padding:23px 28px 23px 24px;margin:24px 0 32px}.article-btn svg{fill:none;stroke:#000;margin-left:18px}
+@media(max-width: 1199px){
+#content h1{font-size:34px;margin-bottom:20px}#content h2{font-size:28px}
+}
+@media(max-width: 991px){
+#content h1{font-size:28px;margin-bottom:20px}#content h2{font-size:24px;margin:32px 0 16px}.article-btn>a{padding:12px 24px 12px 16px}.article-btn svg{margin-left:24px}
+}
+</style>
+<div id="blog-article" class="container">
+  <div class="row">
+    <div id="content" class="col-sm-12">
+      <div class="row">
+        <div id="content" class="col-sm-12">
+          {% if thumb or images %}
+          <ul class="thumbnails">
+            {% if thumb %}
+            <li><a class="thumbnail" href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" /></a></li>
+            {% endif %}
+            {% if images %}
+            {% for image in images %}
+            <li class="image-additional"><a class="thumbnail" href="{{ image.popup }}" title="{{ heading_title }}"> <img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" /></a></li>
+            {% endfor %}
+            {% endif %}
+          </ul>
+          {% endif %}
+          <div class="content">
+            <h1>{{ heading_title }}</h1>
+            <div class="tab-pane active" id="tab-description">{{ description }}</div>
+            {% if link and link_text %}
+            <div class="article-btn"><a href="{{ link }}" class="btn-w">{{ link_text }}<svg width="9" height="18"><use xlink:href="image/icons.svg#i-angle-right" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></a></div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {{ content_bottom }}
+    </div>
+  </div>
+</div>
+<script>
+function owlResized() {
+    var wW = $(window).width();
+
+    if (wW <= 767) {
+        $('.o-owl .product-layout').css({ 'width' : wW / 2 - 20 });
+    } else {
+        $('.o-owl .product-layout').css({ 'width' : 'auto' });
+    }
+}
+
+owlResized();
+
+$(document).ready(function() {
+    $('.o-owl-blog-latest .owl-carousel').owlCarousel({
+        mouseDrag: true,
+        touchDrag: true,
+        lazyLoad: true,
+        loop: false,
+        nav: true,
+        navText: ['<svg class="i-owl-arrow2" width="27" height="28"><use xlink:href="image/icons.svg#i-owl-arrow2" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>', '<svg class="i-owl-arrow2" width="27" height="28"><use xlink:href="image/icons.svg#i-owl-arrow2" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>'],
+        dots: false,
+        responsive: { 0: { items: 2, nav: false, autoWidth: true, margin: 8 }, 767: { items: 2, nav: false, autoWidth: true, margin: 8 }, 768: { items: 3, margin: 8 }, 991: { items: 3, margin: 8 }, 992: { items: 3, margin: 16 }, 1200: { items: 4, margin: 16 } },
+        onResized: owlResized
+    });
+});
+</script>
+{{ footer }}

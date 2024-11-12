@@ -1,0 +1,273 @@
+<style>
+    .cyl-container {
+        padding: 60px 0;
+        background: #c0c2c9;
+    }
+    .cyl-container.owl{display:none}
+    .cyl-row {
+        position: relative;
+        display: -webkit-flex;
+        display: flex;
+        height: {{ cyl_data.c.height }}px;
+    }
+    .cyl-col{width:20%;z-index:1}
+    .cyl-row>svg{z-index:2}
+    .cyl-center {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        width: 100%;
+        height: {{ cyl_data.c.height }}px;
+    }
+    {% if cyl_data.tl is defined and cyl_data.bl is defined %}
+    .cyl-tl .cyl-product{margin-left:32px}
+    .cyl-tl-line-1{display:none}
+    {% if cyl_data.tl.ps %}
+    .cyl-tl-line-2{position:absolute;top:{{ cyl_data.tl.pt }};right:{{ cyl_data.tl.pr }}}
+    {% else %}
+    .cyl-tl-line-2{position:absolute;top:14%;right:56%}
+    {% endif %}
+    .cyl-bl{-webkit-align-self:flex-end;align-self: flex-end}
+    .cyl-bl .cyl-product{margin: 0 0 0 auto}
+    .cyl-bl-line-1{display:none}
+    {% if cyl_data.bl.ps %}
+    .cyl-bl-line-2{position:absolute;bottom:{{ cyl_data.bl.pb }};right:{{ cyl_data.bl.pr }}}
+    {% else %}
+    .cyl-bl-line-2{position:absolute;bottom:7%;right:51%}
+    {% endif %}
+    {% else %}
+    .cyl-tl,.cyl-bl{width:40%;-webkit-align-self:center;align-self:center;}
+    .cyl-tl .cyl-product,.cyl-bl .cyl-product{margin:auto}
+    {% if cyl_data.tl is defined %}
+    {% if cyl_data.tl.ps %}
+    .cyl-tl-line-1{position:absolute;top:{{ cyl_data.tl.pt }};right:{{ cyl_data.tl.pr }}}
+    {% else %}
+    .cyl-tl-line-1{position:absolute;top:24%;right:55%}
+    {% endif %}
+    .cyl-tl-line-2{display:none}
+    {% endif %}
+    {% if cyl_data.bl is defined %}
+    {% if cyl_data.bl.ps %}
+    .cyl-bl-line-1{position:absolute;bottom:{{ cyl_data.bl.pb }};right:{{ cyl_data.bl.pr }}}
+    {% else %}
+    .cyl-bl-line-1{position:absolute;bottom:7%;right:51%}
+    {% endif %}
+    .cyl-bl-line-2{display:none}
+    {% endif %}
+    {% endif %}
+    {% if cyl_data.tr is defined and cyl_data.br is defined %}
+    .cyl-tr-line-1{display:none}
+    {% if cyl_data.tr.ps %}
+        {% if cyl_data.tr.con == 1 %}
+    .cyl-tr-line-2{position:absolute;top:{{ cyl_data.tr.pt }};left:{{ cyl_data.tr.pl }};transform:scaleX(-1)}
+        {% else %}
+    .cyl-tr-line-2{position:absolute;top:{{ cyl_data.tr.pt }};left:{{ cyl_data.tr.pl }}}
+        {% endif %}
+    {% else %}
+        {% if cyl_data.tr.con == 1 %}
+    .cyl-tr-line-2{position:absolute;top:19%;left:52%;transform:scaleX(-1)}
+        {% else %}
+    .cyl-tr-line-2{position:absolute;top:5%;left:48%}
+        {% endif %}
+    {% endif %}
+    .cyl-br{-webkit-align-self:flex-end;align-self:flex-end}
+    .cyl-br .cyl-product{margin: 0 32px 0 auto}
+    .cyl-br-line-1{display:none}
+    {% if cyl_data.br.ps %}
+    .cyl-br-line-2{position:absolute;bottom:{{ cyl_data.br.pb }};left:{{ cyl_data.br.pl }};transform:scaleX(-1)}
+    {% else %}
+    .cyl-br-line-2{position:absolute;bottom:32%;left:55%;transform:scaleX(-1)}
+    {% endif %}
+    {% else %}
+    .cyl-tr,.cyl-br{width:40%;-webkit-align-self:center;align-self:center;}
+    .cyl-tr .cyl-product,.cyl-br .cyl-product{margin:auto}
+    {% if cyl_data.tr is defined %}
+    {% if cyl_data.tr.ps %}
+    .cyl-tr-line-1{position:absolute;top:{{ cyl_data.tr.pt }};left:{{ cyl_data.tr.pl }}}
+    {% else %}
+        {% if cyl_data.tr.con == 1 %}
+    .cyl-tr-line-1{position:absolute;top:35%;left:52%}
+        {% else %}
+    .cyl-tr-line-1{position:absolute;top:5%;left:48%}
+        {% endif %}
+    {% endif %}
+    .cyl-tr-line-2{display:none}
+    {% endif %}
+    {% if cyl_data.br is defined %}
+    {% if cyl_data.br.ps %}
+    .cyl-br-line-1{position:absolute;bottom:{{ cyl_data.br.pb }};left:{{ cyl_data.br.pl }}}
+    {% else %}
+    .cyl-br-line-1{position:absolute;bottom:35%;left:54%}
+    {% endif %}
+    .cyl-br-line-2{display:none}
+    {% endif %}
+    {% endif %}
+    .cyl-product {
+        max-width: 211px;
+        padding: 0;
+    }
+    .cyl-product .product-thumb {
+        margin-bottom: 0;
+    }
+    .cyl-product .product-thumb .caption {
+        height: 140px;
+        min-height: auto;
+        overflow: hidden;
+    }
+    .cyl-product h4 {
+        font-size: 14px;
+        line-height: 140%;
+        max-height: 60px;
+        margin: 12px 0;
+    }
+    .cyl-product .product-thumb .price {
+        font-size: 14px;
+        line-height: 120%;
+        margin-bottom: 12px;
+    }
+    .cyl-product .product-thumb .price-old {
+        font-size: 10px;
+    }
+    .cyl-product .p-options>div {
+        line-height: 24px;
+        min-width: 24px;
+        height: 24px;
+    }
+    @media (max-width: 1439px) {
+        .cyl-container.desktop{display:none}
+        .cyl-container.owl{display:block}
+        .cyl-row {height:auto}
+        .cyl-product {
+            /*max-width: unset;*/
+            /*width: auto;*/
+            margin-top: 40px;
+
+        }
+        .cyl-first {
+            margin: auto;
+        }
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>{{ text_cyl_title }}</h3>
+            <div class="cyl-container desktop container">
+                <div class="cyl-row">
+                    <div class="cyl-col cyl-center" style="background: transparent url('{{ cyl_data.c.thumb }}') no-repeat no-repeat center;"></div>
+                    {% if cyl_data.bl is defined %}
+                    <div class="cyl-col cyl-bl">
+                        {% set product = cyl_data.bl %}
+                        <div class="product-layout cyl-product">
+                        {% include('aviator/template/product/product_thumb.twig') %}
+                        </div>
+                    </div>
+                    <svg class="cyl-bl-line-1" width="363" height="329"><use xlink:href="image/cyl-lines.svg#line-363-329" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                    <svg class="cyl-bl-line-2" width="446" height="158"><use xlink:href="image/cyl-lines.svg#line-446-158" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                    {% endif %}
+                    {% if cyl_data.tl is defined %}
+                    <div class="cyl-col cyl-tl">
+                        {% set product = cyl_data.tl %}
+                        <div class="product-layout cyl-product">
+                        {% include('aviator/template/product/product_thumb.twig') %}
+                        </div>
+                    </div>
+                    <svg class="cyl-line cyl-tl-line-1" width="327" height="113"><use xlink:href="image/cyl-lines.svg#line-327-113" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                    <svg class="cyl-line cyl-tl-line-2" width="180" height="80"><use xlink:href="image/cyl-lines.svg#line-180-80" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                    {% endif %}
+                    <div class="cyl-col cyl-c"></div>
+                    {% if cyl_data.br is defined %}
+                    <div class="cyl-col cyl-br">
+                        {% set product = cyl_data.br %}
+                        <div class="product-layout cyl-product">
+                        {% include('aviator/template/product/product_thumb.twig') %}
+                        </div>
+                    </div>
+                    <svg class="cyl-br-line-1" width="339" height="229"><use xlink:href="image/cyl-lines.svg#line-339-229" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                    <svg class="cyl-br-line-2" width="180" height="80"><use xlink:href="image/cyl-lines.svg#line-180-80" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                    {% endif %}
+                    {% if cyl_data.tr is defined %}
+                    <div class="cyl-col cyl-tr">
+                        {% set product = cyl_data.tr %}
+                        <div class="product-layout cyl-product">
+                        {% include('aviator/template/product/product_thumb.twig') %}
+                        </div>
+                    </div>
+
+                    {% if cyl_data.tr.con == 1 %}
+                    <svg class="cyl-line cyl-tr-line-1" width="372" height="67"><use xlink:href="image/cyl-lines.svg#line-372-67" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                    <svg class="cyl-line cyl-tr-line-2" width="446" height="158"><use xlink:href="image/cyl-lines.svg#line-446-158" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                    {% else %}
+                    <svg class="cyl-line cyl-tr-line-1" width="470" height="277"><use xlink:href="image/cyl-lines.svg#line-470-277" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                    <svg class="cyl-line cyl-tr-line-2" width="569" height="125"><use xlink:href="image/cyl-lines.svg#line-569-125" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% set count = 1 %}
+<div class="cyl-container owl">
+    <div class="cyl-row owl-carousel">
+        <div class="product-layout cyl-product cyl-first"><div class="product-thumb"><div class="image"><img src="{{ cyl_data.c.thumb }}" loading="lazy" class="img-responsive"/></div></div></div>
+        {#<div class="product-layout"><img src="{{ cyl_data.c.thumb }}" style="margin: auto" loading="lazy" class="img-responsive"/></div>#}
+        {% if cyl_data.tl is defined %}
+        {% set count = count + 1 %}
+        {% set product = cyl_data.tl %}
+        <div class="product-layout cyl-product">
+        {% include('aviator/template/product/product_thumb.twig') %}
+        </div>
+        {% endif %}
+        {% if cyl_data.tr is defined %}
+        {% set count = count + 1 %}
+        {% set product = cyl_data.tr %}
+        <div class="product-layout cyl-product">
+        {% include('aviator/template/product/product_thumb.twig') %}
+        </div>
+        {% endif %}
+        {% if cyl_data.br is defined %}
+        {% set count = count + 1 %}
+        {% set product = cyl_data.br %}
+        <div class="product-layout cyl-product">
+        {% include('aviator/template/product/product_thumb.twig') %}
+        </div>
+        {% endif %}
+        {% if cyl_data.bl is defined %}
+        {% set count = count + 1 %}
+        {% set product = cyl_data.bl %}
+        <div class="product-layout cyl-product">
+        {% include('aviator/template/product/product_thumb.twig') %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+<script>
+function owlResized() {
+    var wW = $(window).width();
+
+    if (wW <= 767) {
+        $('.cyl-container.owl .product-layout').css({ 'width' : wW / 2 - 20 });
+    } else {
+        $('.cyl-container.owl .product-layout').css({ 'width' : 'auto' });
+    }
+}
+owlResized();
+$(document).ready(function() {
+    console.log($('.cyl-product').outerHeight());
+    $('.cyl-container.owl .owl-carousel').owlCarousel({
+        mouseDrag: true,
+        touchDrag: true,
+        lazyLoad: false,
+        loop: false,
+        nav: true,
+        navText: ['<svg class="i-owl-arrow2" width="27" height="28"><use xlink:href="image/icons.svg#i-owl-arrow2" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>', '<svg class="i-owl-arrow2" width="27" height="28"><use xlink:href="image/icons.svg#i-owl-arrow2" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>'],
+        dots: false,
+        responsive: { 0: { items: 4, nav: false, autoWidth: true, margin: 8 }, 767: { items: 4, nav: false, autoWidth: true, margin: 8 }, 768: { items: 4, margin: 8 }, 991: { items: 4, margin: 8 }, 992: { items: 4, margin: 16 }, 1200: { items: {{ count }}, margin: 16 } },
+        onResized: owlResized
+    });
+});
+</script>

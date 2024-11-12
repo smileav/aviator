@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>Open Minify</name>
+    <code>open_minify</code>
+    <version>1.0</version>
+    <author>Open Minify</author>
+    <link></link>
+
+    <file path="catalog/controller/common/header.php">
+        <operation error="skip">
+            <search><![CDATA[$data['og_image'] = $this->document->getOgImage();]]></search>
+            <add position="after"><![CDATA[
+        /////
+        ///// start Open Minify
+        $open_minify_css    = ($this->config->get('open_minify_css')    ? 1 : 0);
+		$open_minify_js     = ($this->config->get('open_minify_js')     ? 1 : 0);
+		$open_minify_dev    = ($this->config->get('open_minify_dev')    ? 1 : 0);
+
+		if(isset($open_minify_css) && ($open_minify_css == 1) || (isset($open_minify_js) && ($open_minify_js == 1))) {
+		    $open_minify_mode = 0;
+		} else {
+		    $open_minify_mode = 1;
+		}
+
+        require_once(DIR_SYSTEM . 'open_minify/open_minify_startup.php');
+
+        $openMinify = new OpenMinify();
+
+        $this->registry->set('openMinify', $openMinify);
+
+        $openMinify->utils      = new openMinifyUtils($this->registry);
+		$openMinify->cache      = new openMinifyCache($this->registry);
+		$openMinify->minifier   = new openMinifyMinifier($openMinify->cache);
+
+		$openMinify->cache->setMode($open_minify_mode);
+
+		$openMinify->minifier->setMinifyCss($open_minify_css);
+
+        $openMinify->minifier->addStyle('catalog/view/javascript/jquery/jquery-ui.min.css');
+        $openMinify->minifier->addStyle('catalog/view/javascript/bootstrap/css/bootstrap.min.css');
+        // $openMinify->minifier->addStyle('catalog/view/javascript/font-awesome/css/font-awesome.min.css');
+		$openMinify->minifier->addStyle('catalog/view/theme/aviator/stylesheet/stylesheet.css');
+		$openMinify->minifier->addStyle('catalog/view/theme/aviator/stylesheet/jquery.mCustomScrollbar.min.css');
+		$openMinify->minifier->addStyle('catalog/view/theme/aviator/stylesheet/search.css');
+		$openMinify->minifier->addStyle('catalog/view/javascript/OwlCarousel2/assets/owl.carousel.min.css');
+		$openMinify->minifier->addStyle('catalog/view/javascript/OwlCarousel2/assets/owl.theme.default.min.css');
+
+        if (isset($open_minify_css) && ($open_minify_css == 1)) {
+            $data['open_minify_css'] = false;
+
+            foreach ($data['styles'] as $style) {
+                $openMinify->minifier->addStyle($style['href']);
+            }
+
+        } else {
+            $data['open_minify_css'] = true;
+        }
+
+        $data['open_minify_CSS_data'] = $openMinify->minifier->css();
+
+        $openMinify->minifier->setMinifyJs($open_minify_js);
+
+        $openMinify->minifier->addScript('catalog/view/javascript/jquery/jquery-2.1.1.min.js', 'header');
+        $openMinify->minifier->addScript('catalog/view/javascript/jquery/jquery-ui.min.js', 'header');
+        $openMinify->minifier->addScript('catalog/view/javascript/jquery/jquery.ui.touch-punch.min.js', 'header');
+		$openMinify->minifier->addScript('catalog/view/javascript/bootstrap/js/bootstrap.min.js', 'header');
+		$openMinify->minifier->addScript('catalog/view/theme/aviator/js/common.js', 'header');
+		$openMinify->minifier->addScript('catalog/view/theme/aviator/js/jquery.mCustomScrollbar.min.js', 'header');
+		$openMinify->minifier->addScript('catalog/view/theme/aviator/js/search.js', 'header');
+		$openMinify->minifier->addScript('catalog/view/theme/aviator/js/main.js', 'header');
+		$openMinify->minifier->addScript('catalog/view/javascript/OwlCarousel2/owl.carousel.min.js', 'header');
+
+        $data['script_remote_servers'] = [];
+
+		if (isset($open_minify_js) && ($open_minify_js == 1)) {
+			$data['open_minify_js'] = false;
+
+			foreach ($data['scripts'] as $script) {
+				$search_http = strpos($script, 'http');
+
+				if ($search_http === false) {
+					$openMinify->minifier->addScript($script, 'header');
+				} else {
+					$data['script_remote_servers'][] = $script;
+				}
+			}
+		} else {
+			$data['open_minify_js'] = true;
+		}
+
+		$data['open_minify_JS_data'] = $openMinify->minifier->js('header');
+        ///// end Open Minify
+        /////]]></add>
+        </operation>
+    </file>
+
+</modification>

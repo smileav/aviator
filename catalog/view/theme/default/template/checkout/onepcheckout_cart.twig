@@ -1,0 +1,54 @@
+<div>
+	<div class="cart-list">
+		<div class="opc-cart-title d-f ai-c jc-sb">{{ text_you_order }}<span class="d-f ai-c jc-c">{{ countProducts }}</span></div>
+		{% if products is not empty or vouchers %}
+		{% for product in products %}
+			<div class="cart-item d-f">
+				<button type="button" data-action="remove" data-key="{{ product.key }}" title="{{ button_remove }}" class="btn btn-remove"><svg class="i-trash" width="20" height="22" data-toggle="dropdown"><use xlink:href="image/icons.svg#i-trash" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button>
+				<div class="cart-item-left">
+					{% if product['thumb'] %}
+						<a href="{{ product['href'] }}"><img width="{{ cart_width }}"  height="{{ cart_height }}" src="{{ product['thumb'] }}" alt="{{ product['name'] }}" class="img-responsive" /></a>
+					{% endif %}
+				</div>
+				<div class="cart-item-center">
+					<div class="cart-item-prod-name"><a href="{{ product['href'] }}">{{ product['name'] }}</a></div>
+					{% if (not product.stock) %}
+						<div class="cart-prod-info-stock text-danger">***</div>
+					{% endif %}
+					{% if (product.option) %}
+					<div class="cart-item-options">
+						{% for option in product.option %}
+						<div class="cart-item-option dflex">
+							<div class="cart-item-option-name">{{ option.name }}</div>
+							<div class="cart-item-option-value">{{ option.value }}</div>
+						</div>
+						{% endfor %}
+					</div>
+					{% endif %}
+					{% if (product.reward) %}
+					<div class="cart-prod-info-reward">{{ product.reward }}</div>
+					{% endif %}
+					{% if (product.recurring) %}
+					<br />
+					<span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring }}</small>
+					{% endif %}
+					{% if product.ch_gift_id and product.ch_gift_id > 0%}
+					<div class="ch-gift">{{ text_gift }}</div>
+					{% endif %}
+					{% if product.quantity > 1 %}
+					<div class="cart-item-quantity">{{ product._quantity }}</div>
+					{% endif %}
+					<div class="price d-f ai-c">
+						{% if not product._special %}
+						{{ product._price }}
+						{% else %}
+						<div class="price-new">{{ product._special }}</div> <div class="price-old">{{ product._price }}</div>
+						{% endif %}
+					</div>
+				</div>
+
+			</div>
+		{% endfor %}
+		{% endif %}
+	</div>
+</div>

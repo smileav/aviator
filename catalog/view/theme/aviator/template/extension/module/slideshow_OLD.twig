@@ -1,0 +1,212 @@
+<style>
+  .o-owl-ss {
+    position: relative;
+    /*width: 1440px;
+    padding-right: 24px;
+    padding-left: 24px;
+    margin: auto;*/
+  }
+  .o-owl-ss .item {
+      cursor: pointer;
+  }
+  .o-owl-ss-i {
+    width: 100%;
+    height: 720px;
+    background-position-x: center!important;
+    background-position-y: 0!important;
+    background-size: cover!important;
+  }
+  .o-owl-ss-h {
+    position: absolute;
+    left: 40px;
+    bottom: 40px;
+    z-index: 1;
+  }
+  .o-owl-ss-t {
+    font-size: 80px;
+    font-weight: 500;
+    line-height: 90%;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 24px;
+  }
+  .o-owl-ss-b {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 100%;
+    text-transform: uppercase;
+    color: #fff;
+    border: solid 2px #fff;
+    padding: 24px;
+  }
+  .o-owl-ss-b:hover {
+    color: #fff;
+  }
+  .o-owl-nav-ss {
+    position: absolute;
+    right: 64px;
+    bottom: 40px;
+    font-size: 40px;
+    font-weight: 500;
+    color: #fff;
+    z-index: 1;
+
+  }
+  .o-owl-nav button {
+    background: transparent;
+    border: unset;
+    padding: 0;
+  }
+  .o-owl-nav button {
+    display: -webkit-flex;
+    display: flex;
+  }
+  .o-owl-nav button.owl-prev {
+    padding-right: 13px;
+  }
+  .o-owl-nav button.owl-next {
+    padding-left: 13px;
+  }
+  .owl-next > svg {
+    transform: rotate(180deg);
+  }
+  .o-owl-nav-ss svg {
+    fill: #fff;
+    width: auto;
+    height: 19px;
+  }
+  .o-owl-nav-ss .o-owl-count {
+    padding: 0 9px;
+  }
+  .o-owl-nav-ss .o-owl-count > span {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  @media (max-width: 1199px) {
+    .o-owl-ss {
+      width: 970px;
+    }
+    .o-owl-ss-i {
+      height: 513px;
+    }
+    .o-owl-ss-t {
+      font-size: 48px;
+    }
+    .o-owl-ss-b {
+      font-size: 18px;
+      padding: 20px;
+    }
+    .o-owl-nav-ss {
+      font-size: 34px;
+    }
+    .o-owl-nav button.owl-prev {
+      padding-right: 9px;
+    }
+    .o-owl-nav button.owl-next {
+      padding-left: 9px;
+    }
+  }
+  @media (max-width: 991px) {
+    .o-owl-ss {
+      width: 750px;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+    .o-owl-ss-i {
+      height: 397px;
+    }
+    .o-owl-ss-h {
+      left: 15px;
+      bottom: 24px;
+    }
+    .o-owl-ss-t {
+      font-size: 36px;
+    }
+    .o-owl-ss-b {
+      font-size: 16px;
+      padding: 16px;
+    }
+    .o-owl-nav-ss {
+      right: 30px;
+      bottom: 24px;
+      font-size: 20px;
+    }
+    .o-owl-nav-ss svg {
+      height: 16px;
+    }
+    .o-owl-nav-ss .o-owl-count {
+      padding: 0;
+    }
+
+  }
+  @media (max-width: 767px) {
+    .o-owl-ss {
+      width: 100%;
+      padding: 0;
+    }
+    .o-owl-ss-i {
+      height: 340px;
+      background-position-x: 6%!important;
+    }
+    .o-owl-nav-ss {
+      right: 15px;
+      bottom: 24px;
+      font-size: 20px;
+    }
+
+  }
+</style>
+<div class="o-owl o-owl-ss container">
+  <div class="owl-carousel">
+    {% for banner in banners %}
+      <div class="item" onclick="window.location.href='{{ banner.link }}'">
+          <div class="o-owl-ss-i" style="background: #fff url('{{ banner.image }}') no-repeat;"></div>
+          <div class="o-owl-ss-h">
+            {% if banner.title %}
+            <div class="o-owl-ss-t">{{ banner.title }}</div>
+            {% endif %}
+            {#<a href="{{ banner.link }}" class="o-owl-ss-b">{{ ss_button_text }}</a>#}
+          </div>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="o-owl-nav o-owl-nav-ss d-f ai-c"><div class="o-owl-count"></div></div>
+
+</div>
+<script>
+$(".o-owl-ss .owl-carousel").owlCarousel({
+  items: 1,
+  loop: true,
+  mouseDrag: true,
+  lazyLoad: true,
+  autoplay: true,
+  autoPlaySpeed: 5000,
+  autoPlayTimeout: 5000,
+  nav: true,
+  navContainer: '.o-owl-nav-ss',
+  navText: ['<svg class="i-owl-arrow" width="25" height="27"><use xlink:href="image/icons.svg#i-owl-arrow" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>', '<svg class="i-owl-arrow" width="25" height="27"><use xlink:href="image/icons.svg#i-owl-arrow" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>'],
+  dots: false,
+  onInitialized: owlCounter, //When the plugin has initialized.
+  onTranslated: owlCounter // When the translation of the stage has finished.
+
+  /*responsive: { 0: { items: 2, autoWidth:false, center: false, margin: 8 }, 767: { items: 2, autoWidth:false, center: false, margin: 8 }, 768: { margin: 24 }, 991: { margin: 24}, 992: { margin: 30}, 1200: { margin: 30 } }*/
+});
+function owlCounter(e) {
+  var element = e.target;         // DOM element, in this example .owl-carousel
+  var items = e.item.count;     // Number of items
+  var item = e.item.index + 1;     // Position of the current item
+
+// it loop is true then reset counter from 1
+  if (item > items) {
+    item = item - items
+  }
+  if (item < 10) {
+    item = '0' + item;
+  }
+  if (items < 10) {
+    items = '0' + items;
+  }
+  $('.o-owl-count').html(item + ' <span>/ ' + items + '</span>')
+}
+</script>

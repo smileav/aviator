@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="{{ direction }}" lang="{{ lang }}">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{{ title }}</title>
+{% if robots %}
+<meta name="robots" content="{{ robots }}" />
+{% endif %}
+<base href="{{ base }}" />
+{% if description %}
+<meta name="description" content="{{ description }}" />
+{% endif %}
+{% if keywords %}
+<meta name="keywords" content="{{ keywords }}" />
+{% endif %}
+<meta property="og:title" content="{{ title }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ og_url }}" />
+{% if og_image %}
+<meta property="og:image" content="{{ og_image }}" />
+{% else %}
+<meta property="og:image" content="{{ logo }}" />
+{% endif %}
+<meta property="og:site_name" content="{{ name }}" />
+{% for link in links %}
+<link href="{{ link.href }}" rel="{{ link.rel }}" />
+{% endfor %}
+<link rel="preload" href="catalog/view/theme/aviator/stylesheet/fonts/Inter-Regular.woff2?v=3.19" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="catalog/view/theme/aviator/stylesheet/fonts/Inter-Medium.woff2?v=3.19" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="catalog/view/theme/aviator/stylesheet/fonts/Inter-SemiBold.woff2?v=3.19" as="font" type="font/woff2" crossorigin="anonymous">
+{{ open_minify_CSS_data }}
+{% if (open_minify_css) %}
+{% for style in styles %}
+<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
+{% endfor %}
+{% endif %}
+{{ open_minify_JS_data }}
+{% if (open_minify_js) %}
+{% for script in scripts %}
+<script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+{% else %}
+{% if (script_remote_servers is not empty) %}
+{% for script in script_remote_servers %}
+<script src="{{ script }}"></script>
+{% endfor %}
+{% endif %}
+{% endif %}
+{% for analytic in analytics %}
+{{ analytic }}
+{% endfor %}
+</head>
+<body>
+<div class="top-in d-f ai-c"><div class="container"><div class="top-owl-container">{% set top_length = top_lines|length %}<div class="top-owl{% if top_length > 1 %} owl-carousel{% endif %} d-f ai-c">{% for key, line in top_lines %}<div class="top-item" data-key="{{ key }}">{% if line.link %}<a href="{{ line.link }}">{{ line.title }}</a>{% else %}{{ line.title }}{% endif %}</div>{% endfor %}</div>{% if top_length > 1 %}<div class="o-owl-nav top-nav d-f ai-c"><div class="top-owl-count"></div></div>{% endif %}</div></div></div>
+{% if top_length > 1 %}
+<script>$(".top-owl").owlCarousel({items:1,loop:!0,mouseDrag:!0,autoplay:!0,autoPlaySpeed:5e3,autoPlayTimeout:5e3,nav:!0,navContainer:".top-nav",navText:['<svg width="12" height="11"><use xlink:href="image/icons.svg#top-arrow" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>','<svg width="12" height="11"><use xlink:href="image/icons.svg#top-arrow" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>'],dots:!1,onInitialized:owlTopCounter,onTranslated:owlTopCounter});function owlTopCounter(o){o.target;var t=o.item.count,e=$(".top-owl .owl-item.active .top-item").data("key")+1;e>t&&(e-=t),e<10&&(e="0"+e),t<10&&(t="0"+t),$(".top-owl-count").html(e+" <span>/ "+t+"</span>")}</script>
+{#<script>
+    $('.top-owl').owlCarousel({
+        items: 1,
+        loop: true,
+        mouseDrag: true,
+        autoplay: true,
+        autoPlaySpeed: 5000,
+        autoPlayTimeout: 5000,
+        nav: true,
+        navContainer: '.top-nav',
+        navText: ['<svg width="12" height="11"><use xlink:href="image/icons.svg#top-arrow" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>', '<svg width="12" height="11"><use xlink:href="image/icons.svg#top-arrow" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>'],
+        dots: false,
+        onInitialized: owlTopCounter,
+        onTranslated: owlTopCounter
+    });
+    function owlTopCounter(e) {
+        var element = e.target;
+        var items = e.item.count;
+        var item = $('.top-owl .owl-item.active .top-item').data('key') + 1;
+
+        if (item > items) {
+            item = item - items
+        }
+        if (item < 10) {
+            item = '0' + item;
+        }
+        if (items < 10) {
+            items = '0' + items;
+        }
+
+        $('.top-owl-count').html(item + ' <span>/ ' + items + '</span>')
+    }
+</script>#}
+{% endif %}
+<header>
+  <div class="container">
+    <div class="header-in{% if home == og_url %} common-home{% endif %}">
+
+        <div class="navbar-header d-f ai-c">
+            <div data-toggle="collapse" data-target=".navbar-menu-collapse"><svg class="i-navbar" width="24" height="16"><use xlink:href="image/icons.svg#i-navbar" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></div>
+        </div>
+
+        <ul class="ul-inline ul-mr">
+          <li><a href="{{ about_us }}">{{ text_about_us }}</a></li>
+          <li><a href="{{ delivery }}">{{ text_delivery }}</a></li>
+          <li><a href="{{ contact }}">{{ text_contacts }}</a></li>
+          <li><a href="{{ blog }}">{{ text_blog }}</a></li>
+        </ul>
+
+
+        <div id="logo">
+          {% if home == og_url %}
+          <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" width="255" height="40"/>
+          {% else %}
+          <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" width="255" height="40"/></a>
+          {% endif %}
+        </div>
+
+
+        <ul class="ul-inline ul-ml">
+          <li class="phone"><a href="tel:+380687675320">+38 068 767-53-20</a></li>
+          <li class="work">{{ text_work_time_18 }}</li>
+          <li class="lang">{{ language }}</li>
+        </ul>
+    </div>
+
+      {% if home == og_url %}
+      <div class="h-logo">
+          <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" width="1392" height="206"/>
+      </div>
+      {% endif %}
+
+
+      {{ menu }}
+
+      <div class="h-icons d-f ai-c">
+          <div class="h-search d-f ai-c"><svg class="i-search" width="25" height="25"><use xlink:href="image/icons.svg#i-search" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>{{ search }}</div>
+
+          {#<div class="h-cart d-f ai-c"><svg class="i-cart" width="25" height="24"><use xlink:href="image/icons.svg#i-cart" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></div>#}
+          <div class="h-cart">{{ cart }}</div>
+
+      </div>
+  </div>
+</header>
+
+
+

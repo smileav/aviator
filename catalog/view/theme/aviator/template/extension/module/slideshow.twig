@@ -1,0 +1,48 @@
+<style>
+.o-owl-ss{position:relative}.o-owl-ss .item{cursor:pointer}.o-owl-nav-ss{position:absolute;right:64px;bottom:40px;font-size:40px;font-weight:500;color:#fff;z-index:1}.o-owl-nav button{background:0 0;border:unset;padding:0;display:-webkit-flex;display:flex}.o-owl-nav button.owl-prev{padding-right:13px}.o-owl-nav button.owl-next{padding-left:13px}.owl-next>svg{transform:rotate(180deg)}.o-owl-nav-ss svg{fill:#fff;width:auto;height:19px}.o-owl-nav-ss .o-owl-count{padding:0 9px}.o-owl-nav-ss .o-owl-count>span{color:rgba(255,255,255,.5)}
+@media (max-width: 1199px){.o-owl-nav-ss{font-size:34px}.o-owl-nav button.owl-prev{padding-right:9px}.o-owl-nav button.owl-next{padding-left:9px}}
+@media (max-width: 991px){.o-owl-ss{padding-right:15px;padding-left:15px}.o-owl-nav-ss{right:30px;bottom:24px;font-size:20px}.o-owl-nav-ss svg{height:16px}.o-owl-nav-ss .o-owl-count{padding:0}}
+@media (max-width: 767px){.o-owl-ss{padding:0}.o-owl-nav-ss{right:15px;bottom:24px;font-size:20px}}
+</style>
+<div class="o-owl o-owl-ss container">
+    <div class="owl-carousel">{% for key, banner in banners %}
+            <div class="item" data-key="{{ key }}"><a href="{{ banner.link }}">
+                <picture>
+                    <source media="(max-width: 767px)" srcset="{{ banner.image_m }}"/>
+                    <img src="{{ banner.image }}" alt="{{ banner.title }}"/></picture>
+            </a></div>{% endfor %}</div>
+    <div class="o-owl-nav o-owl-nav-ss d-f ai-c">
+        <div class="o-owl-count"></div>
+    </div>
+</div>
+<script>
+$(".o-owl-ss .owl-carousel").owlCarousel({
+  items: 1,
+  loop: true,
+  mouseDrag: true,
+  autoplay: true,
+  autoPlaySpeed: 5000,
+  autoPlayTimeout: 5000,
+  nav: true,
+  navContainer: '.o-owl-nav-ss',
+  navText: ['<svg class="i-owl-arrow" width="25" height="27"><use xlink:href="image/icons.svg#i-owl-arrow" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>', '<svg class="i-owl-arrow" width="25" height="27"><use xlink:href="image/icons.svg#i-owl-arrow" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>'],
+  dots: false,
+  onInitialized: owlCounter,
+  onTranslated: owlCounter
+});
+function owlCounter(e) {
+  var element = e.target;
+  var items = e.item.count;
+  var item = $('.o-owl-ss .owl-item.active .item').data('key') + 1;
+  if (item > items) {
+    item = item - items
+  }
+  if (item < 10) {
+    item = '0' + item;
+  }
+  if (items < 10) {
+    items = '0' + items;
+  }
+  $('.o-owl-count').html(item + ' <span>/ ' + items + '</span>')
+}
+</script>

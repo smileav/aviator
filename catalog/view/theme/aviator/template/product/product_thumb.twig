@@ -1,0 +1,24 @@
+<div class="product-thumb" data-id="{{ product.product_id }}">
+    <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" width="{{ product.thumb_w }}" height="{{ product.thumb_h }}" alt="{{ product.name }}" title="{{ product.name }}" loading="lazy" class="img-responsive"/></a></div>
+    <div>
+        <div class="caption">
+            <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+            {% if product.price %}
+                <div class="price d-f ai-c">
+                    {% if not product.special %}
+                    {{ product.price }}
+                    {% else %}
+                    <div class="price-new">{{ product.special }}</div> <div class="price-old">{{ product.price }}</div>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if product.options %}
+            <div class="p-options d-f ai-c">
+                {% for option in product.options %}
+                <div>{{ option.name }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

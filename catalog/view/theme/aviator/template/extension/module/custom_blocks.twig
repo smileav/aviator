@@ -1,0 +1,71 @@
+{% if blocks %}
+<style>
+
+    .c-blocks.row {
+        margin: 40px -8px 0 -8px;
+    }
+
+    .c-blocks.row > div {
+        padding-right: 8px;
+        padding-left: 8px
+    }
+
+    .c-block-in {
+        position: relative;
+        background: url('{{ noise }}') 0 0/cover no-repeat #c0c2c9;
+        background-position-x: center;
+        background-position-y: 0;
+        margin-bottom: 16px
+    }
+
+    .c-block-in:hover {
+        background-color: #000
+    }
+
+    .c-block-t {
+        position: absolute;
+        bottom: 24px;
+        left: 24px;
+        font-size: 32px;
+        font-weight: 500;
+        line-height: 100%;
+        text-transform: uppercase;
+        color: #fff
+    }
+
+    @media (max-width: 1199px) {
+        .c-block-t {
+            font-size: 28px
+        }
+    }
+
+    @media (max-width: 991px) {
+        .c-blocks.row {
+            margin: 24px -4px 0 -4px;
+        }
+
+
+        .c-blocks.row > div {
+            padding-right: 4px;
+            padding-left: 4px
+        }
+
+        .c-block-in {
+            margin-bottom: 8px
+        }
+
+        .c-block-t {
+            bottom: 16px;
+            left: 16px;
+            font-size: 24px
+        }
+    }
+
+
+</style>
+{% set class = 'col-sm-6' %}
+{% if columns == 2 %}
+{% set class = 'col-sm-6' %}
+{% endif %}
+<div class="c-blocks row">{% for block in blocks %}<div class="{{ class }}"><div class="c-block-in"><a href="{{ block.link }}"><img src="{{ block.image }}" width="{{ width }}" height="{{ height }}" loading="lazy" class="img-responsive"/><div class="c-block-t">{{ block.title }}</div></a></div></div>{% endfor %}</div>
+{% endif %}

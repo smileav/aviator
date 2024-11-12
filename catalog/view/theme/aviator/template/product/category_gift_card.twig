@@ -1,0 +1,161 @@
+{{ header }}
+<style>
+.gift-banner {
+    margin-bottom: 80px;
+}
+.gift-product .product-thumb {
+    max-width: 287px;
+    margin: 0 auto 64px;
+}
+.gift-product .image {
+    margin-bottom: 32px;
+}
+.gift-product .product-thumb button {
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 100%;
+    width: 100%;
+    padding: 25px 0;
+    margin-bottom: 32px;
+}
+.gift-adv-row, .gift-description-row {
+    margin: 0 -8px;
+}
+.gift-adv-row > div, .gift-description-row > div {
+    padding: 0 8px;
+}
+.gift-adv-in {
+    background: #f1f2f5;
+    padding: 29% 64px 29% 64px;
+    width: 100%;
+}
+.gift-adv-image {
+    text-align: center;
+    width: 128px;
+    height: 128px;
+    margin: 0 auto;
+}
+.gift-adv-text {
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 100%;
+    text-align: center;
+}
+.gift-description-row h2 {
+    font-size: 32px;
+    margin: 48px 0 24px;
+}
+.gift-description-row {
+    font-size: 16px;
+}
+@media (max-width: 991px) {
+    .gift-banner {
+        margin-bottom: 32px;
+    }
+    .gift-product .product-thumb {
+        max-width: 287px;
+        margin: 0 auto 40px;
+    }
+    .gift-product .image {
+        margin-bottom: 24px;
+    }
+    .gift-product .product-thumb button {
+        font-size: 14px;
+        padding: 18px 0;
+        margin-bottom: 24px;
+    }
+    .gift-adv-in {
+        padding: 8% 16px 8% 16px;
+    }
+    .gift-adv-text {
+        font-size: 16px;
+    }
+}
+@media (max-width: 767px) {
+    .gift-adv-row {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        margin: 0 -15px;
+    }
+    .gift-description-row {
+        margin: 0 -15px;
+    }
+    .gift-description-row > div {
+        padding: 0 15px;
+    }
+    .gift-adv-row > div {
+        margin-bottom: 16px;
+        padding: 0 15px;
+    }
+    .gift-adv-in {
+        padding: 64px 32px;
+    }
+    .gift-adv-image {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        width: auto;
+        height: auto;
+        margin-bottom: 16px;
+    }
+}
+</style>
+<div class="container">
+{% include('aviator/template/common/breadcrumb.twig') %}
+</div>
+<div class="container gift-banner-container">
+  {% if thumb %}
+  <div class="gift-banner"><img src="{{ thumb }}" width="1392" height="800" alt="{{ heading_title }}" title="{{ heading_title }}" loading="lazy" class="img-responsive"/></div>
+  {% endif %}
+</div>
+<div id="product-category" class="container">
+  <div class="row">
+    <div id="content" class="col-sm-12">
+      {% if products %}
+      <div class="row product-row gift-product">
+        {% for product in products %}
+        <div class="product-layout col-sm-4 col-xs-12">
+          {% include('aviator/template/product/product_thumb_gift_card.twig') %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      </div>
+    </div>
+    <div class="row gift-adv-row d-f">
+        <div class="col-sm-4 col-xs-12 d-f">
+            <div class="gift-adv-in">
+                <div>
+                    <div class="gift-adv-image"><svg width="98" height="90"><use xlink:href="image/gifts.svg#gift-adv-1" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></div>
+                    <div class="gift-adv-text">{{ text_gift_adv_1 }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12 d-f">
+            <div class="gift-adv-in">
+                <div>
+                    <div class="gift-adv-image"><svg width="102" height="98"><use xlink:href="image/gifts.svg#gift-adv-2" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></div>
+                    <div class="gift-adv-text">{{ text_gift_adv_2 }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12 d-f">
+            <div class="gift-adv-in">
+                <div>
+                    <div class="gift-adv-image"><svg width="81" height="78"><use xlink:href="image/gifts.svg#gift-adv-1" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></div>
+                    <div class="gift-adv-text">{{ text_gift_adv_3 }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row gift-description-row">
+        <div class="col-md-6 col-sm-12">{{ description }}</div>
+        <div class="col-md-6 hidden-sm hidden-xs"></div>
+    </div>
+</div>
+{{ footer }}

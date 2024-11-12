@@ -1,0 +1,4 @@
+<div class="product-thumb" data-id="{{ product.product_id }}">
+    <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" width="{{ product.thumb_w }}" height="{{ product.thumb_h }}" alt="{{ product.name }}" title="{{ product.name }}" loading="lazy" class="img-responsive"/></a></div>
+    <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');" class="btn-b">{{ button_cart_buy }}</button>
+</div>

@@ -1,0 +1,67 @@
+{% if categories %}
+  <nav id="menu" class="navbar">
+    <div class="collapse navbar-collapse navbar-menu-collapse">
+      <ul class="nav navbar-nav">
+        {% for category in categories %}
+          {% if category.children %}
+              <li class="dropdown clickable" data-id="{{ category.category_id }}"><div class="menu-nav-link"><a href="{{ category.href }}" class="dropdown-toggle" data-toggle="dropdown">{{ category.name }}</a><span class="caret"></span></div>
+              <div class="dropdown-menu">
+                <div class="dropdown-inner">
+                    <ul class="list-unstyled row">
+                      {% for children in category.children %}
+                      <li class="col-sm-2"><a href="{{ children.href }}"><img src="{{ children.thumb }}" width="226" height="150" alt="child.name" loading="lazy"/><span>{{ children.name }}</span></a></li>
+                      {% endfor %}
+                    </ul>
+                </div>
+                <div class="menu-sa">
+                  <a href="{{ category.href }}">{{ text_all_product }}</a>
+                </div>
+              </div>
+            </li>
+          {% else %}
+            {#<li><a href="{{ category.href }}">{{ category.name }}</a></li>#}
+            <li><div class="menu-nav-link"><a href="{{ category.href }}">{{ category.name }}</a></div></li>
+          {% endif %}
+        {% endfor %}
+          <li><div class="menu-nav-link"><a href="{{ href_aeronautica_militare }}">Aeronautica Militare</a></div></li>
+          <li class="dropdown clickable" data-id="0"><div class="menu-nav-link"><a href="{{ href_brand }}" class="dropdown-toggle" data-toggle="dropdown">{{ text_brand }}</a><span class="caret"></span></div>
+              <div class="dropdown-menu">
+                  <div class="dropdown-inner brands-inner"></div>
+                  <div class="menu-sa"><a href="{{ manufacturers }}">{{ text_all_brand }}</a></div>
+              </div>
+          </li>
+          <li class="menu-outlet"><div class="menu-nav-link"><a href="{{ special }}">SALE</a></div></li>
+          <li class="menu-info hidden-lg hidden-md">
+            <ul class="list-unstyled">
+              <li><a href="{{ about_us }}">{{ text_about_us }}</a></li>
+              <li><a href="{{ delivery }}">{{ text_delivery }}</a></li>
+              <li><a href="{{ contact }}">{{ text_contacts }}</a></li>
+              <li><a href="{{ gift_card }}">{{ text_gift_card }}</a></li>
+              <li class="menu-store-li d-f ai-c jc-sb">{{ text_store_official }} <span class="caret"></span></li>
+              <li class="menu-store hidden">
+                  <div>
+                      <div>{{ text_stores }}:</div>
+                      <div>{{ text_address_kiev1 }}</div>
+                      <div class="twt">{{ text_work_time_1022 }}</div>
+                      <div>{{ text_address_odessa }}</div>
+                      <div class="twt">{{ text_work_time_1020 }}</div>
+                  </div>
+                  <div>
+                      <div>{{ text_stores_multi }}:</div>
+                      <div>{{ text_address_kiev3 }}</div>
+                      <div class="twt">{{ text_work_time_1022 }}</div>
+                      <div>{{ text_address_kiev2 }}</div>
+                      <div class="twt">{{ text_work_time_1020 }}</div>
+                  </div>
+              </li>
+              <li class="menu-pw">
+                  <div><a href="tel:+380687675320">+38 068 767-53-20</a></div>
+                  <div>{{ text_work_time_18 }}</div>
+              </li>
+              <li class="menu-language">{{ language }}</li>
+            </ul>
+          </li>
+      </ul>
+    </div>
+  </nav>
+{% endif %}

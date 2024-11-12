@@ -1,0 +1,111 @@
+<footer>
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-6 col-sm-12">
+        <div id="logo-w">
+          {% if home == og_url %}
+            <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" width="326" height="48"/>
+          {% else %}
+            <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" width="255" height="40"/></a>
+          {% endif %}
+        </div>
+        <h5>{{ text_information }} <span class="caret"></span></h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ information.4.href }}">{{ information.4.title }}</a></li>
+          <li><a href="{{ blog }}">{{ text_blog }}</a></li>
+          <li><a href="{{ information.7.href }}">{{ information.7.title }}</a></li>
+        </ul>
+
+        <h5>{{ text_for_customers }} <span class="caret"></span></h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ information.6.href }}">{{ information.6.meta_h1 }}</a></li>
+          <li><a href="{{ information.8.href }}">{{ information.8.title }}</a></li>
+          <li><a href="{{ information.10.href }}">{{ information.10.title }}</a></li>
+          <li><a href="{{ gift_card }}">{{ text_gift_card }}</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-6 col-sm-12">
+        <h5>{{ text_store }}</h5>
+        <div class="f-h5-text">{{ text_work_time_1018 }}</div>
+        {#<div class="f-h5-text">{{ text_work_store_pnsb_ }}</div>#}
+        <h5>{{ text_store_kiev }}</h5>
+        <div class="f-h5-text">{{ text_address_kiev1_ }}</div>
+        <h5>{{ text_store_odessa }}</h5>
+        <div class="f-h5-text">{{ text_address_odessa_ }}</div>
+        <h5>{{ text_store_multi3 }}</h5>
+        <div class="f-h5-text">{{ text_address_kiev3_ }}</div>
+        <h5>{{ text_store_multi2 }}</h5>
+        <div class="f-h5-text">{{ text_address_kiev2_ }}</div>
+        <div class="f-phone"><a href="tel:+380687675320">+38 068 767-53-20</a></div>
+        <div class="f-social">
+          <h5>{{ text_social_networks }}</h5>
+          <div class="f-h5-text">{{ text_am_ukraine }}</div>
+          <div class="f-social-links row">
+            <div class="f-social-fi col-sm-4 col-xs-6 d-f ai-c">
+              <a href="https://www.facebook.com/AeronauticaMilitareUA" target="_blank">Facebook</a>
+              <a href="https://www.facebook.com/AeronauticaMilitareUA" target="_blank"><svg class="i-facebook" width="8" height="14"><use xlink:href="image/icons.svg#i-facebook" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></a>
+            </div>
+            <div class="f-social-fi col-sm-8 col-xs-6 d-f ai-c">
+              <a href="https://www.instagram.com/aeronautica_militare_ukraine/" target="_blank">Instagram</a>
+              <a href="https://www.instagram.com/aeronautica_militare_ukraine/" target="_blank"><svg class="i-instagram" width="13" height="14"><use xlink:href="image/icons.svg#i-instagram" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></a>
+            </div>
+          </div>
+          <div class="f-h5-text">{{ text_multi_brand }}</div>
+          <div class="f-social-links row">
+            <div class="f-social-fi col-sm-4 col-xs-6 d-f ai-c">
+              <a href="https://www.facebook.com/AviatorUkraine" target="_blank">Facebook</a>
+              <a href="https://www.facebook.com/AviatorUkraine" target="_blank"><svg class="i-facebook" width="8" height="14"><use xlink:href="image/icons.svg#i-facebook" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></a>
+            </div>
+            <div class="f-social-fi col-sm-8 col-xs-6 d-f ai-c">
+              <a href="https://www.instagram.com/aviator.ukraine/" target="_blank">Instagram</a>
+              <a href="https://www.instagram.com/aviator.ukraine/" target="_blank"><svg class="i-instagram" width="13" height="14"><use xlink:href="image/icons.svg#i-instagram" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="f-powered">{{ powered }}</div>
+  </div>
+</footer>
+<div class="menu-backdrop"></div>
+{% if this_session_data_language == 'uk-ua' %}
+<script type="text/javascript">
+(function(d, w, s) {
+  var widgetHash = '5kvrm1cn27354tzozhqj', gcw = d.createElement(s); gcw.type = 'text/javascript'; gcw.async = true;
+  gcw.src = '//widgets.binotel.com/getcall/widgets/'+ widgetHash +'.js';
+  var sn = d.getElementsByTagName(s)[0]; sn.parentNode.insertBefore(gcw, sn);
+})(document, window, 'script');
+(function(d, w, s) {
+  var widgetHash = 'SPbpcNYHoC0hW5BgGWK1', bch = d.createElement(s); bch.type = 'text/javascript'; bch.async = true;
+  bch.src = '//widgets.binotel.com/chat/widgets/' + widgetHash + '.js';
+  var sn = d.getElementsByTagName(s)[0]; sn.parentNode.insertBefore(bch, sn);
+})(document, window, 'script');
+</script>
+{% endif %}
+{% if this_session_data_language == 'ru-ru' %}
+<script type="text/javascript">
+(function(d, w, s) {
+  var widgetHash = 'uhoyx1eygjwm2hwkztpy', gcw = d.createElement(s); gcw.type = 'text/javascript'; gcw.async = true;
+  gcw.src = '//widgets.binotel.com/getcall/widgets/'+ widgetHash +'.js';
+  var sn = d.getElementsByTagName(s)[0]; sn.parentNode.insertBefore(gcw, sn);
+})(document, window, 'script');
+(function(d, w, s) {
+  var widgetHash = 'Pd5f6tYh1xCZdOMJvmjD', bch = d.createElement(s); bch.type = 'text/javascript'; bch.async = true;
+  bch.src = '//widgets.binotel.com/chat/widgets/' + widgetHash + '.js';
+  var sn = d.getElementsByTagName(s)[0]; sn.parentNode.insertBefore(bch, sn);
+})(document, window, 'script');
+</script>
+{% endif %}
+{% if this_session_data_language == 'en-gb' %}
+<script type="text/javascript">
+(function(d, w, s) {
+  var widgetHash = 'ikDrj8dCs9EiYL6DVvw1', bch = d.createElement(s); bch.type = 'text/javascript'; bch.async = true;
+  bch.src = '//widgets.binotel.com/chat/widgets/' + widgetHash + '.js';
+  var sn = d.getElementsByTagName(s)[0]; sn.parentNode.insertBefore(bch, sn);
+})(document, window, 'script');
+</script>
+{% endif %}
+</body></html>

@@ -1,0 +1,532 @@
+{{ header }}
+<div class="container">
+{% include('aviator/template/common/breadcrumb.twig') %}
+</div>
+<div id="product-product" class="container">
+  <div class="row">
+    <div id="content" class="col-sm-12">
+      <div class="row">
+	    <div class="col-sm-6 images-col">
+			<div class="row images owl-carousel">
+			{% set index = 1 %}
+			{% for key, image in images %}
+			{% if index == 1 or index == 2 %}
+			{% set class_image_col = 'col-sm-12' %}
+			{% else %}
+			{% set class_image_col = 'col-sm-6 col-xs-12' %}
+			{% endif %}
+			<a href="{{ images_o[key] }}" data-fancybox="gallery" data-caption="{{ heading_title }}" class="item {{ class_image_col }}{% if not gift_card %} zoom{% endif %}"><img src="{{ image }}" width="{{ image_w }}" height="{{ image_h }}" data-id="{{ key }}" title="{{ heading_title }}" alt="{{ heading_title }}"{% if key %} loading="lazy"{% endif %} class="img-responsive"/></a>
+			{#<div class="item {{ class_image_col }}{% if not gift_card %} zoom{% endif %}"><img src="{{ image }}" width="{{ image_w }}" height="{{ image_h }}" data-id="{{ key }}" title="{{ heading_title }}" alt="{{ heading_title }}" loading="lazy" class="img-responsive"/></div>#}
+			{% set index = index + 1 %}
+			{% endfor %}
+			</div>
+		</div>
+        <div class="col-sm-6 info-col">
+          <h1>{{ heading_title }}</h1>
+          <div id="product">
+		    {% if not archive %}<div class="price price-product d-f ai-c" data-price="{{ price_not_format }}" data-special="{{ special_not_format }}" data-currency-symbol="{{ currency_symbol }}">{% if not special %}{{ price }}{% else %}<div class="price-new">{{ special }}</div> <div class="price-old">{{ price }}</div>{% endif %}</div>{% endif %}
+		    <table class="pp-info">{% if manufacturer %}<tr><td>{{ text_manufacturer }}</td><td><a href="{{ manufacturers }}">{{ manufacturer }}</a></td></tr>{% endif %}<tr><td>{{ text_model }}</td><td>{{ model }}</td></tr>{% if not archive %}<tr><td>{{ text_stock }}</td><td>{{ stock }}</td></tr>{% endif %}</table>
+			{% if options and not archive %}
+            {% for option in options %}
+            {% if option.type == 'radio' and option.product_option_value is not empty %}
+				<div class="pp-size-group">
+					<div id="input-option{{ option.product_option_id }}" class="d-f ai-c">{% for key, option_value in option.product_option_value %}
+							<label><input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" data-price-prefix="{{ option_value.price_prefix }}" data-price="{{ option_value.price_not_format }}">{{ option_value.name }}
+							</label>{% endfor %}</div>
+				</div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+		    {% if not archive %}
+			<div class="pp-stock-store"><a onclick="stockByStore('{{ product_id }}');">{{ text_stockByStore }}</a></div>
+		    <div class="pp-btn-group d-f ai-c"><button type="button" id="button-cart" class="btn-b"><svg class="i-cart" width="24" height="24"><use xlink:href="image/icons.svg#i-cart" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg> {{ button_cart }}</button><button type="button" id="button-cart-quick" class="btn-w">{{ button_quick }}</button></div>
+			{% endif %}
+            <input type="hidden" name="quantity" value="{{ minimum }}"/>
+            <input type="hidden" name="product_id" value="{{ product_id }}"/>
+		    {% if archive %}
+				<style>
+				.p-archive{padding:32px;background:#f1f2f5;margin-bottom:40px}
+				.p-archive-not-available {
+					font-size: 20px;
+					font-weight: 500;
+					line-height: 100%;
+					text-transform: uppercase;
+					color: #f7352a;
+					margin-bottom: 16px;
+				}
+				.p-archive-not-available-text {
+					font-size: 14px;
+					line-height: 100%;
+					color: #7c7c7c;
+					margin-bottom: 24px;
+				}
+				.p-archive .pp-btn-group {
+					margin-bottom: 0;
+				}
+				.p-archive a.btn-a {
+					-webkit-appearance: button;
+					-moz-appearance: button;
+					appearance: button;
+					text-align: center;
+					padding: 0 16px;
+					width: 100%;
+				}
+				.p-archive a.btn-a:last-child {
+					margin-right: 0;
+				}
+				@media (max-width: 1199px) {
+					.p-archive a.btn-a:first-child {
+						margin-bottom: 6px;
+					}
+				}
+				@media (max-width: 991px) {
+					.p-archive{padding:16px}
+					.p-archive a.btn-a {
+						height: 60px;
+					}
+					.p-archive a.btn-a:last-child {
+						margin-bottom: 0;
+					}
+					.p-archive-not-available-text {
+						font-size: 12px;
+						margin-bottom: 16px;
+					}
+					.p-archive a.btn-a {
+						font-size: 14px;
+					}
+
+				}
+				</style>
+				<div class="p-archive">
+					<div class="p-archive-not-available">{{ text_archive_not_available }}</div>
+					<div class="p-archive-not-available-text">{{ text_archive_not_available_text }}</div>
+					<div class="pp-btn-group d-f ai-c">
+						{% if archive_category_id %}<a href="{{ archive_not_available_btn_category }}" class="btn-b btn-a">{{ text_archive_not_available_btn_category }}</a>{% endif %}
+						<a href="{{ manufacturers }}" class="btn-w btn-a">{{ text_archive_not_available_btn_manufacturer }}</a>
+					</div>
+				</div>
+			{% endif %}
+          </div>
+		  {% if product_colors %}
+		  <div class="pp-colors-h">{{ text_other_color }}</div>
+		  <div class="row pp-colors">
+			  {% for color in product_colors %}
+			  <div class="col-sm-3 col-xs-4">
+				  <a href="{{ color.href }}"><img src="{{ color.thumb }}" width="235" height="352" title="{{ color.name }}" alt="{{ color.name }}" loading="lazy" class="img-responsive"/></a>
+			  </div>
+			  {% endfor %}
+		  </div>
+		  {% endif %}
+          <div class="pp-nav-tabs-in">
+          <ul class="nav pp-nav-tabs d-f ai-fe">
+            <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_description }}</a></li>
+			<!--noindex-->
+            <li><a href="#tab-payment-and-delivery" data-toggle="tab" rel="nofollow">{{ tab_payment_and_delivery }}</a></li>
+		    {% if not gift_card %}
+            <li><a href="#tab-determine-size" data-toggle="tab" rel="nofollow">{{ tab_determine_size }}</a></li>
+			{% if size_description %}
+            <li><a href="#tab-table-size" data-toggle="tab" rel="nofollow">{{ tab_table_size }}</a></li>
+		    {% endif %}
+		    {% endif %}
+		    <!--/noindex-->
+          </ul>
+          </div>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-description">{{ description }}</div>
+		    <!--noindex-->
+		    <div class="tab-pane" id="tab-payment-and-delivery">{{ payment_and_delivery }}</div>
+			{% if not gift_card %}
+		    <div class="tab-pane" id="tab-determine-size">
+				<style>
+					.d-size-h1 {
+						font-size: 20px;
+						font-weight: 500;
+						text-transform: uppercase;
+						line-height: 100%;
+						color: #000;
+						margin-bottom: 16px;
+					}
+					.d-size-info {
+						margin-bottom: 16px;
+					}
+					#tab-determine-size .nav-tabs>li>a {
+						border-radius: 0;
+						text-transform: uppercase;
+					}
+					@media (max-width: 991px) {
+						.d-size-h1 {
+							font-size: 16px;
+						}
+					}
+				</style>
+				<div class="d-size-h1">{{ text_d_size_h1 }}</div>
+				<div class="d-size-info">{{ text_d_size_info }}</div>
+				<div class="tab-content">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#d-size-m" data-toggle="tab" aria-expanded="true">{{ text_d_size_man }}</a></li>
+						<li><a href="#d-size-w" data-toggle="tab" aria-expanded="true">{{ text_d_size_woman }}</a></li>
+					</ul>
+					<div class="tab-pane active" id="d-size-m">
+						<img src="image/catalog/size/men.png.webp" width="129" height="166" title="{{ text_d_size_man }}" alt="{{ text_d_size_man }}"/>
+					</div>
+					<div class="tab-pane" id="d-size-w">
+						<img src="image/catalog/size/girl.png.webp" width="129" height="166" title="{{ text_d_size_woman }}" alt="{{ text_d_size_woman }}"/>
+					</div>
+				</div>
+				<div id="d-size-form"></div>
+			</div>
+			{% if size_description %}
+            <div class="tab-pane" id="tab-table-size">
+				<style>
+					#tab-table-size .nav-tabs>li>a {
+						border-radius: 0;
+						text-transform: uppercase;
+					}
+					#tab-table-size .size-h1 {
+						font-size: 20px;
+						font-weight: 500;
+						text-transform: uppercase;
+						line-height: 100%;
+						color: #000;
+						margin-bottom: 16px;
+					}
+					#tab-table-size .table>tbody>tr>td {
+						border:0;
+						text-align: center;
+						vertical-align: middle;
+					}
+					#tab-table-size .strong {
+						font-weight: 500;
+						text-transform: uppercase;
+					}
+					#tab-table-size tr:nth-child(odd) {
+						background-color: #f1f2f5;
+					}
+					#tab-table-size tr:hover {
+						color: #000;
+						background: rgba(0, 0, 0, 0.1);;
+					}
+					#tab-table-size td.hover {
+						color: #000;
+						background: rgba(0, 0, 0, 0.1);;
+					}
+					#tab-table-size td:hover {
+						background: #000;
+						color: #fff;
+					}
+
+					#tab-table-size .number {
+						display: block;
+						color: #000;
+						font-weight: 500;
+						text-align: center;
+						border: 1px solid #000;
+						width: 19px;
+					}
+					#tab-table-size .num-text {
+						text-transform: uppercase;
+					}
+					@media (max-width: 991px) {
+						#tab-table-size .size-h1 {
+							font-size: 16px;
+						}
+						#tab-table-size .table>tbody>tr>td {
+							font-size: 12px;
+						}
+					}
+
+				</style>
+				{{ size_description }}
+				<script type="text/javascript"><!--
+				var tds = [];
+				$("#tab-table-size tr").each(function( i ) {
+					$(this).children().each(function( index ){
+						if ( i == 0 ) tds.push( $("#tab-table-size td:nth-child("+( index + 1 )+")") );
+						this.customAttrIndex = index;
+					});
+				});
+				$("#tab-table-size td").mouseover(function() {
+					tds[ this.customAttrIndex ].addClass("hover");
+				}).mouseout(function() {
+					tds[ this.customAttrIndex ].removeClass("hover");
+				});
+				//--></script>
+			</div>
+		    {% endif %}
+			{% endif %}
+		    <!--/noindex-->
+          </div>
+        </div>
+      </div>
+	  {% if kit_products %}
+	  <style>#kit-button-cart,.kit-total-price{font-weight:500;text-transform:uppercase}.kit-box{display:-webkit-flex;display:flex;border:1px solid #c0c2c9;padding:16px;width:100%;background:#fff}.kit-box>div{padding-right:0;padding-left:0}.kit-eq,.kit-plus{font-size:60px;font-weight:500;line-height:normal}.kit-eq>div,.kit-plus>div,.kit-total>div{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;-webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center;position:absolute;top:30%;right:0;left:0}.kit-total-price{font-size:40px;line-height:normal;margin-bottom:24px}#kit-button-cart{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center;font-size:20px;line-height:28px;height:76px;padding:0 50px}@media (max-width:1199px){.kit-eq,.kit-plus{font-size:40px}.kit-total-price{font-size:36px}#kit-button-cart{font-size:20px;padding:0 40px}}@media (max-width:991px){.kit-box{padding:8px}.kit-eq>div,.kit-plus>div,.kit-total>div{position:relative}.kit-total-price{font-size:28px;margin-bottom:16px}#kit-button-cart{font-size:16px;width:100%;height:62px;padding:0}}@media (max-width:767px){.kit-box{display:table;border:unset;padding:0;margin-right:-4px;margin-left:-4px;margin-bottom:32px}.kit-box>div{padding-right:4px;padding-left:4px}#content .kit-box .col-xs-6:nth-child(odd){clear:unset}}</style>
+	  <h3>{{ text_buy_kit }}</h3><div class="row"><div class="col-sm-12"><div class="kit-box">{% for key, product in kit_products %}{% if key == 1 %}<div class="hidden-xs kit-plus col-sm-1"><div>+</div></div>{% endif %}<div class="product-layout col-sm-3 col-xs-6">{% include('aviator/template/product/product_thumb_kit.twig') %}</div>{% endfor %}<div class="hidden-xs kit-eq col-sm-1"><div>=</div></div><div class="kit-total col-sm-4 col-xs-12"><div><div class="kit-total-price">{{ kit_total }}</div><button type="button" id="kit-button-cart" data-loading-text="{{ text_loading }}" class="btn-b">{{ button_kit_cart }}</button></div></div></div></div></div>
+	  <script type="text/javascript"><!--
+		$('.kit-box .p-options > div').on('click', function() {
+			$(this).closest('.p-options').find('.active').removeClass('active');
+			$(this).addClass('active');
+		});
+
+		$('#kit-button-cart').on('click', function() {
+			var option = true;
+			var html = '';
+
+			$(this).closest('.kit-box').find('.product-layout').each(function( index ) {
+				var product_id = $(this).find('.product-thumb').data('id');
+
+				if ($('.kit-box .product-thumb[data-id="' + product_id + '"] .p-options').length && !$('.kit-box .product-thumb[data-id="' + product_id + '"] .p-options > div').hasClass('active')) {
+					option = false;
+
+					html += '<div class="product-thumb" data-id="' + product_id + '">';
+					html += '<h4>' + $('.kit-box .product-thumb[data-id="' + product_id + '"] h4 > a').text() + '</h4>';
+					html += '<div class="modal-options d-f ai-c">';
+					html += $('.kit-box .product-thumb[data-id="' + product_id + '"] .p-options').html();
+					html += '</div>';
+					html += '</div>';
+				}
+			});
+
+			if (option === false) {
+				$('#modal-size').remove();
+				$('.modal-backdrop').remove();
+
+				$.get('index.php?route=checkout/cart/modal_size', function(data) {
+					console.log(data);
+					$('body').append(data);
+					$('#modal-size .modal-head > div').text('{{ text_options_title }}');
+					$('#modal-size #kit-button-cart').text('{{ button_kit_cart }}');
+					$('#modal-size .modal-products').html(html);
+
+					$('#modal-size').modal('show');
+				});
+				return false;
+			}
+
+
+			$(this).closest('.kit-box').find('.product-layout').each(function( index ) {
+				var product_id = $(this).find('.product-thumb').data('id');
+
+				$.ajax({
+					url: 'index.php?route=checkout/cart/add&kit=1',
+					type: 'post',
+					data: $('.kit-box .product-thumb[data-id="' + product_id + '"] input[name="product_id"], .kit-box .product-thumb[data-id="' + product_id + '"] .p-options > div.active input'),
+					dataType: 'json',
+					beforeSend: function() {
+					},
+					complete: function() {
+					},
+					success: function(json) {
+						console.log(json);
+						$('.alert').remove();
+
+						if (json['error']) {
+							if (json['error']) {
+
+							}
+						}
+
+						if (json['success']) {
+							$('#breadcrumb').after('<div class="alert">' + json['success'] + '<button type="button" class="close" data-dismiss="alert"><svg class="i-close" width="14" height="14"><use xlink:href="image/icons.svg#i-close" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button></div>');
+							$('html, body').animate({scrollTop: 0}, 'slow');
+							$('#cart').load('index.php?route=common/cart/info');
+							setTimeout(function () {
+								$('.alert').slideUp(2000);
+							}, 5000);
+						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
+
+
+
+
+			});
+
+
+		});
+		//--></script>
+		{% endif %}
+		{% if products %}
+		<h3>{{ text_related }}</h3>
+		<div class="o-owl o-owl-related">
+			<div class="owl-carousel">{% for product in products %}
+				<div class="product-layout">{% include('aviator/template/product/product_thumb.twig') %}</div>{% endfor %}
+			</div>
+		</div>
+		{% endif %}
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{% if cyl_data %}
+{% include('aviator/template/extension/module/complete_your_look.twig') %}
+{% endif %}
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+<script type="text/javascript"><!--
+$('#button-cart, #button-cart-quick').on('click', function() {
+	var product_id = $('input[name="product_id"]').val();
+	var buttonID = $(this).attr('id');
+	var url ='index.php?route=checkout/cart/add';
+	if (buttonID == 'button-cart-quick') {
+		url ='index.php?route=checkout/cart/add&quick=1';
+	}
+	$.ajax({
+		url: url,
+		type: 'post',
+		data: $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#' + buttonID).addClass('disabled');
+		},
+		complete: function() {
+			$('#' + buttonID).removeClass('disabled');
+		},
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			if (json['success']) {
+				if (buttonID == 'button-cart') {
+					$('#breadcrumb').after('<div class="alert">' + json['success'] + '<button type="button" class="close" data-dismiss="alert"><svg class="i-close" width="14" height="14"><use xlink:href="image/icons.svg#i-close" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button></div>');
+					$('html, body').animate({scrollTop: 0}, 'slow');
+					$('#cart').load('index.php?route=common/cart/info');
+					setTimeout(function () {
+						$('.alert').slideUp(1500);
+					}, 5000);
+				}
+
+				if (buttonID == 'button-cart-quick') {
+					$.get('index.php?route=common/cart/info', function(data) {
+						$('#cart').html(data);
+						quickOrder(product_id);
+					});
+					/*
+					$('#cart').load('index.php?route=common/cart/info');
+					quickOrder();
+					quickOrderTotal();
+					 */
+				}
+			}
+			if (json['error']) {
+				if (json['error']['option']) {
+					for (i in json['error']['option']) {
+						var element = $('#input-option' + i.replace('_', '-'));
+						element.after('<div class="text-danger" style="font-weight:500;text-transform:uppercase;">' + json['error']['option'][i] + '</div>');
+
+					}
+				}
+			}
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+	});
+});
+function currencyFormatPrice(price, currency_symbol) {
+	return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + currency_symbol;
+}
+$('.pp-size-group label').on('click', function(e) {
+	let o_price = $(this).find('input').data('price'), price_prefix = $(this).find('input').data('price-prefix'),
+		price_product = $('#product .price-product'),
+		price = price_product.data('price'),
+		special = price_product.data('special'),
+		currency_symbol = price_product.data('currency-symbol');
+	if (o_price) {
+			let price_new = 0, special_new = 0;
+			if (price_prefix === '+') {
+					price_new = price + o_price;
+					special_new = special + o_price;
+			}
+			if (price_prefix === '-') {
+				price_new = price - o_price;
+				special_new = special - o_price;
+			}
+			if (special) {
+				price_product.find('.price-new').text(currencyFormatPrice(special_new, currency_symbol));
+				price_product.find('.price-old').text(currencyFormatPrice(price_new, currency_symbol));
+			} else {
+				price_product.text(currencyFormatPrice(price_new, currency_symbol));
+			}
+		} else  {
+			if (special) {
+				price_product.find('.price-new').text(currencyFormatPrice(special, currency_symbol));
+				price_product.find('.price-old').text(currencyFormatPrice(price, currency_symbol));
+			} else {
+				price_product.text(currencyFormatPrice(price, currency_symbol));
+			}
+		}
+    $('.pp-size-group label').removeClass('active');
+    $(this).addClass('active');
+});
+function p_stycky(el = '') {
+	setTimeout(function() {
+		var sticky_top = $('.info-col').height() - $(window).height();
+		var sticky_prefix = '';
+		if (sticky_top > 0) {
+			sticky_prefix = '-';
+		}
+		$('.info-col').css({ 'position' : 'sticky', 'top' : sticky_prefix + sticky_top + 'px' });
+	}, 350);
+
+}
+
+	function owl_pp_i_init() {
+		$('.images.owl-carousel').owlCarousel({
+			items: 1,
+			loop: true,
+			mouseDrag: true,
+			lazyLoad: true,
+			nav: false,
+			dots: true
+		});
+	}
+
+	function owlResized() {
+		var wW = $(window).width();
+
+		if (wW <= 767) {
+			$('.o-owl .product-layout').css({ 'width' : wW / 2 - 20 });
+		} else {
+			$('.o-owl .product-layout').css({ 'width' : 'auto' });
+		}
+	}
+
+	owlResized();
+
+	$(document).ready(function() {
+		$('.o-owl-related .owl-carousel').owlCarousel({
+			mouseDrag: true,
+			touchDrag: true,
+			lazyLoad: true,
+			loop: false,
+			nav: true,
+			navText: ['<svg class="i-owl-arrow2" width="27" height="28"><use xlink:href="image/icons.svg#i-owl-arrow2" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>', '<svg class="i-owl-arrow2" width="27" height="28"><use xlink:href="image/icons.svg#i-owl-arrow2" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>'],
+			dots: false,
+			responsive: { 0: { items: 2, nav: false, autoWidth: true, margin: 8 }, 767: { items: 2, nav: false, autoWidth: true, margin: 8 }, 768: { items: 3, margin: 8 }, 991: { items: 3, margin: 8 }, 992: { items: 3, margin: 16 }, 1200: { items: 4, margin: 16 } },
+			onResized: owlResized
+		});
+
+		p_stycky();
+
+		$('.pp-nav-tabs [data-toggle="tab"]').on('click', function() {
+			console.log('123132123');
+			p_stycky();
+		});
+	});
+
+	Fancybox.bind('[data-fancybox="gallery"]', {
+		Thumbs : {
+			type: "classic"
+		}
+	});
+//--></script>
+{% if not gift_card %}
+<script type="text/javascript"><!--
+$('[href="#tab-determine-size"]').on('click', function() {
+	$.get('index.php?route=product/determine_size/get', function(data) {
+		$('#d-size-form').html(data);
+	});
+});
+//--></script>
+{% endif %}
+{{ footer }}

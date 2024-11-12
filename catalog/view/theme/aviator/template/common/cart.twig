@@ -1,0 +1,47 @@
+<div id="cart">
+  <div class="dropdown-toggle d-f ai-c" data-toggle="dropdown"><svg class="i-cart" width="25" height="24"><use xlink:href="image/icons.svg#i-cart" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg><div class="h-cart-it d-f ai-c"><span>{{ count }}</span></div></div>
+  <div class="dropdown-menu pull-right animate slideIn">
+    {% if products or vouchers %}
+      <div class="cart-in cart-head d-f ai-c">
+          {{ text_cart_head }}<span>{{ count }}</span>
+      </div>
+      <div class="cart-in cart-product">
+        {% for product in products %}
+        <div class="cart-p d-f" data-id="{{ product.product_id }}">
+          <div class="cart-p-img"><a href="{{ product.href }}"><img src="{{ product.thumb }}" width="{{ product.thumb_w }}" height="{{ product.thumb_h }}" alt="{{ product.name }}" title="{{ product.name }}" loading="lazy"/></a></div>
+          <div class="cart-p-cap">
+            <button type="button" onclick="cart.remove('{{ product.cart_id }}');" title="{{ button_remove }}" class="btn-trash"><svg class="i-trash" width="20" height="22" data-toggle="dropdown"><use xlink:href="image/icons.svg#i-trash" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button>
+            <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+            {% if product.option %}
+            {% for option in product.option %}
+            <div class="cart-p-o">{{ option.name }}&nbsp;{{ option.value }}<input type="hidden" name="option[{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/></div>
+            {% endfor %}
+            {% endif %}
+            {% if product.quantity > 1 %}
+            <div class="cart-q">{{ product._quantity }}</div>
+            {% endif %}
+            <div class="price d-f ai-c">
+              {% if not product._special %}
+                {{ product._price }}
+              {% else %}
+                <div class="price-new">{{ product._special }}</div> <div class="price-old">{{ product._price }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="cart-in cart-total d-f jc-sb">
+        <div>{{ text_total }}</div>
+        <div>{{ total_custom }}</div>
+      </div>
+      <div class="cart-in cart-btn d-f fd-c">
+        <a href="{{ checkout }}" class="btn-b d-f ai-c jc-c">{{ text_checkout }}</a>
+        <button onclick="quickOrder('cart');" type="button" data-loading-text="{{ text_loading }}" class="btn-w d-f ai-c jc-c">{{ button_quick }}</button>
+      </div>
+    {% else %}
+      <div class="cart-empty">{{ text_empty }}</div>
+    {% endif %}
+  </div>
+</div>
+

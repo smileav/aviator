@@ -1,0 +1,29 @@
+{% if languages|length > 1 %}
+{% for language in languages %}{% if language.current %}<span class="active">{{ language.name }}</span>{% else %}<span onclick="lm_setCookie('languageauto','1',{expires:180});window.location='{{ language.url }}'">{{ language.name }}</span>{% endif %}{% endfor %}
+<script>function lm_setCookie(e,t,o={}){o={path:"/",...o};let i=new Date(Date.now()+864e5*o.expires);i=i.toUTCString(),o.expires=i;let n=encodeURIComponent(e)+"="+encodeURIComponent(t);for(let l in o){n+="; "+l;let r=o[l];!0!==r&&(n+="="+r)}document.cookie=n}</script>
+{# <script>
+    function lm_setCookie(name, value, options = {}) {
+		options = {
+			path: '/',
+			...options
+		};
+		let date = new Date(Date.now() + (86400e3 * options.expires));
+		date = date.toUTCString();
+		options.expires = date;
+		let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+		for (let optionKey in options) {
+			updatedCookie += "; " + optionKey;
+			let optionValue = options[optionKey];
+			if (optionValue !== true) {
+				updatedCookie += "=" + optionValue;
+			}
+		}
+		document.cookie = updatedCookie;
+	}
+	function lm_deleteCookie(name) {
+		lm_setCookie(name, "", {
+			'max-age': -1
+		});
+	}
+</script> #}
+{% endif %}

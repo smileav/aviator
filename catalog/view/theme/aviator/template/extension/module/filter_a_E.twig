@@ -1,0 +1,201 @@
+{% set plus = '' %}
+{% if Filter_A.fiaG or Filter_A.fiaC or Filter_A.fiaM %}
+{% set plus = '+' %}
+{% endif %}
+<div id="filter-a" class="row">
+    <div class="col-sm-3 fia-G fia-checkbox" data-fia="G">
+        <div class="fia-in">
+            <button type="button" data-toggle="dropdown">{{ text_fia_gender }} ({{ Filter_A.fiaG|length }}) <span class="caret"></span></button>
+            <div class="dropdown-menu">
+                {% for name,value in Filter_A.fia.G %}
+                    {% set total = value.total_f %}
+                    {% set active = '' %}
+                    {% set prefix = value.prefix %}
+                    {% if prefix == '=' %}
+                        {% set active = 1 %}
+                        {% set prefix = '' %}
+                    {% endif %}
+                <div class="fia-G-o{% if active %} active{% endif %}{% if not total %} disabled{% endif %}" data-filter="{{ name }}"><span><svg class="fia-i-check" width="10" height="8"><use xlink:href="image/fia-icons.svg#fia-i-check" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></span>{{ name }}&nbsp;<span>({{ total }})</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 fia-C fia-checkbox" data-fia="C">
+        <div class="fia-in">
+            <button type="button" data-toggle="dropdown">{{ text_fia_category }} ({{ Filter_A.fiaC|length }}) <span class="caret"></span></button>
+            <div class="dropdown-menu">
+                {% for name, value in Filter_A.fia.C %}
+
+                    {% if value.total_f %}
+                        {% set total = value.total_f %}
+                    {% else %}
+                        {% set total = value.total %}
+                    {% endif %}
+
+                    {% set active = false %}
+                    {% if prefix == '=' %}
+                        {% set active = true %}
+                        {% set prefix = '' %}
+                    {% endif %}
+                <div class="{{ total }} fia-C-o{% if active and total %} active{% endif %}{% if not total %} disabled{% endif %}" data-filter="{{ name }}"><span><svg class="fia-i-check" width="10" height="8"><use xlink:href="image/fia-icons.svg#fia-i-check" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></span>{{ name }}&nbsp;<span>({{ total }})</span></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 fia-M fia-checkbox" data-fia="M">
+        <div class="fia-in">
+            <button type="button" data-toggle="dropdown">{{ text_fia_manufacturers }} ({{ Filter_A.fiaM|length }}) <span class="caret"></span></button>
+            <div class="dropdown-menu">
+                {% if Filter_A.fiaC or Filter_A.fiaS %}
+                {% set plus = '' %}
+                {% endif %}
+                {% for name, value in Filter_A.fia.M %}
+                {% set active = value|first in Filter_A.fiaM %}
+                {% set total = value|length %}
+                <div class="fia-M-o{% if active and total %} active{% endif %}{% if not total %} disabled{% endif %}" data-filter="{{ value|first }}"><span><svg class="fia-i-check" width="10" height="8"><use xlink:href="image/fia-icons.svg#fia-i-check" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></span>{{ name }}&nbsp;<span>({% if total and not active %}{{ plus }}{{ total }}{% else %}{{ total }}{% endif %})</span></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 fia-P">
+        <div class="fia-in" data-fia="P">
+            <button type="button" data-toggle="dropdown">{{ text_fia_price }} <span class="caret"></span></button>
+            <div class="dropdown-menu">
+                    <div class="fia-P-ib">
+                        <input type="text" min="{{ Filter_A.min_price }}" max="{{ Filter_A.max_price }}" step="100" id="fia-P-min" disabled>
+                        <input type="text" min="{{ Filter_A.min_price }}" max="{{ Filter_A.max_price }}" step="100" id="fia-P-max" disabled>
+                        {#<button type="button" onclick="fiaPrice();" data-toggle="dropdown">Принять</button>#}
+                        <button type="button" class="fia-P-btn">Принять</button>
+                    </div>
+                    <div id="fia-P"></div>
+                <hr>
+                <script>
+                    var fiaP = document.getElementById('fia-P');
+
+                    noUiSlider.create(fiaP, {
+                        start: [{{ Filter_A.min_price }}, {{ Filter_A.max_price }}],
+                        connect: true,
+                        step: 100,
+                        format: wNumb({
+                            decimals: 0,
+                            thousand: ' ',
+                            suffix: ' ГРН'
+                        }),
+                        {% if Filter_A.fiaP and not Filter_A.fiaG and not Filter_A.fiaC and not Filter_A.fiaS %}
+                        range: {
+                            'min': {{ Filter_A.min_price_all }},
+                            'max': {{ Filter_A.max_price_all }}
+                        }
+                        {% else %}
+                        range: {
+                            'min': {{ Filter_A.min_price }},
+                            'max': {{ Filter_A.max_price }}
+                        }
+                        {% endif %}
+                    });
+                </script>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 fia-S" data-fia="S">
+        <div class="fia-in">
+            <button type="button" data-toggle="dropdown">{{ text_fia_size }} ({{ Filter_A.fiaS|length }}) <span class="caret"></span></button>
+            <div class="dropdown-menu">
+                <div class="row">
+                    {% for name, value in Filter_A.fia.S %}
+                    {% set active = value|first in Filter_A.fiaS %}
+                    {% set total = value|length %}
+                    <div class="fia-md-5"><div class="fia-S-o{% if active and total %} active{% endif %}{% if not total %} disabled{% endif %}" data-filter="{{ value|first }}">{{ name }}</div></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="fia-in">
+            <button type="button" data-toggle="dropdown">{{ text_fia_sort }} <span class="caret"></span></button>
+            <div class="dropdown-menu">
+                <div><a href="#">1</a></div>
+                <div><a href="#">2</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="fia-in">
+            <button type="button" data-toggle="dropdown">{{ Filter_A.limit }} <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                {% for limit in limits %}
+                <li><a href="{{ limit.href }}">{{ limit.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-3 fia-grid">
+        <div>
+            <div>{{ text_fia_grid }}</div>
+            <div class="fia-grid-n" data-grid="{{ fia.grid }}"></div>
+        </div>
+    </div>
+</div>
+<div id="filter-a-r">
+
+        <ul class="list-inline">
+            {% for name, value in Filter_A.fia.G %}
+            {% if name in Filter_A.fiaG %}
+            <li data-filter="{{ name }}"><span>{{ text_fia_gender }}: {{ name }}</span> <svg class="fia-i-clear" width="10" height="10"><use xlink:href="image/fia-icons.svg#fia-i-clear" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></li>
+            {% endif %}
+            {% endfor %}
+            {% for name, value in Filter_A.fia.C %}
+            {% if name in Filter_A.fiaC %}
+            <li data-filter="{{ name }}"><span>{{ text_fia_category }}: {{ name }}</span> <svg class="fia-i-clear" width="10" height="10"><use xlink:href="image/fia-icons.svg#fia-i-clear" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></li>
+            {% endif %}
+            {% endfor %}
+            {% for name, value in Filter_A.fia.M %}
+            {% if value|first in Filter_A.fiaM %}
+            <li data-filter="{{ value|first }}"><span>{{ text_fia_manufacturer }}: {{ name }}</span> <svg class="fia-i-clear" width="10" height="10"><use xlink:href="image/fia-icons.svg#fia-i-clear" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></li>
+            {% endif %}
+            {% endfor %}
+            {% if Filter_A.fiaP %}
+            <li data-filter="{{ value|first }}"><span>{{ text_fia_price }}: {{ Filter_A.min_price_nf }} - {{ Filter_A.max_price_nf }} ГРН</span> <svg class="fia-i-clear" width="10" height="10"><use xlink:href="image/fia-icons.svg#fia-i-clear" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></li>
+            {% endif %}
+            {% for name, value in Filter_A.fia.S %}
+            {% if value|first in Filter_A.fiaS %}
+            <li data-filter="{{ value|first }}"><span>{{ text_fia_size }}: {{ name }}</span> <svg class="fia-i-clear" width="10" height="10"><use xlink:href="image/fia-icons.svg#fia-i-clear" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        <div>clear</div>
+
+</div>
+<script>
+let el =  $('.fia-grid-n');
+let el_active = el.data('grid')
+let wW = $(window).width();
+let html = '';
+
+for(let i = 1; i <= 4; i++) {
+    if (wW >= 1199 && i === 1) {
+        if (el_active == 1) el_active = 4;
+        continue;
+    }
+
+    let active_class = '';
+
+    if (el_active === i) {
+        active_class = ' class="active"';
+    }
+
+    html += '<div id="fia-grid-' + i + '"><div onclick="fiaGrid(' + i + ')"' + active_class + '>';
+
+    for(let s = 1; s <= i; s++) {
+        html += '<svg class="fia-i-grid" width="18" height="18"><use xlink:href="image/fia-icons.svg#fia-i-grid" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>';
+    }
+
+    html += '</div></div>';
+}
+
+el.html(html);
+</script>

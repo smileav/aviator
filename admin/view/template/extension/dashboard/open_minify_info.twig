@@ -1,0 +1,74 @@
+<div id="open-minify" class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-calendar"></i> {{ heading_title }}</h3>
+    </div>
+
+    <div class="panel-body">
+        <div class="alert-body"></div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <td class="text-center">CSS Minifier</td>
+                    <td class="text-center">JavaScript Minifier</td>
+                    <td class="text-center">Clear Cache</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center"><input type="checkbox" id="open_minify_css" data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="danger"{% if open_minify_css %} checked{% endif %}></td>
+                    <td class="text-center"><input type="checkbox" id="open_minify_js" data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="danger"{% if open_minify_js %} checked{% endif %}></td>
+                    <td class="text-center"><button id="open_minify_cc" data-toggle="tooltip" title="Clear Cache" class="btn btn-warning"><i class="fa fa-refresh"></i></button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+    $('#open-minify input, #open_minify_cc').on('click change', function () {
+        var element = this;
+
+        var data = {};
+
+        if (element.id == 'open_minify_cc') {
+            data = { 'action' : element.id };
+        } else {
+            var value = 0;
+
+            if ($(element).prop("checked") == true) {
+                value = 1;
+            }
+
+            data = { 'action' : element.id, 'value' : value };
+        }
+
+        $.ajax({
+            url: 'index.php?route=extension/dashboard/open_minify/ajax&user_token={{ user_token }}',
+            dataType: 'json',
+            type: 'post',
+            data: data,
+            beforeSend: function () {
+                $(element).button('loading');
+            },
+            complete: function () {
+                $(element).button('reset');
+            },
+            success: function (json) {
+                $('.alert-dismissible').remove();
+
+                if (json['success'] && json['success'] == 'open_minify_cc') {
+                    $('#open-minify .alert-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> Cache clearing completed successfully. <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+                    setTimeout(function() {
+                        $('.alert-dismissible').remove();
+                    }, 5000);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
+//--></script>

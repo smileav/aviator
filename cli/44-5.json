@@ -1,0 +1,126 @@
+{
+  "context" : {
+    "employee" : {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/context/employee",
+        "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+        "type" : "employee",
+        "mediaType" : "application/json"
+      }
+    }
+  },
+  "meta" : {
+    "href" : "https://api.moysklad.ru/api/remap/1.2/report/stock/bystore?filter=store=https://api.moysklad.ru/api/remap/1.2/entity/store/3a9e7f9a-16c3-11ec-0a80-0654001ac701;product=https://api.moysklad.ru/api/remap/1.2/entity/product/caa86d6b-4e89-11ee-0a80-119b0015b0be;",
+    "type" : "stockbystore",
+    "mediaType" : "application/json",
+    "size" : 5,
+    "limit" : 1000,
+    "offset" : 0
+  },
+  "rows" : [ {
+    "meta" : {
+      "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d51a7400-4e89-11ee-0a80-0375001624be?expand=product.supplier",
+      "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+      "type" : "variant",
+      "mediaType" : "application/json",
+      "uuidHref" : "https://online.moysklad.ru/app/#feature/edit?id=d51a6ba6-4e89-11ee-0a80-0375001624bc"
+    },
+    "stockByStore" : [ {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/store/3a9e7f9a-16c3-11ec-0a80-0654001ac701",
+        "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
+        "type" : "store",
+        "mediaType" : "application/json",
+        "uuidHref" : "https://online.moysklad.ru/app/#warehouse/edit?id=3a9e7f9a-16c3-11ec-0a80-0654001ac701"
+      },
+      "name" : "Aeronautica Militare (ТЦ Gulliver)",
+      "stock" : 1.0,
+      "reserve" : 0.0,
+      "inTransit" : 0.0
+    } ]
+  }, {
+    "meta" : {
+      "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d51c6595-4e89-11ee-0a80-0375001624c3?expand=product.supplier",
+      "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+      "type" : "variant",
+      "mediaType" : "application/json",
+      "uuidHref" : "https://online.moysklad.ru/app/#feature/edit?id=d51c6085-4e89-11ee-0a80-0375001624c1"
+    },
+    "stockByStore" : [ {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/store/3a9e7f9a-16c3-11ec-0a80-0654001ac701",
+        "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
+        "type" : "store",
+        "mediaType" : "application/json",
+        "uuidHref" : "https://online.moysklad.ru/app/#warehouse/edit?id=3a9e7f9a-16c3-11ec-0a80-0654001ac701"
+      },
+      "name" : "Aeronautica Militare (ТЦ Gulliver)",
+      "stock" : 1.0,
+      "reserve" : 0.0,
+      "inTransit" : 0.0
+    } ]
+  }, {
+    "meta" : {
+      "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d51e1d09-4e89-11ee-0a80-0375001624c8?expand=product.supplier",
+      "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+      "type" : "variant",
+      "mediaType" : "application/json",
+      "uuidHref" : "https://online.moysklad.ru/app/#feature/edit?id=d51e12ea-4e89-11ee-0a80-0375001624c6"
+    },
+    "stockByStore" : [ {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/store/3a9e7f9a-16c3-11ec-0a80-0654001ac701",
+        "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
+        "type" : "store",
+        "mediaType" : "application/json",
+        "uuidHref" : "https://online.moysklad.ru/app/#warehouse/edit?id=3a9e7f9a-16c3-11ec-0a80-0654001ac701"
+      },
+      "name" : "Aeronautica Militare (ТЦ Gulliver)",
+      "stock" : 1.0,
+      "reserve" : 0.0,
+      "inTransit" : 0.0
+    } ]
+  }, {
+    "meta" : {
+      "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d51fa87a-4e89-11ee-0a80-0375001624cd?expand=product.supplier",
+      "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+      "type" : "variant",
+      "mediaType" : "application/json",
+      "uuidHref" : "https://online.moysklad.ru/app/#feature/edit?id=d51fa2bb-4e89-11ee-0a80-0375001624cb"
+    },
+    "stockByStore" : [ {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/store/3a9e7f9a-16c3-11ec-0a80-0654001ac701",
+        "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
+        "type" : "store",
+        "mediaType" : "application/json",
+        "uuidHref" : "https://online.moysklad.ru/app/#warehouse/edit?id=3a9e7f9a-16c3-11ec-0a80-0654001ac701"
+      },
+      "name" : "Aeronautica Militare (ТЦ Gulliver)",
+      "stock" : 1.0,
+      "reserve" : 0.0,
+      "inTransit" : 0.0
+    } ]
+  }, {
+    "meta" : {
+      "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d5215395-4e89-11ee-0a80-0375001624d2?expand=product.supplier",
+      "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+      "type" : "variant",
+      "mediaType" : "application/json",
+      "uuidHref" : "https://online.moysklad.ru/app/#feature/edit?id=d5214e96-4e89-11ee-0a80-0375001624d0"
+    },
+    "stockByStore" : [ {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/store/3a9e7f9a-16c3-11ec-0a80-0654001ac701",
+        "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
+        "type" : "store",
+        "mediaType" : "application/json",
+        "uuidHref" : "https://online.moysklad.ru/app/#warehouse/edit?id=3a9e7f9a-16c3-11ec-0a80-0654001ac701"
+      },
+      "name" : "Aeronautica Militare (ТЦ Gulliver)",
+      "stock" : 1.0,
+      "reserve" : 0.0,
+      "inTransit" : 0.0
+    } ]
+  } ]
+}

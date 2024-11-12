@@ -1,0 +1,476 @@
+{
+  "context" : {
+    "employee" : {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/context/employee",
+        "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+        "type" : "employee",
+        "mediaType" : "application/json"
+      }
+    }
+  },
+  "meta" : {
+    "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant?filter=productid=caa86d6b-4e89-11ee-0a80-119b0015b0be",
+    "type" : "variant",
+    "mediaType" : "application/json",
+    "size" : 5,
+    "limit" : 1000,
+    "offset" : 0
+  },
+  "rows" : [ {
+    "meta" : {
+      "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d51a7400-4e89-11ee-0a80-0375001624be",
+      "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+      "type" : "variant",
+      "mediaType" : "application/json",
+      "uuidHref" : "https://online.moysklad.ru/app/#feature/edit?id=d51a6ba6-4e89-11ee-0a80-0375001624bc"
+    },
+    "id" : "d51a7400-4e89-11ee-0a80-0375001624be",
+    "accountId" : "0ab1edf0-3b95-11ea-0a80-063d00003d51",
+    "updated" : "2023-09-15 00:17:54.752",
+    "name" : "Чоловіча футболка 91a Squadriglia від Aeronautica Militare 5781 (L)",
+    "code" : "0000015556",
+    "externalCode" : "t4XnQjQ9g5TF2fsKve0210",
+    "archived" : false,
+    "characteristics" : [ {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata/characteristics/95baaa15-3c59-11ea-0a80-05f2000a790e",
+        "type" : "attributemetadata",
+        "mediaType" : "application/json"
+      },
+      "id" : "95baaa15-3c59-11ea-0a80-05f2000a790e",
+      "name" : "Размер",
+      "value" : "L"
+    } ],
+    "images" : {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d51a7400-4e89-11ee-0a80-0375001624be/images",
+        "type" : "image",
+        "mediaType" : "application/json",
+        "size" : 0,
+        "limit" : 1000,
+        "offset" : 0
+      }
+    },
+    "salePrices" : [ {
+      "value" : 486000.0,
+      "currency" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/0ae9fbeb-3b95-11ea-0a80-0390000b997e",
+          "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+          "type" : "currency",
+          "mediaType" : "application/json",
+          "uuidHref" : "https://online.moysklad.ru/app/#currency/edit?id=0ae9fbeb-3b95-11ea-0a80-0390000b997e"
+        }
+      },
+      "priceType" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/0aebaec0-3b95-11ea-0a80-0390000b997f",
+          "type" : "pricetype",
+          "mediaType" : "application/json"
+        },
+        "id" : "0aebaec0-3b95-11ea-0a80-0390000b997f",
+        "name" : "Цена продажи",
+        "externalCode" : "cbcf493b-55bc-11d9-848a-00112f43529a"
+      }
+    }, {
+      "value" : 389000.0,
+      "currency" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/0ae9fbeb-3b95-11ea-0a80-0390000b997e",
+          "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+          "type" : "currency",
+          "mediaType" : "application/json",
+          "uuidHref" : "https://online.moysklad.ru/app/#currency/edit?id=0ae9fbeb-3b95-11ea-0a80-0390000b997e"
+        }
+      },
+      "priceType" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/b9b0911c-411f-11ea-0a80-06730016f603",
+          "type" : "pricetype",
+          "mediaType" : "application/json"
+        },
+        "id" : "b9b0911c-411f-11ea-0a80-06730016f603",
+        "name" : "Цена по распродаже",
+        "externalCode" : "72640826-6e14-40c9-9b4b-731ba286c8dd"
+      }
+    } ],
+    "barcodes" : [ {
+      "ean13" : "8057630035270"
+    } ],
+    "discountProhibited" : false,
+    "product" : {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/product/caa86d6b-4e89-11ee-0a80-119b0015b0be",
+        "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+        "type" : "product",
+        "mediaType" : "application/json",
+        "uuidHref" : "https://online.moysklad.ru/app/#good/edit?id=caa864f7-4e89-11ee-0a80-119b0015b0bb"
+      }
+    }
+  }, {
+    "meta" : {
+      "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d51c6595-4e89-11ee-0a80-0375001624c3",
+      "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+      "type" : "variant",
+      "mediaType" : "application/json",
+      "uuidHref" : "https://online.moysklad.ru/app/#feature/edit?id=d51c6085-4e89-11ee-0a80-0375001624c1"
+    },
+    "id" : "d51c6595-4e89-11ee-0a80-0375001624c3",
+    "accountId" : "0ab1edf0-3b95-11ea-0a80-063d00003d51",
+    "updated" : "2023-09-15 00:17:46.631",
+    "name" : "Чоловіча футболка 91a Squadriglia від Aeronautica Militare 5781 (M)",
+    "code" : "0000015557",
+    "externalCode" : "4soH6jiujPyUzqfIJNyLH3",
+    "archived" : false,
+    "characteristics" : [ {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata/characteristics/95baaa15-3c59-11ea-0a80-05f2000a790e",
+        "type" : "attributemetadata",
+        "mediaType" : "application/json"
+      },
+      "id" : "95baaa15-3c59-11ea-0a80-05f2000a790e",
+      "name" : "Размер",
+      "value" : "M"
+    } ],
+    "images" : {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d51c6595-4e89-11ee-0a80-0375001624c3/images",
+        "type" : "image",
+        "mediaType" : "application/json",
+        "size" : 0,
+        "limit" : 1000,
+        "offset" : 0
+      }
+    },
+    "salePrices" : [ {
+      "value" : 486000.0,
+      "currency" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/0ae9fbeb-3b95-11ea-0a80-0390000b997e",
+          "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+          "type" : "currency",
+          "mediaType" : "application/json",
+          "uuidHref" : "https://online.moysklad.ru/app/#currency/edit?id=0ae9fbeb-3b95-11ea-0a80-0390000b997e"
+        }
+      },
+      "priceType" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/0aebaec0-3b95-11ea-0a80-0390000b997f",
+          "type" : "pricetype",
+          "mediaType" : "application/json"
+        },
+        "id" : "0aebaec0-3b95-11ea-0a80-0390000b997f",
+        "name" : "Цена продажи",
+        "externalCode" : "cbcf493b-55bc-11d9-848a-00112f43529a"
+      }
+    }, {
+      "value" : 389000.0,
+      "currency" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/0ae9fbeb-3b95-11ea-0a80-0390000b997e",
+          "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+          "type" : "currency",
+          "mediaType" : "application/json",
+          "uuidHref" : "https://online.moysklad.ru/app/#currency/edit?id=0ae9fbeb-3b95-11ea-0a80-0390000b997e"
+        }
+      },
+      "priceType" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/b9b0911c-411f-11ea-0a80-06730016f603",
+          "type" : "pricetype",
+          "mediaType" : "application/json"
+        },
+        "id" : "b9b0911c-411f-11ea-0a80-06730016f603",
+        "name" : "Цена по распродаже",
+        "externalCode" : "72640826-6e14-40c9-9b4b-731ba286c8dd"
+      }
+    } ],
+    "barcodes" : [ {
+      "ean13" : "8057630035263"
+    } ],
+    "discountProhibited" : false,
+    "product" : {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/product/caa86d6b-4e89-11ee-0a80-119b0015b0be",
+        "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+        "type" : "product",
+        "mediaType" : "application/json",
+        "uuidHref" : "https://online.moysklad.ru/app/#good/edit?id=caa864f7-4e89-11ee-0a80-119b0015b0bb"
+      }
+    }
+  }, {
+    "meta" : {
+      "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d51e1d09-4e89-11ee-0a80-0375001624c8",
+      "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+      "type" : "variant",
+      "mediaType" : "application/json",
+      "uuidHref" : "https://online.moysklad.ru/app/#feature/edit?id=d51e12ea-4e89-11ee-0a80-0375001624c6"
+    },
+    "id" : "d51e1d09-4e89-11ee-0a80-0375001624c8",
+    "accountId" : "0ab1edf0-3b95-11ea-0a80-063d00003d51",
+    "updated" : "2023-09-15 00:18:02.561",
+    "name" : "Чоловіча футболка 91a Squadriglia від Aeronautica Militare 5781 (XL)",
+    "code" : "0000015558",
+    "externalCode" : "iz8ZTnk7gkG5Lc5r9xTFM0",
+    "archived" : false,
+    "characteristics" : [ {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata/characteristics/95baaa15-3c59-11ea-0a80-05f2000a790e",
+        "type" : "attributemetadata",
+        "mediaType" : "application/json"
+      },
+      "id" : "95baaa15-3c59-11ea-0a80-05f2000a790e",
+      "name" : "Размер",
+      "value" : "XL"
+    } ],
+    "images" : {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d51e1d09-4e89-11ee-0a80-0375001624c8/images",
+        "type" : "image",
+        "mediaType" : "application/json",
+        "size" : 0,
+        "limit" : 1000,
+        "offset" : 0
+      }
+    },
+    "salePrices" : [ {
+      "value" : 486000.0,
+      "currency" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/0ae9fbeb-3b95-11ea-0a80-0390000b997e",
+          "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+          "type" : "currency",
+          "mediaType" : "application/json",
+          "uuidHref" : "https://online.moysklad.ru/app/#currency/edit?id=0ae9fbeb-3b95-11ea-0a80-0390000b997e"
+        }
+      },
+      "priceType" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/0aebaec0-3b95-11ea-0a80-0390000b997f",
+          "type" : "pricetype",
+          "mediaType" : "application/json"
+        },
+        "id" : "0aebaec0-3b95-11ea-0a80-0390000b997f",
+        "name" : "Цена продажи",
+        "externalCode" : "cbcf493b-55bc-11d9-848a-00112f43529a"
+      }
+    }, {
+      "value" : 389000.0,
+      "currency" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/0ae9fbeb-3b95-11ea-0a80-0390000b997e",
+          "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+          "type" : "currency",
+          "mediaType" : "application/json",
+          "uuidHref" : "https://online.moysklad.ru/app/#currency/edit?id=0ae9fbeb-3b95-11ea-0a80-0390000b997e"
+        }
+      },
+      "priceType" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/b9b0911c-411f-11ea-0a80-06730016f603",
+          "type" : "pricetype",
+          "mediaType" : "application/json"
+        },
+        "id" : "b9b0911c-411f-11ea-0a80-06730016f603",
+        "name" : "Цена по распродаже",
+        "externalCode" : "72640826-6e14-40c9-9b4b-731ba286c8dd"
+      }
+    } ],
+    "barcodes" : [ {
+      "ean13" : "8057630035287"
+    } ],
+    "discountProhibited" : false,
+    "product" : {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/product/caa86d6b-4e89-11ee-0a80-119b0015b0be",
+        "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+        "type" : "product",
+        "mediaType" : "application/json",
+        "uuidHref" : "https://online.moysklad.ru/app/#good/edit?id=caa864f7-4e89-11ee-0a80-119b0015b0bb"
+      }
+    }
+  }, {
+    "meta" : {
+      "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d51fa87a-4e89-11ee-0a80-0375001624cd",
+      "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+      "type" : "variant",
+      "mediaType" : "application/json",
+      "uuidHref" : "https://online.moysklad.ru/app/#feature/edit?id=d51fa2bb-4e89-11ee-0a80-0375001624cb"
+    },
+    "id" : "d51fa87a-4e89-11ee-0a80-0375001624cd",
+    "accountId" : "0ab1edf0-3b95-11ea-0a80-063d00003d51",
+    "updated" : "2023-09-15 00:18:12.661",
+    "name" : "Чоловіча футболка 91a Squadriglia від Aeronautica Militare 5781 (XXL)",
+    "code" : "0000015559",
+    "externalCode" : "sHxbWJsYgCpntwztxJh3r3",
+    "archived" : false,
+    "characteristics" : [ {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata/characteristics/95baaa15-3c59-11ea-0a80-05f2000a790e",
+        "type" : "attributemetadata",
+        "mediaType" : "application/json"
+      },
+      "id" : "95baaa15-3c59-11ea-0a80-05f2000a790e",
+      "name" : "Размер",
+      "value" : "XXL"
+    } ],
+    "images" : {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d51fa87a-4e89-11ee-0a80-0375001624cd/images",
+        "type" : "image",
+        "mediaType" : "application/json",
+        "size" : 0,
+        "limit" : 1000,
+        "offset" : 0
+      }
+    },
+    "salePrices" : [ {
+      "value" : 486000.0,
+      "currency" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/0ae9fbeb-3b95-11ea-0a80-0390000b997e",
+          "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+          "type" : "currency",
+          "mediaType" : "application/json",
+          "uuidHref" : "https://online.moysklad.ru/app/#currency/edit?id=0ae9fbeb-3b95-11ea-0a80-0390000b997e"
+        }
+      },
+      "priceType" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/0aebaec0-3b95-11ea-0a80-0390000b997f",
+          "type" : "pricetype",
+          "mediaType" : "application/json"
+        },
+        "id" : "0aebaec0-3b95-11ea-0a80-0390000b997f",
+        "name" : "Цена продажи",
+        "externalCode" : "cbcf493b-55bc-11d9-848a-00112f43529a"
+      }
+    }, {
+      "value" : 389000.0,
+      "currency" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/0ae9fbeb-3b95-11ea-0a80-0390000b997e",
+          "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+          "type" : "currency",
+          "mediaType" : "application/json",
+          "uuidHref" : "https://online.moysklad.ru/app/#currency/edit?id=0ae9fbeb-3b95-11ea-0a80-0390000b997e"
+        }
+      },
+      "priceType" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/b9b0911c-411f-11ea-0a80-06730016f603",
+          "type" : "pricetype",
+          "mediaType" : "application/json"
+        },
+        "id" : "b9b0911c-411f-11ea-0a80-06730016f603",
+        "name" : "Цена по распродаже",
+        "externalCode" : "72640826-6e14-40c9-9b4b-731ba286c8dd"
+      }
+    } ],
+    "barcodes" : [ {
+      "ean13" : "8057630035294"
+    } ],
+    "discountProhibited" : false,
+    "product" : {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/product/caa86d6b-4e89-11ee-0a80-119b0015b0be",
+        "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+        "type" : "product",
+        "mediaType" : "application/json",
+        "uuidHref" : "https://online.moysklad.ru/app/#good/edit?id=caa864f7-4e89-11ee-0a80-119b0015b0bb"
+      }
+    }
+  }, {
+    "meta" : {
+      "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d5215395-4e89-11ee-0a80-0375001624d2",
+      "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+      "type" : "variant",
+      "mediaType" : "application/json",
+      "uuidHref" : "https://online.moysklad.ru/app/#feature/edit?id=d5214e96-4e89-11ee-0a80-0375001624d0"
+    },
+    "id" : "d5215395-4e89-11ee-0a80-0375001624d2",
+    "accountId" : "0ab1edf0-3b95-11ea-0a80-063d00003d51",
+    "updated" : "2023-09-15 00:18:20.408",
+    "name" : "Чоловіча футболка 91a Squadriglia від Aeronautica Militare 5781 (XXXL)",
+    "code" : "0000015560",
+    "externalCode" : "d0Dpumxygfxvodkp7VUJU2",
+    "archived" : false,
+    "characteristics" : [ {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata/characteristics/95baaa15-3c59-11ea-0a80-05f2000a790e",
+        "type" : "attributemetadata",
+        "mediaType" : "application/json"
+      },
+      "id" : "95baaa15-3c59-11ea-0a80-05f2000a790e",
+      "name" : "Размер",
+      "value" : "XXXL"
+    } ],
+    "images" : {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/variant/d5215395-4e89-11ee-0a80-0375001624d2/images",
+        "type" : "image",
+        "mediaType" : "application/json",
+        "size" : 0,
+        "limit" : 1000,
+        "offset" : 0
+      }
+    },
+    "salePrices" : [ {
+      "value" : 486000.0,
+      "currency" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/0ae9fbeb-3b95-11ea-0a80-0390000b997e",
+          "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+          "type" : "currency",
+          "mediaType" : "application/json",
+          "uuidHref" : "https://online.moysklad.ru/app/#currency/edit?id=0ae9fbeb-3b95-11ea-0a80-0390000b997e"
+        }
+      },
+      "priceType" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/0aebaec0-3b95-11ea-0a80-0390000b997f",
+          "type" : "pricetype",
+          "mediaType" : "application/json"
+        },
+        "id" : "0aebaec0-3b95-11ea-0a80-0390000b997f",
+        "name" : "Цена продажи",
+        "externalCode" : "cbcf493b-55bc-11d9-848a-00112f43529a"
+      }
+    }, {
+      "value" : 389000.0,
+      "currency" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/0ae9fbeb-3b95-11ea-0a80-0390000b997e",
+          "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+          "type" : "currency",
+          "mediaType" : "application/json",
+          "uuidHref" : "https://online.moysklad.ru/app/#currency/edit?id=0ae9fbeb-3b95-11ea-0a80-0390000b997e"
+        }
+      },
+      "priceType" : {
+        "meta" : {
+          "href" : "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/b9b0911c-411f-11ea-0a80-06730016f603",
+          "type" : "pricetype",
+          "mediaType" : "application/json"
+        },
+        "id" : "b9b0911c-411f-11ea-0a80-06730016f603",
+        "name" : "Цена по распродаже",
+        "externalCode" : "72640826-6e14-40c9-9b4b-731ba286c8dd"
+      }
+    } ],
+    "barcodes" : [ {
+      "ean13" : "8057630035300"
+    } ],
+    "discountProhibited" : false,
+    "product" : {
+      "meta" : {
+        "href" : "https://api.moysklad.ru/api/remap/1.2/entity/product/caa86d6b-4e89-11ee-0a80-119b0015b0be",
+        "metadataHref" : "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+        "type" : "product",
+        "mediaType" : "application/json",
+        "uuidHref" : "https://online.moysklad.ru/app/#good/edit?id=caa864f7-4e89-11ee-0a80-119b0015b0bb"
+      }
+    }
+  } ]
+}

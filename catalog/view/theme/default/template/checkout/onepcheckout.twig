@@ -1,0 +1,132 @@
+{{ header }}
+<div class="container">
+{% include('aviator/template/common/breadcrumb.twig') %}
+</div>
+<div id="checkout-onepcheckout" class="container">
+	<div class="error"></div>
+	<div class="row">
+		{{ column_left }}
+		{% if (column_left and column_right) %}
+		{% set class = 'col-sm-6' %}
+		{% elseif (column_left or column_right) %}
+		{% set class = 'col-sm-9' %}
+		{% else %}
+		{% set class = 'col-sm-12' %}
+		{% endif %}
+		<div id="content" class="{{ class }}">{{ content_top }}
+			<div id="onepcheckout" class="page-cart checkout_form dflex" style="flex-wrap: wrap;">
+				{% if (opc_blocks['top_full'] is defined) %}
+					<div class="row checkout-col-top">
+						{% for block_name in opc_blocks['top_full'] %}
+							<div class="col-xs-12 col-sm-12 col-md-12 mb-30 opc_block_{{ block_name }}">
+								{{ opc_block[block_name] }}
+							</div>
+						{% endfor %}
+					</div>
+				{% endif %}
+
+				<div class="row dflex checkout-col-center">
+					<div class="checkout-col-left" style="width:{{ opc_cl_width }}%">
+						{% if (opc_blocks['top_left'] is defined) %}
+							{% for block_name in opc_blocks['top_left'] %}
+								<div class="col-xs-12 col-sm-12 col-md-12 mb-30 opc_block_{{ block_name }}">
+									{{ opc_block[block_name] }}
+								</div>
+							{% endfor %}
+						{% endif %}
+						{% if (opc_blocks['center_left'] or opc_blocks['center_right']) %}
+							<div class="col-xs-12 col-sm-12 col-md-12 two-column">
+								<div class="row-flex">
+									{% if (opc_blocks['center_left'] is defined) %}
+										<div class="opc-left-column dflex flex-column col-xs-12 col-sm-12 col-md-12 col-lg-6">
+											{% for block_name in opc_blocks['center_left'] %}
+												<div class="h-100 w-100 mb-30 opc_block_{{ block_name }}">
+													{{ opc_block[block_name] }}
+												</div>
+											{% endfor %}
+										</div>
+									{% endif %}
+									{% if (opc_blocks['center_right'] is defined) %}
+										<div class="opc-right-column dflex flex-column col-xs-12 col-sm-12 col-md-12 col-lg-6">
+										{% for block_name in opc_blocks['center_right'] %}
+											<div class="h-100 w-100 mb-30 opc_block_{{ block_name }}">
+												{{ opc_block[block_name] }}
+											</div>
+										{% endfor %}
+										</div>
+									{% endif %}
+								</div>
+							</div>
+						{% endif %}
+						{% if (opc_blocks['bottom_left'] is defined) %}
+							{% for block_name in opc_blocks['bottom_left'] %}
+								<div class="col-xs-12 col-sm-12 col-md-12 mb-30 opc_block_{{ block_name }}">
+									{{ opc_block[block_name] }}
+								</div>
+							{% endfor %}
+						{% endif %}
+					</div><!--<div class="checkout-col-left">-->
+					{% if (opc_blocks['fix_right'] is defined) %}
+					<div class="checkout-col-fix-right" style="width:{{ opc_cr_width }}%">
+						{% for block_name in opc_blocks['fix_right'] %}
+							<div class="col-xs-12 col-sm-12 col-md-12 mb-30 opc_block_{{ block_name }}{% if opc_cr_width < 40 and block_name == 'cart' %} sm-fix-cart{% endif %}">
+								{{ opc_block[block_name] }}
+							</div>
+						{% endfor %}
+					</div><!--<div class="checkout-col-fix-right">-->
+					{% endif %}
+				</div><!--<div class="checkout-col-center">-->
+
+				{% if (opc_blocks['bottom_full'] is defined) %}
+					<div class="row checkout-col-bottom">
+						{% for block_name in opc_blocks['bottom_full'] %}
+							<div class="col-xs-12 col-sm-12 col-md-12 mb-30 opc_block_{{ block_name }}">
+								{{ opc_block[block_name] }}
+							</div>
+						{% endfor %}
+					</div>
+				{% endif %}
+			</div><!-- END page-cart-->
+			<div class="payment hidden">{% if (payment) %}{{ payment }}{% endif %}</div>
+			{{ content_bottom }}
+		</div>
+		{{ column_right }}
+	</div>
+<script>
+$(function() {
+	let options = {
+		text_select: '{{ opc_setting.text_select }}',
+		tel_mask: '{{ opc_setting.tel_mask }}',
+		load_script: `{{ opc_setting.load_script }}`
+	}
+	opc = new OnePageCheckout(options);
+	opc.init();
+});
+$('#onepcheckout').delegate('.shipping_method_title', 'click', function(e) {
+	$('.opc_block_shipping_address').find('input[type="radio"]').prop('checked', false);
+	$(this).closest('.shipping-method').find('input[type="radio"]:first').trigger('click');
+	// opc.updateCart();
+	opc.shippingUpdate();
+});
+$('#onepcheckout').on('focusin', '.form-group input, .form-group textarea', function(e) {
+	$(this).addClass('focus');
+});
+$('#onepcheckout').on('focusout', '.form-group input, .form-group textarea', function(e) {
+	if (!$(this).val() && $(this).attr('id') !== 'input-payment-address-1') {
+		if ($(this).attr('name') === 'telephone') return false;
+		$(this).removeClass('focus');
+	};
+});
+$('#onepcheckout').on('change', 'input#input-payment-address-1', function(e) {
+	if (!$(this).val()) {
+		$(this).removeClass('focus');
+	};
+});
+$('#onepcheckout').on('select2:select', 'select[data-type="select2"]', function(e) {
+	if (e.params.data) {
+		$(this).addClass('focus');
+	}
+});
+</script>
+</div>
+{{ footer }}

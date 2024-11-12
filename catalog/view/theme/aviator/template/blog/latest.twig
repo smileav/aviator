@@ -1,0 +1,29 @@
+{{ header }}
+<div class="container">
+{% include('aviator/template/common/breadcrumb.twig') %}
+</div>
+<div id="blog-latest" class="container">
+  <div class="row">
+    <div id="content" class="col-sm-12">
+      {% if articles %}
+      <div class="row blog-latest-row">
+        {% for article in articles %}
+        <div class="product-layout col-lg-3 col-md-4 col-sm-6 col-xs-12">
+          <div class="product-thumb">
+            <div class="image"><a href="{{ article['href'] }}"><img src="{{ article['thumb'] }}"  width="{{ article.thumb_w }}" height="{{ article.thumb_h }}" alt="{{ article['name'] }}" title="{{ article['name'] }}" loading="lazy" class="img-responsive"/></a></div>
+            <div class="caption">
+              <h4><a href="{{ article['href'] }}">{{ article['name'] }}</a></h4>
+              <p class="description">{{ article['description'] }}</p>
+            </div>
+          </div>
+        </div>
+       {% endfor %}
+      </div>
+      <div class="row">
+        <div class="col-sm-12">{{ pagination }}</div>
+      </div>
+      {% endif %}
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

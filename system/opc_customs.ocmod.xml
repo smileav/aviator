@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <code>opc_customs</code>
+    <name>Opc Customs</name>
+    <version>1.2</version>
+    <author>[iBond]</author>
+
+    <file path="catalog/controller/checkout/onepcheckout.php">
+        <operation error="skip">
+            <search><![CDATA[
+                public function index() {
+            ]]></search>
+            <add position="before"><![CDATA[
+    //# opc_customs.ocmod.xml
+    public function shipping_address_custom($render = false, $data = []) {
+        $html = '<div class="checkout-heading">' . $this->language->get('title_shipping_method') . '</div>';
+
+        $shipping_code = explode('.', $this->session->data['shipping_method']['code']);
+
+        foreach ($this->session->data['shipping_methods'] as $shipping_key => $shipping_method) {
+
+            if ($shipping_key == $shipping_code[0]) {
+                $html .= '<div class="shipping-method open">';
+
+                if ($shipping_key == 'novaposhta') {
+                    $html .= '<div class="shipping_method_title"><svg class="nova-poshta" width="32" height="32"><use xlink:href="image/onepcheckout.svg#nova-poshta" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>' . $shipping_method['title'] . '</div>';
+                } else {
+                    $html .= '<div class="shipping_method_title">' . $shipping_method['title'] . '</div>';
+                }
+
+
+                foreach ($shipping_method['quote'] as $quote) {
+                    if ($quote['code'] == $shipping_code[0] . '.' . $shipping_code[1]) {
+                        if ($quote['code'] == 'pickup.pickup') {
+                            $html .= '<div class="radio chm-radio" style="display: none!important;"><label><input type="radio" name="shipping_method" value="' . $quote['code'] . '" checked="checked"/>' . $quote['title'] . '</label></div>';
+                        } else
+                        if ($quote['code'] == 'flat.flat') {
+                            $html .= '<div class="radio chm-radio" style="display: none!important;"><label><input type="radio" name="shipping_method" value="' . $quote['code'] . '" checked="checked"/>' . $quote['title'] . '</label></div>';
+                        } else {
+                            $html .= '<div class="radio chm-radio"><label><input type="radio" name="shipping_method" value="' . $quote['code'] . '" checked="checked"/>' . $quote['title'] . '</label></div>';
+                        }
+
+                        if (!empty($data)) {
+                            $html .= $this->shipping_address(false, $data);
+                        } else {
+                            $html .= $this->shipping_address(false);
+                        }
+                    } else {
+                        $html .= '<div class="radio chm-radio"><label><input type="radio" name="shipping_method" value="' . $quote['code'] . '"/>' . $quote['title'] . '</label></div>';
+                    }
+                }
+
+                $html .= '</div>';
+            } else {
+                $html .= '<div class="shipping-method">';
+
+                if ($shipping_key == 'novaposhta') {
+                    $html .= '<div class="shipping_method_title"><svg class="nova-poshta" width="32" height="32"><use xlink:href="image/onepcheckout.svg#nova-poshta" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>' . $shipping_method['title'] . '</div>';
+                } else {
+                    $html .= '<div class="shipping_method_title">' . $shipping_method['title'] . '</div>';
+                }
+
+                foreach ($shipping_method['quote'] as $quote) {
+                    $html .= '<div class="radio chm-radio"><label><input type="radio" name="shipping_method" value="' . $quote['code'] . '"/>' . $quote['title'] . '</label></div>';
+                }
+
+                $html .= '</div>';
+            }
+        }
+
+        return $html;
+    }
+    //# opc_customs.ocmod.xml
+            ]]></add>
+        </operation>
+        <operation error="skip">
+            <search><![CDATA[
+                $data['opc_mask'] = $this->config->get('opc_mask');
+            ]]></search>
+            <add position="before"><![CDATA[
+            //# opc_customs.ocmod.xml
+            $this->document->addScript('catalog/view/javascript/inputmask/jquery.inputmask.min.js');
+            //# opc_customs.ocmod.xml
+            ]]></add>
+        </operation>
+
+        <operation error="skip">
+            <search><![CDATA[
+                $data['opc_block']['shipping_address'] = $this->shipping_address(false, $data);
+            ]]></search>
+            <add position="replace"><![CDATA[
+        //# opc_customs.ocmod.xml
+        //# $data['opc_block']['shipping_address'] = $this->shipping_address(false, $data);
+        if (isset($this->session->data['shipping_method']['code'])) {
+            $data['_shipping_method_code'] = $this->session->data['shipping_method']['code'];
+        } else {
+            $data['_shipping_method_code'] = '';
+        }
+
+        $data['opc_block']['shipping_address'] = $this->shipping_address_custom(false, $data);
+        //# opc_customs.ocmod.xml
+            ]]></add>
+        </operation>
+        <operation error="skip">
+            <search><![CDATA[
+                $json['shipping_address'] = $this->shipping_address(false);
+            ]]></search>
+            <add position="replace"><![CDATA[
+            //# opc_customs.ocmod.xml
+            //# $json['shipping_address'] = $this->shipping_address(false);
+
+            if (isset($this->session->data['shipping_method']['code'])) {
+                $data['_shipping_method_code'] = $this->session->data['shipping_method']['code'];
+            } else {
+                $data['_shipping_method_code'] = '';
+            }
+            $json['shipping_address'] = $this->shipping_address_custom(false, $data);
+            //# opc_customs.ocmod.xml
+            ]]></add>
+        </operation>
+        <operation error="skip">
+            <search><![CDATA[
+                public function shipping_method($render = true, &$data = array()){
+            ]]></search>
+            <add position="after"><![CDATA[
+        //# opc_customs.ocmod.xml
+        if (isset($this->request->post['country_id']) && $this->request->post['country_id'] != 220 && isset($this->request->post['shipping_method']) && $this->request->post['shipping_method'] != 'flat.flat') {
+            $this->request->post['country_id'] = 220;
+            $this->request->post['zone_id'] = '';
+            $this->request->post['city'] = '';
+            $this->request->post['address_1'] = '';
+            $this->request->post['postcode'] = '';
+            $this->request->post['telephone'] = '';
+        }
+        //# opc_customs.ocmod.xml
+            ]]></add>
+        </operation>
+        <operation error="skip">
+            <search><![CDATA[
+                foreach ($totals as $total) {
+            ]]></search>
+            <add position="after"><![CDATA[
+            //# opc_customs.ocmod.xml
+            if ($total['code'] == 'shipping' && $total['value'] == 0 && isset($this->session->data['shipping_method']['code'])) {
+                $code = explode('.', $this->session->data['shipping_method']['code']);
+
+                if ($code[0] == 'novaposhta') {
+                    $total['title'] = $this->language->get('text_delivery');
+                    $total['value'] = $this->language->get('text_delivery_np');
+                }
+
+                if ($code[0] == 'pickup') {
+                    $total['value'] = $this->language->get('text_delivery_pickup');
+                }
+            } else {
+                $total['value'] = $this->currency->format($total['value'], $this->session->data['currency']);
+            }
+            //# opc_customs.ocmod.xml
+            ]]></add>
+        </operation>
+        <operation error="skip">
+            <search><![CDATA[
+                'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
+            ]]></search>
+            <add position="replace"><![CDATA[
+                //# opc_customs.ocmod.xml
+                //# 'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
+                'text' => $total['value']
+                //# opc_customs.ocmod.xml
+            ]]></add>
+        </operation>
+
+        <operation error="skip">
+            <search><![CDATA[
+                if(isset($this->request->post['city'])){
+            ]]></search>
+            <add position="after"><![CDATA[
+        //# opc_customs.ocmod.xml
+        $json['city'] = $this->request->post['city'];
+        //# opc_customs.ocmod.xml
+            ]]></add>
+        </operation>
+
+        <operation error="skip">
+            <search index="1"><![CDATA[
+                $this->abandonedOrders();
+            ]]></search>
+            <add position="after"><![CDATA[
+        //# opc_customs.ocmod.xml
+        if (!isset($json['city'])) {
+            $json['city'] = '';
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+        //# opc_customs.ocmod.xml
+            ]]></add>
+        </operation>
+        <operation error="skip">
+            <search><![CDATA[
+                if ($field_key == 'email' && isset($customer_field['status']) && $customer_field['status'] == 'required') {
+            ]]></search>
+            <add position="before"><![CDATA[
+                    //# opc_customs.ocmod.xml
+                    if ($field_key == 'telephone' && isset($customer_field['status']) && $customer_field['status'] == 'required' && isset($this->request->post['telephone']) && isset($this->session->data['shipping_address']['iso_code_2'])) {
+                        $this->load->language('checkout/sms_validator');
+
+                        $rinvex = new rinvex\country;
+
+                        $country_data = $rinvex->getData($this->session->data['shipping_address']['iso_code_2'], $this->request->post['telephone'], true);
+
+                        if ($country_data['valid']) {
+                            $telephone = $country_data['telephone'];
+
+                            if ($country_data['iso_code_2'] == 'ua') {
+                                $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sms_validator` WHERE `telephone` = '" . $this->db->escape($telephone) . "'");
+
+                                if (!$query->num_rows) {
+                                    $json['error']['telephone'] = $this->language->get('error_sms_please');
+                                }
+                            }
+
+                        } else {
+                            $json['error']['telephone'] = !empty($customer_field['setting']['text_error_field'][$this->config->get('config_language_id')]) ? $customer_field['setting']['text_error_field'][$this->config->get('config_language_id')] : $this->language->get('error_telephone');
+                        }
+                    }
+
+					if (!empty($this->request->post['email'])) {
+                        $opc_email = $this->request->post['email'];
+
+                        if ((utf8_strlen($opc_email) > 96) || !filter_var($opc_email, FILTER_VALIDATE_EMAIL)) {
+                            $json['error']['email'] = !empty($customer_field['setting']['text_error_field'][$this->config->get('config_language_id')]) ? $customer_field['setting']['text_error_field'][$this->config->get('config_language_id')] : $this->language->get('error_email');
+                        }
+                    }
+                    //# opc_customs.ocmod.xml
+            ]]></add>
+        </operation>
+        <operation error="skip">
+            <search><![CDATA[
+                public function customer($render = true, &$data  = array()) {
+            ]]></search>
+            <add position="after"><![CDATA[
+        //# opc_customs.ocmod.xml
+        if (isset($this->session->data['shipping_address']['iso_code_2'])) {
+            $iso_code_2 = $this->session->data['shipping_address']['iso_code_2'];
+        } else {
+            $iso_code_2 = 'UA';
+        }
+
+        $this->load->language('checkout/sms_validator');
+
+        $rinvex = new rinvex\country;
+
+        $country_data = $rinvex->getData($iso_code_2);
+
+        $data['iso_code_2']             = $country_data['iso_code_2'];
+        $data['calling_code']           = $country_data['calling_code'];
+        $data['number_lengths_mask']    = $country_data['number_lengths_mask'];
+        $data['flag']                   = $country_data['flag'];
+        //# opc_customs.ocmod.xml
+            ]]></add>
+        </operation>
+
+        <operation error="skip">
+            <search><![CDATA[
+                $this->load->model('checkout/order');
+            ]]></search>
+            <add position="after"><![CDATA[
+        //# opc_customs.ocmod.xml
+        if (isset($this->session->data['shipping_address']['shipping_country_id']) && $this->session->data['shipping_address']['shipping_country_id'] == 220) {
+            $order_data['payment_zone'] = '';
+            $order_data['shipping_zone'] = '';
+        }
+        //# opc_customs.ocmod.xml
+            ]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/extension/module/shippingdata.php">
+        <operation error="skip">
+            <search><![CDATA[
+                if ($shipping['sub_method'] == 'department' || $shipping['sub_method'] == 'poshtomat') {
+            ]]></search>
+            <add position="replace"><![CDATA[
+                //# opc_customs.ocmod.xml
+                //# if ($shipping['sub_method'] == 'department' || $shipping['sub_method'] == 'poshtomat') {
+                if ($shipping['sub_method'] == 'department' || $shipping['sub_method'] == 'poshtomat' || $shipping['sub_method'] == 'doors') {
+                //# opc_customs.ocmod.xml
+            ]]></add>
+        </operation>
+    </file>
+
+</modification>

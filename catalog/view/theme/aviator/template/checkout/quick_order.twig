@@ -1,0 +1,651 @@
+<style>
+    .modal-open #modal-quick-order {
+        text-align: center;
+        z-index: 10000;
+    }
+    .modal-open .modal-backdrop {
+        z-index: 9999;
+    }
+    .modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
+    .modal-head {
+        font-size: 32px;
+        font-weight: 500;
+        line-height: 100%;
+        text-transform: uppercase;
+    }
+    .modal input, .modal textarea {
+        font-size: 16px;
+        font-weight: 500;
+        color: #000;
+        width: 100%;
+        border: 1px solid #000;
+        border-radius: 0;
+        padding: 26px 16px 14px 16px;
+        outline: 0;
+    }
+    .modal input {
+        height: 58px;
+    }
+    .modal textarea {
+        resize: none;
+    }
+
+    .modal-form {
+        margin: 24px 0;
+    }
+    .form-group {
+        position: relative;
+        margin-bottom: 0;
+    }
+    /*input:not(:focus):valid ~ .float-label, textarea:not(:focus):valid ~ .float-label*/
+    /*input:focus ~ .float-label, textarea:focus ~ .float-label,
+    input:not(:focus):valid ~ .float-label, textarea:not(:focus):invalid ~ .float-label*/
+    input.focus ~ .float-label, input[name="phone"]:hover ~ .float-label, input[name="email"]:hover ~ .float-label, textarea.focus ~ .float-label
+     {
+        top: 10px;
+        left: 16px;
+        font-size: 10px;
+        text-transform: none;
+    }
+    .float-label {
+        position: absolute;
+        pointer-events: none;
+        left: 16px;
+        top: 21px;
+        -webkit-transition: opacity .3s ease;
+        transition: .3s ease all;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 100%;
+        color: #a4a5a7;
+        text-transform: uppercase;
+    }
+    .modal input[name="phone"] {
+        padding: 26px 16px 14px 60px;
+    }
+    [name="phone"] ~ .float-label {
+        left: 72px;
+    }
+
+    .float-label > span {
+        color: #f7352a;
+    }
+    .form-group .error {
+        border-color: #f7352a;
+    }
+    .form-error {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: normal;
+        color: #f7352a;
+        height: 24px;
+    }
+    .modal-total {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: normal;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+    }
+    .modal .btn-b {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: normal;
+        text-transform: uppercase;
+        width: 100%;
+        max-width: 410px;
+        height: 76px;
+        margin: auto;
+    }
+
+    .modal-success-text, .modal-success-thank {
+        font-size: 14px;
+        line-height: 140%;
+        color: #7c7c7c;
+    }
+    .modal-success-text {
+        margin: 26px 0 12px 0;
+    }
+    .modal-success-text > a {
+        color: #7c7c7c;
+        text-decoration: underline;
+    }
+    .modal-success-text > a:hover {
+        color: #000;
+    }
+
+
+    #dropdownFlags {
+        position: absolute;
+        top: 24px;
+        left: 16px;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        cursor: pointer;
+    }
+    #dropdownFlags .caret {
+        top: 0;
+        right: -12px;
+        border-top: 4px solid #000;
+        border-right: 4px solid transparent;
+        border-left: 4px solid transparent;
+    }
+    [aria-labelledby="dropdownFlags"] {
+        top: 56px;
+        padding: 12px 0;
+        border: unset;
+        border-radius: unset;
+        white-space: nowrap;
+        max-height: 208px;
+        -webkit-box-shadow: 0px 10px 25px rgb(0 0 0 / 6%);;
+        box-shadow: 0px 10px 25px rgb(0 0 0 / 6%);;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+    [aria-labelledby="dropdownFlags"] > li {
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        padding: 4px 16px;
+        cursor: pointer;
+    }
+
+    [aria-labelledby="dropdownFlags"] > li:hover, [aria-labelledby="dropdownFlags"] > li[aria-selected="true"] {
+        background: #f1f2f5;
+    }
+
+    [aria-labelledby="dropdownFlags"] > li img {
+        margin-right: 6px;
+    }
+    [aria-labelledby="dropdownFlags"] > li span + span {
+        margin-left: 12px;
+    }
+
+
+
+    #modal-quick-order #btn-send-sms {
+        position: absolute;
+        right: 3px;
+        z-index: 1;
+        height: 52px;
+        top: 3px;
+        font-weight: 500;
+        line-height: normal;
+        text-transform: uppercase;
+        padding: 10px 16px;
+        color: #fff;
+        background: #000;
+        border: unset;
+        -webkit-transition: opacity .3s ease;
+        transition: opacity .3s ease-in-out;
+    }
+    #modal-quick-order #btn-send-sms:hover {
+        opacity: 0.9;
+    }
+    #modal-quick-order input[name="sms_code"] {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        text-align: center;
+        border: 1px solid #c0c2c9;
+        max-width: 80px;
+        height: 52px;
+        z-index: 1;
+    }
+    #modal-quick-order svg.check {
+        position: absolute;
+        top: 0;
+        right: 16px;
+        bottom: 24px;
+        margin: auto;
+        fill: none;
+        stroke: #000;
+    }
+
+    #modal-quick-order svg.check.active {
+        display: block;
+    }
+
+
+    /* Wait */
+    .lds-ellipsis {
+        position: fixed;
+        right: 0;
+        bottom: 300px;
+        left: 0;
+        margin: auto;
+        z-index: 10010;
+    }
+    .lds-ellipsis {
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+    }
+    .lds-ellipsis div {
+        position: absolute;
+        top: 33px;
+        width: 16px;
+        height: 16px;
+        background: #000;
+        animation-timing-function: cubic-bezier(0, 1, 1, 0);
+    }
+    .lds-ellipsis div:nth-child(1) {
+        left: 8px;
+        animation: lds-ellipsis1 0.6s infinite;
+    }
+    .lds-ellipsis div:nth-child(2) {
+        left: 8px;
+        animation: lds-ellipsis2 0.6s infinite;
+    }
+    .lds-ellipsis div:nth-child(3) {
+        left: 32px;
+        animation: lds-ellipsis2 0.6s infinite;
+    }
+    .lds-ellipsis div:nth-child(4) {
+        left: 56px;
+        animation: lds-ellipsis3 0.6s infinite;
+    }
+    @keyframes lds-ellipsis1 {
+        0% {
+            transform: scale(0);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    @keyframes lds-ellipsis3 {
+        0% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(0);
+        }
+    }
+    @keyframes lds-ellipsis2 {
+        0% {
+            transform: translate(0, 0);
+        }
+        100% {
+            transform: translate(24px, 0);
+        }
+    }
+    @media (min-width: 768px) {
+        .modal:before {
+            display: inline-block;
+            vertical-align: middle;
+            content: " ";
+            height: 100%;
+        }
+        .modal-dialog {
+            width: 688px;
+            margin: auto;
+        }
+    }
+    @media (max-width: 991px) {
+        .modal-head {
+            font-size: 24px;
+        }
+        .modal-body {
+            padding: 24px;
+        }
+        .modal input {
+            height: 52px;
+        }
+        .modal input, .modal textarea {
+            font-size: 14px;
+        }
+        .float-label {
+            left: 12px;
+            top: 19px;
+            font-size: 14px;
+        }
+        .form-error {
+            font-size: 10px;
+            height: 18px;
+        }
+        .modal-total {
+            font-size: 16px;
+        }
+        .modal .btn-b {
+            font-size: 16px;
+            height: 62px;
+        }
+        [aria-labelledby="dropdownFlags"] {
+            top: 50px;
+            max-height: 190px;
+        }
+        #modal-quick-order #btn-send-sms {
+            height: 46px;
+        }
+        #modal-quick-order input[name="sms_code"] {
+            height: 46px;
+        }
+        #modal-quick-order svg.check {
+            bottom: 18px;
+        }
+    }
+    @media (max-width: 767px) {
+        .modal {
+            top: 15px;
+            left: 15px;
+            right: 15px;
+        }
+        .modal-dialog {
+            width: 100%;
+            margin: 0;
+        }
+        .modal-body {
+            padding: 16px;
+        }
+        .modal-head > div {
+            padding-right: 32px;
+        }
+        .modal-form {
+            margin: 16px 0;
+        }
+        .modal-total {
+            margin-bottom: 16px;
+        }
+        .modal .btn-b {
+            width: 100%;
+        }
+        [aria-labelledby="dropdownFlags"] {
+            width: 100%;
+        }
+        #modal-quick-order #btn-send-sms {
+            position: unset;
+            margin-top: 3px;
+            width: 100%;
+        }
+        #modal-quick-order input[name="sms_code"] {
+            position: unset;
+            margin-top: 3px;
+            max-width: unset;
+            padding: 0;
+        }
+    }
+</style>
+<div id="modal-quick-order" class="modal fade" data-type="order" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-head d-f ai-c jc-sb">
+                    <div>{{ text_head }}</div>
+                    <button type="button" class="close" data-dismiss="modal"><svg class="i-close" width="14" height="14"><use xlink:href="image/icons.svg#i-close" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button>
+                </div>
+                <div class="modal-in">
+                    <div class="modal-form">
+                        <div class="form-group required">
+                            <input type="text" name="name" required/>
+                            <div class="float-label">{{ text_form_name }} <span>*</span></div>
+                            <div class="form-error"></div>
+                        </div>
+                        <div class="form-group required">
+                            {#<img src="{{ flag }}" alt="" width="24" height="16"/>
+                            <select>
+                                <option selected><img src="{{ flag }}" alt="" width="24" height="16"/> 1</option>
+                                <option><img src="{{ flag }}" alt="" width="24" height="16"/> 2</option>
+                            </select>#}
+
+
+
+                            <div class="flag-container">
+                                <div id="dropdownFlags" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-iso-code="{{ iso_code_2 }}">
+                                    <div class="flag"><img src="{{ flag }}" alt="" width="24" height="16"/></div>
+                                    <span class="caret"></span>
+                                </div>
+                                <ul class="dropdown-menu scroll" aria-labelledby="dropdownFlags">
+                                    {% for key, country in countries %}
+                                    <li data-iso-code="{{ country.iso_code_2 }}" data-calling-code="{{ country.calling_code }}" data-number-mask="{{ country.number_lengths_mask }}" aria-selected="{% if country.iso_code_2 == iso_code_2 %}true{% else %}false{% endif %}"><img src="{{ country.flag }}" alt="" width="24" height="16"/><span>{{ country.name }}</span><span>+{{ country.calling_code }}</span></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% if iso_code_2 == 'ua' %}
+                            <input type="text" name="phone" class="focus" placeholder="+380 (XX) XXX-XX-XX" required/>
+                            {% else %}
+                            <input type="text" name="phone" class="focus" placeholder="+{{ calling_code}} {{ number_lengths_mask }}" required/>
+                            {% endif %}
+                            <svg width="18" height="13" class="check" style="display: none;"><use xlink:href="image/icons.svg#check" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                            <input type="text" name="sms_code" value="" placeholder="XXXX" class="hidden" autocomplete="off" im-insert="true"/>
+                            <button type="button" id="btn-send-sms" class="hidden">{{ text_sms_confirm }} <svg class="i-close" width="14" height="14"></button>
+                            <div class="float-label">{{ text_form_phone }} <span>*</span></div>
+                            <div class="form-error"></div>
+                        </div>
+                        <div class="form-group required">
+                            <input type="text" name="email"/>
+                            <div class="float-label">E-mail <span>*</span></div>
+                            <div class="form-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="comment" rows="3"></textarea>
+                            <div class="float-label">{{ text_form_comment }}</div>
+                        </div>
+                    </div>
+                    <div class="modal-total d-f ai-c jc-sb">
+                        <div>{{ text_total }}</div>
+                        <div>1500 грн</div>
+                    </div>
+                    <div class="modal-button">
+                        <button id="button-confirm" type="button" data-loading-text="{{ text_loading }}" class="btn-b d-f ai-c jc-c">{{ text_button }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="catalog/view/javascript/inputmask/jquery.inputmask.min.js" type="text/javascript"></script>
+<script type="text/javascript"><!--
+var iso_code = '{{ iso_code_2 }}';
+var calling_code = '{{ calling_code }}';
+var fg_phone = $('#modal-quick-order input[name="phone"]').closest('.form-group');
+
+if (iso_code === 'ua') {
+    $('#modal-quick-order input[name="phone"]').inputmask({
+        mask: '+' + calling_code + ' (99) 999-99-99',
+        placeholder: 'X'
+    });
+} else  {
+    $('#modal-quick-order input[name="phone"]').inputmask({
+        mask: '+' + calling_code.replace(/9/g, "\\9") + ' {{ number_lengths_mask }}',
+        placeholder: 'X'
+    });
+}
+
+$('#modal-quick-order input[name="sms_code"]').inputmask({
+    mask: '9999',
+    placeholder: 'X'
+})
+
+$('#modal-quick-order').on('click', '[aria-labelledby="dropdownFlags"] > li', function() {
+    var iso_code = $(this).data('iso-code');
+    var calling_code = $(this).data('calling-code');
+    var number_mask = $(this).data('number-mask')
+
+    $('[aria-labelledby="dropdownFlags"] > li').attr('aria-selected', 'false');
+    $(this).attr('aria-selected', 'true');
+    $('#dropdownFlags').attr('data-iso-code', iso_code).find('img').attr('src', $(this).find('img').attr('src'));
+
+    fg_phone.find('.check').hide();
+    fg_phone.find('input[name="phone"]').removeClass('error');
+    fg_phone.find('#btn-send-sms').addClass('hidden');
+    fg_phone.find('.form-error').text('');
+
+    if (iso_code === 'ua') {
+        $('#modal-quick-order input[name="phone"]').val('').attr('placeholder', '+380 (XX) XXX-XX-XX').inputmask({
+            mask: '+380 (99) 999-99-99',
+            placeholder: 'X'
+        });
+    } else {
+        $('#modal-quick-order input[name="phone"]').val('').attr('placeholder', '+' + calling_code + ' ' + number_mask.toString().replace(/9/g, "X")).inputmask({
+            mask: '+' + calling_code.toString().replace(/9/g, "\\9") + ' ' + number_mask,
+            placeholder: 'X'
+        });
+    }
+});
+
+$('#modal-quick-order').on('keyup', 'input[name="phone"]', function() {
+  var iso_code = $('#modal-quick-order #dropdownFlags').attr('data-iso-code');
+
+  if (iso_code == 'ua') {
+    $.get('index.php?route=checkout/sms_validator/validateNumber&tel=' + encodeURIComponent($(this).val()), function(step) {
+      switch(step) {
+        case '1':
+          fg_phone.find('.check').hide();
+          fg_phone.find('input[name="phone"]').removeClass('error');
+          fg_phone.find('#btn-send-sms').addClass('hidden');
+          fg_phone.find('.form-error').text('');
+          break;
+        case '2':
+          fg_phone.find('input[name="phone"]').addClass('error');
+          fg_phone.find('#btn-send-sms').removeClass('hidden');
+          fg_phone.find('.form-error').text('{{ error_sms_please }}');
+          break;
+        case '3':
+          fg_phone.find('.check').show();
+          break;
+      }
+    });
+  }
+});
+
+var int;
+$('#modal-quick-order').on('click', '#btn-send-sms', function() {
+    var _Seconds = 120;
+
+    fg_phone.find('#dropdownFlags').prop('disabled', true);
+    fg_phone.find('input[name="phone"]').prop('disabled', true);
+    fg_phone.find('#btn-send-sms').addClass('hidden');
+    fg_phone.find('input[name="sms_code"]').removeClass('hidden').focus();
+    fg_phone.find('.form-error').text('{{ text_sms_wait }} ' + _Seconds + ' {{ text_sms_wait_sec }}!');
+
+    clearInterval(int);
+    int = setInterval(function() {
+        if (_Seconds > 0) {
+            _Seconds--;
+            fg_phone.find('.form-error').text('{{ text_sms_wait }} ' + _Seconds + ' {{ text_sms_wait_sec }}!');
+        } else {
+            clearInterval(int);
+            console.log('asdadads');
+            fg_phone.find('input[name="sms_code"]').addClass('hidden').val('');
+            fg_phone.find('#btn-send-sms').removeClass('hidden');
+            fg_phone.find('.form-error').text('{{ error_sms_please }}');
+            fg_phone.find('#dropdownFlags').prop('disabled', false);
+            fg_phone.find('input[name="phone"]').prop('disabled', false);
+        }
+    }, 1000);
+
+    $.ajax({
+        url: 'index.php?route=checkout/sms_validator/sendSMS',
+        type: 'post',
+        dataType: 'json',
+        success: function(json) {
+            console.log(json);
+        }
+    });
+});
+
+$('#modal-quick-order').on('keyup', 'input[name="sms_code"]', function() {
+    $.get("index.php?route=checkout/sms_validator/validateCode&code=" + encodeURIComponent($(this).val()), function(json) {
+        if (json['success']) {
+            clearInterval(int);
+
+            fg_phone.find('input[name="phone"]').removeClass('error');
+            fg_phone.find('input[name="sms_code"]').addClass('hidden').val('');
+            fg_phone.find('#btn-send-sms').addClass('hidden');
+            fg_phone.find('.form-error').text('');
+            fg_phone.find('.check').show();
+            fg_phone.find('#dropdownFlags').prop('disabled', false);
+            fg_phone.find('input[name="phone"]').prop('disabled', false);
+        }
+    });
+});
+
+$('input[name="email"]').inputmask({ alias: 'email' });
+var focus = $('#modal-quick-order .form-group input, #modal-quick-order .form-group textarea');
+focus.focusin(function () {
+    $(this).addClass('focus');
+});
+focus.focusout(function () {
+    if (!$(this).val() && $(this).attr('name') !== 'phone' ) {
+        $(this).removeClass('focus');
+    };
+});
+
+$('#modal-quick-order #button-confirm').on('click', function() {
+    var modal = $('#modal-quick-order');
+    var iso_code = $('#dropdownFlags').attr('data-iso-code');
+
+    $.ajax({
+        url: 'index.php?route=checkout/quick_order/confirm&iso_code=' + iso_code,
+        type: 'post',
+        data: $('#modal-quick-order input, #modal-quick-order textarea'),
+        dataType: 'json',
+        beforeSend: function() {
+            modal.find('#button-confirm').button('loading');
+            modal.find('.modal-content').attr('style', 'opacity: 0.9');
+            $('<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>').prependTo(modal.find('.modal-content'));
+            modal.find('.modal-button > button').button('loading');
+        },
+        complete: function() {
+            modal.find('.modal-content').attr('style', '');
+            modal.find('.lds-ellipsis').remove();
+            modal.find('.modal-button > button').button('reset');
+            modal.find('#button-confirm').button('reset');
+        },
+        success: function(json) {
+            modal.find('input').removeClass('error');
+            modal.find('.form-error').text('');
+
+            if (json['error']) {
+                if (json['error']['name']) {
+                    modal.find('input[name="name"]').addClass('error').next().next().text(json['error']['name']);
+                }
+
+                if (json['error']['phone']) {
+                    modal.find('input[name="phone"]').addClass('error').closest('.form-group').find('.form-error').text(json['error']['phone']);
+                }
+
+                if (json['error']['email']) {
+                    modal.find('input[name="email"]').addClass('error').next().next().text(json['error']['email']);
+                }
+            }
+
+            if (json['success']) {
+                $('#cart').load('index.php?route=common/cart/info');
+                modal.attr('data-type', 'success');
+                modal.find('.modal-head > div').text(json['success_head']);
+                modal.find('.modal-in').remove();
+                modal.find('.modal-body').append('<div class="modal-success-text">' + json['success_text'] + '</div>');
+                modal.find('.modal-body').append('<div class="modal-success-thank">' + json['success_thank'] + '</div>');
+
+                if (typeof remarketingQuickOrder == 'function') {
+                    remarketingQuickOrder(json);
+                }
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
+{% if quick %}
+<script>
+if (typeof remarketingAddToCart == 'function') {
+    remarketingAddToCart({{ quick|json_encode() }});
+}
+</script>
+{% endif %}

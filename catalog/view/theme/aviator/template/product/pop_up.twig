@@ -1,0 +1,307 @@
+<style>
+    
+    .modal-open #modal-pop-up {
+        text-align: center;
+        z-index: 10000;
+    }
+    .modal-open .modal-backdrop {
+        z-index: 9999;
+    }
+    .modal-dialog {
+        margin: auto;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+    }
+
+    .modal-content {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+    }
+
+    /*
+        .modal-dialog {
+            position: fixed;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+        .modal-body {
+            !*position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 50px;
+            left: 0;*!
+        }
+
+        .owl-stage {
+            display: flex;
+        }
+
+        .owl-item {
+            display: flex;
+            align-items: center;
+
+        }*/
+    .modal-in {
+   /*     position: relative;
+        padding: 50px;*/
+    }
+
+    .owl-item img{
+        /*height: 90vh;*/
+        /*object-fit: cover;*/
+    }
+
+    /*#modal-size.modal:before {
+        display: inline-block;
+        vertical-align: middle;
+        content: " ";
+        height: 100%;
+    }*/
+/*.modal-open #modal-pop-up {
+    text-align: center;
+    z-index: 10000;
+}
+.modal-open .modal-backdrop {
+    z-index: 9999;
+}
+#modal-pop-up .modal-dialog {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+.modal-full {
+    min-width: 20%;
+    margin-left: 80;
+}
+
+.modal-full .modal-content {
+    min-height: 100vh;
+}
+.modal-content {
+    height: auto;
+    min-height: 100%;
+    border-radius: 0;
+}
+.modal-head {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 100%;
+    text-transform: uppercase;
+}
+.modal-images img {
+    max-width: 737px;
+    max-height: 90%;
+}*/
+
+/*
+.modal-in {
+    position: relative;
+}
+*/
+
+/* fix blank or flashing items on carousel */
+/*
+.owl-carousel .item {
+    position: relative;
+    z-index: 100;
+    -webkit-backface-visibility: hidden;
+}
+*/
+/*
+
+.owl-carousel .owl-wrapper {
+    display: flex !important;
+}
+.owl-carousel .owl-item img {
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+.modal-options > div {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 500;
+    width: 73px;
+    height: 76px;
+    border: 2px solid #000;
+    margin-right: 8px;
+    -webkit-transition: background-color .3s ease;
+    transition: background-color .3s ease-in-out;
+    cursor: pointer;
+}
+.modal-options > div.active {
+    color: #fff;
+    background: #000;
+    cursor: default;
+}
+.modal-options > > div:not(.active):hover {
+    color: #fff;
+    background: #000;
+}*/
+/*
+@media (min-width: 768px) {
+    .modal:before {
+        display: inline-block;
+        vertical-align: middle;
+        content: " ";
+        height: 100%;
+    }
+    .modal-dialog {
+        width: 688px;
+        margin: auto;
+    }
+}*/
+@media (max-width: 1199px) {
+    .modal-options > div {
+        font-size: 18px;
+        width: 64px;
+        height: 66px;
+    }
+}
+@media (max-width: 991px) {
+    .modal-options > div {
+        font-size: 16px;
+        width: 56px;
+        height: 58px;
+    }
+}
+</style>
+
+
+
+
+<div id="modal-pop-up" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-head d-f ai-c jc-sb">
+                    <button type="button" class="close" data-dismiss="modal"><svg class="i-close" width="14" height="14"><use xlink:href="image/icons.svg#i-close" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button>
+                </div>
+                <div class="modal-in">
+                    <div class="modal-images owl-carousel">
+                        {#<div class="item"><img src="{{ images.0 }}" loading="lazy" class="img-responsive"/></div>#}
+                        {% for image in images %}
+                            <div class="item"><img src="{{ image }}" width="737" height="1105" alt="" class="img-responsive"/></div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal-head d-f ai-c jc-sb" style="height:60px;width: 100%;background: red">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="catalog/view/javascript/jquery/slick/slick-theme.css">
+<script src="catalog/view/javascript/jquery/slick/slick.min.js"></script>
+
+
+{#<script type="module">
+    import PhotoSwipeLightbox from './catalog/view/javascript/jquery/photoswipe/photoswipe-lightbox.esm.js';
+    import PhotoSwipe from './catalog/view/javascript/jquery/photoswipe/photoswipe.esm.js';
+    const lightbox = new PhotoSwipeLightbox({
+        gallery: '#gallery',
+        children: 'a',
+        // pswpModule: () => import('./catalog/view/javascript/jquery/photoswipe/photoswipe.esm.js')
+        pswpModule: PhotoSwipe
+    });
+    lightbox.init();
+</script>#}
+{#<script src="catalog/view/javascript/jquery/photoswipe/photoswipe-lightbox.esm.js" type="text/javascript"></script>
+<script src="catalog/view/javascript/jquery/photoswipe/photoswipe.esm.js" type="text/javascript"></script>#}
+{#<script type="module">
+    import Lightbox from 'catalog/view/javascript/jquery/photoswipe/photoswipe-lightbox.esm.js';
+    const lightbox = new Lightbox({
+        gallery: '#my-gallery',
+        children: 'a',
+        pswpModule: () => import('catalog/view/javascript/jquery/photoswipe/photoswipe.esm.js')
+    });
+
+</script>#}
+
+<!-- Core CSS file -->
+{#<link rel="stylesheet" href="catalog/view/javascript/jquery/photoswipe/photoswipe.css">#}
+
+<!-- Skin CSS file (optional)
+     In folder of skin CSS file there are also:
+     - .png and .svg icons sprite,
+     - preloader.gif (for browsers that do not support CSS animations) -->
+
+
+<!-- Core JS file -->
+{#
+<script src="catalog/view/javascript/jquery/photoswipe/photoswipe-lightbox.esm.js"></script>
+<script src="catalog/view/javascript/jquery/photoswipe/photoswipe.esm.js"></script>
+#}
+
+<!-- UI JS file -->
+
+<script type="text/javascript"><!--
+    var height = $(window).height();
+    $('.modal-images img').height(height)
+
+    $('.modal-images222').slick({
+        dots: true,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+        adaptiveHeight: true
+    });
+
+
+    //lightbox.init();
+    //console.log('==========12312312');
+
+    /*
+    import PhotoSwipeLightbox from 'catalog/view/javascript/jquery/photoswipe/photoswipe-lightbox.esm.js';
+    import PhotoSwipe from 'catalog/view/javascript/jquery/photoswipe/photoswipe.esm.js';
+
+    const lightbox = new PhotoSwipeLightbox({
+        gallery: '#gallery--no-dynamic-import',
+        children: 'a',
+        pswpModule: PhotoSwipe
+    });
+
+    lightbox.init();
+
+     */
+
+$('#modal-size').delegate('.modal-options > div', 'click', function() {
+    $(this).closest('.modal-options').find('.active').removeClass('active');
+    $(this).addClass('active');
+
+    var product_id = $(this).closest('.product-thumb').data('id');
+    var on = $(this).find('input').attr('name');
+    var ov = $(this).find('input').val();
+
+    $('.kit-box [data-id="' + product_id + '"] .p-options').find('.active').removeClass('active');
+    $('.kit-box [data-id="' + product_id + '"] input[name="' + on + '"][value="' + ov + '"]').parent().addClass('active');
+});
+//--></script>

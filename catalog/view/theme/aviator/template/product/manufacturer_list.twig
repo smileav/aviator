@@ -1,0 +1,36 @@
+{{ header }}
+<div class="container">
+  {% include('aviator/template/common/breadcrumb.twig') %}
+</div>
+<style>
+  #product-manufacturer .row > div > a > img {
+    margin-bottom: 32px;
+    -webkit-transition: opacity .3s ease;
+    transition: opacity .3s ease-in-out;
+  }
+  #product-manufacturer .row > div > a:hover > img {
+    opacity: 0.8;
+  }
+  @media (max-width: 991px) {
+    #product-manufacturer .row > div > a > img {
+      margin: 0 auto 16px auto;
+    }
+  }
+</style>
+<div class="container c-ban-container">
+  <div class="c-ban" style="background: #fff url('https://test.aviator.shop/image/cachewebp/category_no_image-1392x200.webp') no-repeat;">
+    <h1>{{ heading_title }}</h1>
+  </div>
+</div>
+<div id="product-manufacturer" class="container">
+  <div class="row">
+    <div id="content" class="col-sm-12">
+      <div class="row">
+      {% for manufacturer in manufacturers %}
+        <div class="col-md-2 col-sm-3 col-xs-6"><a href="{{ manufacturer.href }}"><img src="{{ manufacturer.image }}" alt="{{ manufacturer.name }}" width="207" height="116" class="img-responsive"/></a></div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

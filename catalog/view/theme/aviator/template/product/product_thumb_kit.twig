@@ -1,0 +1,49 @@
+<div class="product-thumb" data-id="{{ product.product_id }}">
+    <style>
+        .p-options > div {
+            cursor: pointer;
+            -webkit-transition: background-color .3s ease;
+            transition:  background-color .3s ease-in-out;
+        }
+        .p-options > div.active {
+            color: #fff;
+            background-color: #000;
+            cursor: default;
+        }
+        .p-options > div:not(.active):hover {
+            color: #fff;
+            background-color: #000;
+        }
+        .p-options-title {
+            color: #7c7c7c;
+            font-size: 12px;
+            margin: 16px 0 6px;
+        }
+    </style>
+    <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" width="{{ product.thumb_w }}" height="{{ product.thumb_h }}" alt="{{ product.name }}" title="{{ product.name }}" loading="lazy" class="img-responsive"/></a></div>
+    <div>
+        <div class="caption">
+            <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+            {% if product.price %}
+                <div class="price d-f ai-c">
+                    {% if not product.special %}
+                    {{ product.price }}
+                    {% else %}
+                    <div class="price-new">{{ product.special }}</div> <div class="price-old">{{ product.price }}</div>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if product.options %}
+            <div class="p-options-title">{{ text_options_title }}:</div>
+            <div class="p-options d-f ai-c">
+                {% for key, option in product.options %}
+                <div>{{ option.name }}
+                    <input type="hidden" name="option[{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}"/></div>
+                {% endfor %}
+            </div>
+            {#<div class="p-choose-size d-f ai-c">Обрати розмір <svg width="8" height="14"><use xlink:href="image/icons.svg#angle-814" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></div>#}
+            {% endif %}
+            <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
+        </div>
+    </div>
+</div>

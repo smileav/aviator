@@ -1,0 +1,639 @@
+#filter-a .dropdown-menu>.active>a, #filter-a .dropdown-menu>.active>a:hover, #filter-a .dropdown-menu>.active>a:focus {
+    color: #000;
+    text-decoration: none;
+    background: unset;
+    outline: 0;
+}
+#filter-a {
+    position: relative;
+}
+#filter-a > .row {
+    margin: 0 -8px;
+}
+#filter-a > .row > div {
+    padding: 0 8px;
+    margin-bottom: 24px;
+}
+#filter-a > .row > div > div, #filter-a > .row > div > div > button {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    height: 58px;
+}
+.fia-in > button {
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-flex-basis: 100%;
+    flex-basis: 100%;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    background: #fff;
+    border: solid 1px #000;
+    padding: 1px 18px 1px 16px;
+}
+.fia-in > button > div {
+    text-align: left;
+}
+.fia-in > button .filtered {
+    display: none;
+    font-size: 12px;
+    text-transform: none;
+    line-height: normal;
+    color: rgba(0, 0, 0, 0.32);
+}
+.fia-in > button .caret {
+    border-top: 5px solid #000;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+}
+.fia-in.open > button .caret {
+    border-top: unset;
+    border-bottom: 5px solid #000;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+}
+.fia-in .dropdown-menu {
+    top: 100%;
+    left: 8px;
+    min-width: 160px;
+    width: calc(100% - 16px);
+    padding: 16px;
+    margin: 0;
+
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+
+    border: unset;
+    border-radius: unset;
+    -webkit-box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.06);
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.06);
+    z-index: 1;
+}
+.fia-S .dropdown-menu, .fia-sort .dropdown-menu, .fia-limit .dropdown-menu {
+    max-height: 300px;
+    padding: 16px 16px 8px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.fia-S .row, .fia-sort .row, .fia-limit .row {
+    margin: 0 -4px;
+}
+.fia-S-o, .fia-sort-o, .fia-limit-o {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+    height: 54px;
+    border: solid 1px #c0c2c9;
+    margin-bottom: 8px;
+    cursor: pointer;
+    overflow: hidden;
+}
+.fia-S-o.active, .fia-sort-o.active, .fia-limit-o.active {
+    border: solid 2px #000;
+}
+.fia-S-o:hover, .fia-sort-o:hover, .fia-limit-o:hover {
+    border-color: #000;
+}
+.fia-S-o.active:hover, .fia-sort-o.active:hover, .fia-limit-o.active:hover {
+    border-color: #c0c2c9;
+}
+.fia-S-o.disabled, .fia-limit.disabled {
+    color: #c0c2c9;
+    border-color: #c0c2c9;
+    cursor: no-drop;
+}
+.fia-checkbox .dropdown-menu {
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.fia-checkbox .dropdown-menu > div {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    margin-bottom: 16px;
+    cursor: pointer;
+    line-height: normal;
+}
+.fia-checkbox .dropdown-menu > div:last-child {
+    margin-bottom: unset;
+}
+.fia-checkbox .dropdown-menu > div span:first-child {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background: #f1f2f5;
+    margin-right: 8px;
+}
+.fia-checkbox .dropdown-menu > div span:last-child {
+    color: #c0c2c9;
+}
+.fia-checkbox .dropdown-menu > div svg {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    fill: none;
+    stroke: #fff;
+}
+.fia-checkbox .dropdown-menu > div.active span:first-child {
+    background: #000;
+}
+.fia-checkbox .dropdown-menu > div.active svg {
+    display: block;
+}
+
+.fia-checkbox .dropdown-menu > div.disabled {
+    color: #c0c2c9;
+    cursor: no-drop;
+}
+.fia-checkbox .dropdown-menu > div.disabled span:last-child {
+    display: none;
+}
+
+.fia-P .fia-in .dropdown-menu {
+    padding: 24px 16px 32px 16px;
+}
+.fia-P-ib {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    line-height: normal;
+    padding-bottom: 16px;
+}
+.fia-P-ib input {
+    -webkit-flex-basis: 100%;
+    flex-basis: 100%;
+    width: 100%;
+    border: unset;
+    background: unset;
+}
+.fia-P-btn {
+    font-weight: 500;
+    border: unset;
+    background: #000;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 7px 12px;
+    outline: 0;
+}
+.fia-P-btn:hover {
+    opacity: 0.9;
+}
+.fia-sort-o > a {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.fia-sort-o.active:hover {
+    border-color: #000;
+    cursor: default;
+}
+.fia-limit-o > a {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.fia-limit-o.active:hover {
+    border-color: #000;
+    cursor: default;
+}
+.fia-grid > div {
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+.fia-grid > div:first-child {
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.fia-grid-n, .fia-grid-n > div > div {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.fia-grid-n > div {
+    display: -webkit-flex;
+    display: flex;
+    height: 18px;
+}
+.fia-grid-n > div + div:before {
+    content: '|';
+    font-size: 10px;
+    line-height: 18px;
+    color: #c0c2c9;
+    padding: 0 7px;
+}
+.fia-grid-n > div > div {
+    cursor: pointer;
+}
+.fia-grid-n > div > div > span {
+    width: 16px;
+    height: 16px;
+    border: 1px solid  #c0c2c9;
+    border-radius: 25%;
+}
+.fia-grid-n > div.active > div > span {
+    border-color: #000;
+}
+.fia-grid-n > div > div:hover span {
+    border-color: #000;
+}
+.fia-grid-n > div > div > span + span {
+    margin-left: 2px;
+}
+#filter-a-r {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    margin: 8px 0 22px 0;
+}
+#filter-a-r ul > li {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding-right: 22px;
+}
+#filter-a-r ul > li > span {
+    padding-right: 6px;
+}
+.fia-i-clear {
+    fill: none;
+    stroke: #c0c2c9;
+    cursor: pointer;
+}
+.fia-i-clear:hover {
+    stroke: #cc3333;
+}
+#fia-P{
+    height: 4px;
+    padding: 0;
+    margin-top: 7px;
+}
+
+#fia-P.noUi-target {
+    background: #f1f2f5;
+    border-radius: 0;
+    border: unset;
+    box-shadow: unset;
+}
+#fia-P .noUi-connects {
+    border-radius: 0;
+}
+#fia-P .noUi-connect {
+    background: #000;
+}
+#fia-P .noUi-handle {
+    height: 16px;
+    width: 10px;
+    top: -6px;
+    border: unset;
+    border-radius: 0;
+    background: #000;
+    box-shadow: unset;
+
+}
+#fia-P .noUi-handle.noUi-handle-lower {
+    right: -9px;
+}
+#fia-P .noUi-handle-upper    {
+    right: 0px;
+}
+
+#fia-P .noUi-handle:after, #fia-P .noUi-handle:before {
+    content: unset;
+}
+
+.fia-trash {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #c0c2c9;
+    cursor: pointer;
+}
+.fia-i-trash {
+    fill: none;
+    stroke: #c0c2c9;
+    margin-right: 8px;
+}
+.fia-trash:hover {
+    color: #cc3333;
+}
+.fia-trash:hover .fia-i-trash {
+    stroke: #cc3333;
+}
+.fia-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+.fia-scroll::-webkit-scrollbar-track {
+    background-color: #c0c2c9;
+    opacity: 0.2;
+}
+.fia-scroll::-webkit-scrollbar-thumb {
+    background-color: #000;
+}
+
+/* Bootstrap 5 columns */
+.fia-xs-5,
+.fia-sm-5,
+.fia-md-5,
+.fia-lg-5 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 4px;
+    padding-left: 4px;
+}
+.fia-xs-5 {
+    width: 20%;
+    float: left;
+}
+@media (min-width: 768px) {
+    .fia-sm-5 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 992px) {
+    .fia-md-5 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (max-width: 1439px) {
+    .fia-md-5 {
+        width: 25%;
+        float: left;
+    }
+}
+/* media */
+@media (max-width: 1329px) {
+    .fia-view > div:first-child {
+        font-size: 14px;
+    }
+    .fia-view-num > div + div:before {
+        padding: 0 4px;
+    }
+    .fia-view-num > div > div > svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+@media (max-width: 1199px) {
+    .fia-md-5 {
+        width: 33.33333333%;
+    }
+    .fia-in > button {
+        font-size: 14px;
+    }
+    .fia-in .dropdown-menu {
+        font-size: 12px;
+    }
+    .fia-grid-n > div:nth-child(3) {
+        display: none;
+    }
+}
+@media (max-width: 991px) {
+    #filter-a {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y:scroll;
+        overflow-x:hidden;
+        -webkit-overflow-scrolling: touch;
+        background: #fff;
+        z-index: 10000;
+    }
+    #filter-a-mobile {
+        margin-bottom: 16px;
+    }
+    .fia-mobile {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+    .fia-mobile > svg {
+        fill: none;
+        stroke: #000;
+        margin-right: 8px;
+    }
+    .fia-mobile > span {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 9px;
+        font-weight: 400;
+        background: #000;
+        margin-left: 6px;
+        width: 16px;
+        height: 16px;
+        border-radius: 80px;
+    }
+    .fia-header {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: space-around;
+        justify-content: space-between;
+        border-bottom: 1px solid #000;
+        background: #fff;
+        height: 60px;
+        padding: 0 16px 0 16px;
+        z-index: 10001;
+    }
+    .fia-header > div:first-child {
+        font-size: 20px;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+
+    .fia-header > .fia-m-clear {
+        color: #c0c2c9;
+        font-weight: 500;
+        text-align: right;
+        width: 100%;
+    }
+    .fia-header > .fia-i-close {
+        fill: none;
+        stroke: #000;
+        min-width: 14px;
+        min-height: 14px;
+        margin-left: 30px;
+    }
+    #filter-a > .row {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        -webkit-align-items: flex-start;
+        align-items: flex-start;
+        margin-top: 60px;
+    }
+    #filter-a > .row.mb60 {
+        margin-bottom: 60px;
+    }
+    #filter-a > .row > div {
+        float: unset;
+        display: -webkit-flex;
+        display: flex;
+        width: 100%;
+        margin-bottom: unset        ;
+        /*order: 2;*/
+    }
+    #filter-a > .row > div > div {
+
+        display: inline-block;
+        width: 100%;
+
+        height: auto;
+
+    }
+    #filter-a > .row > div > div > button {
+        width: 100%;
+        height: auto;
+    }
+    .fia-in {
+        width: 100%;
+    }
+    .fia-in > button {
+        font-size: 16px;
+        text-transform: unset;
+        border-top: unset;
+        border-right: unset;
+        border-bottom: 1px solid #f1f2f5;
+        border-left: unset;
+        padding: 16px 24px 16px 16px;
+    }
+    .fia-in > button > div > span {
+        display: none;
+    }
+    .fia-in > button .filtered {
+        display: block;
+    }
+    .fia-in > button .caret {
+        border-top: 5px solid transparent;
+        border-right: unset;
+        border-bottom: 5px solid transparent;
+        border-left: 5px solid #000;
+    }
+    .fia-in.open > button {
+        border-bottom: unset;
+    }
+    .fia-in.open > button .caret {
+        border-top: 5px solid #000;
+        border-right: 5px solid transparent;
+        border-bottom: unset;
+        border-left: 5px solid transparent;
+    }
+    .fia-in .dropdown-backdrop {
+        display: none;
+    }
+    .fia-in .dropdown-menu {
+        position: inherit;
+        width: 100%;
+        max-height: unset!important;
+        border-bottom: 1px solid #f1f2f5;
+        padding: 8px 16px 16px ;
+        -webkit-box-shadow: unset;
+        box-shadow: unset;
+        font-size: 14px;
+    }
+    .fia-md-5 {
+        width: 20%;
+    }
+    .fia-S-o:hover, .fia-sort-o:hover, .fia-limit-o:hover {
+        border: solid 1px #c0c2c9;
+    }
+    .fia-S-o.active:hover, .fia-sort-o.active:hover, .fia-limit-o.active:hover {
+        border: solid 2px #000;
+    }
+    #filter-a .fia-grid {
+        display: none!important;
+    }
+    #filter-a-mobile.fia-grid {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: flex-start;
+        align-items: flex-start;
+        -webkit-justify-content: space-around;
+        justify-content: space-between;
+    }
+    .fia-apply {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        height: 60px;
+        background: #000;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        color: #fff;
+        cursor: pointer;
+    }
+    .fia-grid-n > div:nth-child(3) {
+            display: inherit;
+    }
+    #filter-a-r {
+        display: none;
+    }
+}
+@media (max-width: 767px) {
+    .fia-grid-n > div:nth-child(3) {
+        display: none;
+    }
+}

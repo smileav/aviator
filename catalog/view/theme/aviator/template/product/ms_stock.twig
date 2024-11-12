@@ -1,0 +1,40 @@
+<style>.modal-head,.ms-stock,.ms-stock-store-address>span{font-weight:500}.modal-open #modal-ms-stock{text-align:center;z-index:10000}.modal-open .modal-backdrop{z-index:9999}.modal-dialog{display:inline-block;text-align:left;vertical-align:middle;margin:auto}.modal-head{font-size:32px;line-height:100%;text-transform:uppercase;margin-bottom:24px}.ms-stock-wrapper{margin-bottom:18px}.ms-stock-wrapper:last-child{margin-bottom:0}.ms-stock-store-address{font-size:14px}.ms-stock-store-work{font-size:12px;margin-bottom:6px}.ms-stock-group{-webkit-flex-wrap:wrap;flex-wrap:wrap}.ms-stock-group>div{font-size:16px;font-weight:500;width:60px;height:60px;background:#fff;border:2px solid #000;margin-right:8px;cursor:default;margin-bottom:6px}.ms-stock-group>div.active{color:#fff;background:#000}.ms-stock{color:green;font-size:14px}.ms-stock.not-available{color:#c33}@media (min-width:768px){.modal:before{display:inline-block;vertical-align:middle;content:" ";height:100%}.modal-dialog{width:688px;margin:auto}}@media (max-width:767px){.ms-stock-wrapper{margin-bottom:12px}}</style>
+<div id="modal-ms-stock" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-head d-f ai-c jc-sb">
+                    <div>{{ text_modal_ms_head }}</div>
+                    <button type="button" class="close" data-dismiss="modal"><svg class="i-close" width="14" height="14"><use xlink:href="image/icons.svg#i-close" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button>
+                </div>
+                <div class="modal-wrapper">
+                    {% for data in stockByStore %}
+                    <div class="ms-stock-wrapper">
+                        <div class="ms-stock-store">
+                            {% if data.store_address %}
+                            <div class="ms-stock-store-address">{{ data.store_address }}</div>
+                            {% endif %}
+                            {% if data.store_work %}
+                            <div class="ms-stock-store-work">{{ data.store_work }}</div>
+                            {% endif %}
+                        </div>
+                        {% if data.values is defined and data.quantity %}
+                        <div class="ms-stock-group d-f ai-c">
+                            {% for value in data.values %}
+                            <div class="d-f ai-c jc-c" data-pov-id="{{ value.product_option_value_id }}">{{ value.name }}</div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {% if data.values is not defined and data.quantity %}
+                        <div class="ms-stock">{{ text_modal_ms_available }}</div>
+                        {% endif %}
+                        {% if not data.quantity %}
+                        <div class="ms-stock not-available">{{ text_modal_ms_not_available }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

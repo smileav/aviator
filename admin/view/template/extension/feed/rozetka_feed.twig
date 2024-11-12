@@ -1,0 +1,119 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-rozetka-feed" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-rozetka-feed" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="rozetka_feed_status" id="input-status" class="form-control">
+                {% if rozetka_feed_status %}
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-rewrite-url">{{ entry_rewrite_url }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="rozetka_feed_rewrite_url" value="{{ store_url }}ua/index.php?route=extension/feed/rozetka_feed" id="input-rewrite-url" class="form-control" readonly />
+            </div>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-file-url">{{ entry_file_url }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="rozetka_feed_file_url" value="{{ store_url }}xml/rozetka_feed.xml" id="input-file-url" class="form-control" readonly />
+            </div>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-store-url">{{ entry_store_url }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="rozetka_feed_store_url" value="{{ rozetka_feed_store_url ? rozetka_feed_store_url : 'https://' }}" placeholder="https://" id="input-store-url" class="form-control" />
+            </div>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-store-name">{{ entry_store_name }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="rozetka_feed_store_name" value="{{ rozetka_feed_store_name ? rozetka_feed_store_name : '' }}" placeholder="{{ entry_store_name_placeholder }}" id="input-store-name" class="form-control" />
+            </div>
+          </div>
+		  <div class="form-group">
+			<label class="col-sm-2 control-label" for="input-banned-vendors"><span data-toggle="tooltip" title="{{ help_banned_vendors }}">{{ entry_banned_vendors }}</span></label>
+				<div class="col-sm-10">
+					<input type="text" name="disabled_vendors" value="" placeholder="{{ entry_banned_vendors }}" id="input-banned-vendors" class="form-control" />
+					<div id="banned-vendors" class="well well-sm" style="overflow: auto;">
+                        {% for disabled_vendor in disabled_vendors %}
+							<div id="banned-vendors{{ disabled_vendor.manufacturer_id }}"><i class="fa fa-minus-circle"></i> {{ disabled_vendor.name }}
+								<input type="hidden" name="banned_vendors[]" value="{{ disabled_vendor.manufacturer_id }}" />
+							</div>
+                        {% endfor %}
+					</div>
+				</div>
+			</div>
+		  <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            <div class="col-sm-10">
+              <a class="btn btn-primary" href="{{ store_url }}ua/index.php?route=extension/feed/rozetka_feed">{{ rewrite_file }}</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$('input[name=\'disabled_vendors\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=extension/feed/rozetka_feed/vendorList&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['manufacturer_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+       $('input[name=\'disabled_vendors\']').val('');
+
+		$('#banned-vendors' + item['value']).remove();
+
+		$('#banned-vendors').append('<div id="banned-vendors' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="banned_vendors[]" value="' + item['value'] + '" /></div>');
+    }
+});
+
+$('#banned-vendors').delegate('.fa-minus-circle', 'click', function() {
+    $(this).parent().remove();
+});
+</script>
+{{ footer }}

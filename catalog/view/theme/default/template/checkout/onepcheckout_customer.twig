@@ -1,0 +1,322 @@
+<div class="checkout-сustomer register_block">
+	<div class="checkout-heading">
+		<div class="title-customer dflex">{{ text_op_сustomer }}</div>
+	</div>
+	<div class="checkout-сustomer-info">
+		{% if customer_fields is not empty %}
+			{% for field_name,customer_field in customer_fields %}
+				{% if field_name == 'firstname' %}
+					<div class="form-group form-group-error{% if customer_field['status'] == 'required' %} required{% endif %}">
+						{#<label for="input-opc-firstname" class="control-label opc-label">{{ entry_firstname }}</label>#}
+						<input id="input-opc-firstname" type="text" name="firstname" value="{% if firstname is defined %}{{ firstname }}{% endif %}" class="form-checkout{% if firstname is not empty %} focus{% endif %}"/>
+						<div class="float-label">{{ entry_firstname }}{% if customer_field['status'] == 'required' %} <span>*</span>{% endif %}</div>
+						<div class="form-error"></div>
+					</div>
+				{% endif %}
+				{% if field_name == 'lastname' %}
+					<div class="form-group form-group-error{% if customer_field['status'] == 'required' %} required{% endif %}">
+						{#<label for="input-opc-lastname" class="control-label opc-label">{{ entry_lastname }}</label>#}
+						<input id="input-opc-lastname" type="text" name="lastname" value="{% if lastname is defined %}{{ lastname }}{% endif %}" class="form-checkout{% if lastname is not empty %} focus{% endif %}"/>
+						<div class="float-label">{{ entry_lastname }}{% if customer_field['status'] == 'required' %} <span>*</span>{% endif %}</div>
+						<div class="form-error"></div>
+					</div>
+				{% endif %}
+				{% if field_name == 'telephone' %}
+					<div class="form-group form-group-error{% if customer_field['status'] == 'required' %} required{% endif %}">
+						{#<label for="input-opc-telephone" class="control-label opc-label">{{ entry_telephone }}</label>#}
+						<div class="flag-container">
+							<div id="dropdownFlags" data-iso-code="{{ iso_code_2 }}">
+								<div class="flag"><img src="{{ flag }}" alt="" width="24" height="16"/></div>
+								{#<span class="caret"></span>#}
+							</div>
+							{#<ul class="dropdown-menu scroll" aria-labelledby="dropdownFlags">
+								{% for key, country in countries_t %}
+									<li data-iso-code="{{ country.iso_code_2 }}" data-calling-code="{{ country.calling_code }}" data-number-mask="{{ country.number_lengths_mask }}" aria-selected="{% if country.iso_code_2 == iso_code_2 %}true{% else %}false{% endif %}"><img src="{{ country.flag }}" alt="" width="24" height="16"/><span>{{ country.name }}</span><span>+{{ country.calling_code }}</span></li>
+								{% endfor %}
+							</ul>#}
+						</div>
+						{% if iso_code_2 == 'ua' %}
+						<input id="input-opc-telephone" type="text" name="telephone" value="{% if telephone is defined %}{{ telephone }}{% endif %}" placeholder="+380 (XX) XXX-XX-XX" class="form-checkout focus" required/>
+						{% else %}
+						<input id="input-opc-telephone" type="text" name="telephone" value="{% if telephone is defined %}{{ telephone }}{% endif %}" placeholder="+{{ calling_code}} {{ number_lengths_mask }}" class="form-checkout focus" required/>
+						{% endif %}
+						<svg width="18" height="13" class="check" style="display: none;"><use xlink:href="image/icons.svg#check" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+						<input type="text" name="sms_code" value="" placeholder="XXXX" class="hidden" autocomplete="off" im-insert="true"/>
+						<button type="button" id="btn-send-sms" class="hidden">{{ text_sms_confirm }}</button>
+						<div class="float-label">{{ entry_telephone }}{% if customer_field['status'] == 'required' %} <span>*</span>{% endif %}</div>
+						<div class="form-error"></div>
+					</div>
+				{% endif %}
+				{% if field_name == 'email' %}
+					<div class="form-group form-group-error{% if customer_field['status'] == 'required' %} required{% endif %}">
+						{#<label for="input-opc-email" class="control-label opc-label">{{ entry_email }}</label>#}
+						<input autocomplete="off" id="input-opc-email" type="text" name="email" value="{% if email is defined %}{{ email }}{% endif %}" class="form-checkout{% if email is not empty %} focus{% endif %}" {% if customer_id is defined %}readonly{% endif %}/>
+						<div class="float-label">{{ entry_email }}{% if customer_field['status'] == 'required' %} <span>*</span>{% endif %}</div>
+						<div class="form-error"></div>
+					</div>
+				{% endif %}
+				{% if field_name == 'fax' %}
+					<div class="form-group{% if customer_field['status'] == 'required' %} required{% endif %}">
+						<label for="input-opc-fax" class="control-label opc-label">{{ entry_fax }}</label>
+						<input id="input-opc-fax" type="text" name="fax" value="{% if fax is defined %}{{ fax }}{% endif %}" placeholder="{{ entry_ph_fax }}" class="form-control"/>
+					</div>
+				{% endif %}
+				{% if customer_field['location'] is defined and customer_field['location'] == 'opc_customer' %}
+					{% if customer_field['type'] == 'select' %}
+						<div class="form-group col-xs-12 col-sm-6 custom-field{{ customer_field['required'] ? ' required' : '' }}" id="customer-custom-field{{ customer_field['custom_field_id'] }}">
+							<label class="control-label opc-label" for="input-customer-custom-field{{ customer_field['custom_field_id'] }}">{{ customer_field['name'] }}</label>
+							<select name="custom_field[{{ customer_field['location'] }}][{{ customer_field['custom_field_id'] }}]" id="input-customer-custom-field{{ customer_field['custom_field_id'] }}" class="form-control">
+								<option value="">{{ text_select }}</option>
+								{% for custom_field_value in customer_field['custom_field_value'] %}
+									<option value="{{ custom_field_value['custom_field_value_id'] }}">{{ custom_field_value['name'] }}</option>
+								{% endfor %}
+							</select>
+						</div>
+					{% endif %}
+					{% if customer_field['type'] == 'radio' %}
+						<div class="form-group col-xs-12 col-sm-6 custom-field{{ customer_field['required'] ? ' required' : '' }}" id="customer-custom-field{{ customer_field['custom_field_id'] }}">
+							<label class="control-label opc-label">{{ customer_field['name'] }}</label>
+							<div id="input-customer-custom-field{{ customer_field['custom_field_id'] }}">
+								{% for custom_field_value in customer_field['custom_field_value'] %}
+									<div class="radio">
+										<label class="chm-radio">
+											<input class="checkbox-input" type="radio" name="custom_field[{{ customer_field['location'] }}][{{ customer_field['custom_field_id'] }}]" value="{{ custom_field_value['custom_field_value_id'] }}" />
+											<span class="checkbox-radio"></span>
+											{{ custom_field_value['name'] }}
+										</label>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					{% endif %}
+					{% if customer_field['type'] == 'checkbox' %}
+						<div class="form-group col-xs-12 col-sm-6 custom-field{{ customer_field['required'] ? ' required' : '' }}" id="customer-custom-field{{ customer_field['custom_field_id'] }}">
+							<label class="control-label opc-label">{{ customer_field['name'] }}</label>
+							<div id="input-customer-custom-field{{ customer_field['custom_field_id'] }}">
+								{% for custom_field_value in customer_field['custom_field_value'] %}
+									<div class="checkbox">
+										<label class="chm-checkbox">
+											<input class="checkbox-input" type="checkbox" name="custom_field[{{ customer_field['location'] }}][{{ customer_field['custom_field_id'] }}][]" value="{{ custom_field_value['custom_field_value_id'] }}" />
+											<span class="checkbox-check"></span>
+											{{ custom_field_value['name'] }}
+										</label>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					{% endif %}
+					{% if customer_field['type'] == 'text' %}
+						<div class="form-group col-xs-12 col-sm-6 custom-field{{ customer_field['required'] ? ' required' : '' }}" id="customer-custom-field{{ customer_field['custom_field_id'] }}">
+							<label class="control-label opc-label" for="input-customer-custom-field{{ customer_field['custom_field_id'] }}">{{ customer_field['name'] }}</label>
+							<input type="text" name="custom_field[{{ customer_field['location'] }}][{{ customer_field['custom_field_id'] }}]" value="{{ guest_custom_field[customer_field['custom_field_id']] ?? customer_field['value'] }}" placeholder="{{ customer_field['name'] }}" id="input-customer-custom-field{{ customer_field['custom_field_id'] }}" class="form-control" />
+						</div>
+					{% endif %}
+					{% if customer_field['type'] == 'textarea' %}
+						<div class="form-group col-xs-12 col-sm-6 custom-field{{ customer_field['required'] ? ' required' : '' }}" id="customer-custom-field{{ customer_field['custom_field_id'] }}">
+							<label class="control-label opc-label" for="input-customer-custom-field{{ customer_field['custom_field_id'] }}">{{ customer_field['name'] }}</label>
+							<textarea name="custom_field[{{ customer_field['location'] }}][{{ customer_field['custom_field_id'] }}]" rows="1" placeholder="{{ customer_field['name'] }}" id="input-customer-custom-field{{ customer_field['custom_field_id'] }}" class="form-control">{{ guest_custom_field[customer_field['custom_field_id']] ?? customer_field['value'] }}</textarea>
+						</div>
+					{% endif %}
+					{% if customer_field['type'] == 'date' %}
+						<div class="form-group col-xs-12 col-sm-6 custom-field{{ customer_field['required'] ? ' required' : '' }}" id="customer-custom-field{{ customer_field['custom_field_id'] }}">
+							<label class="control-label opc-label" for="input-customer-custom-field{{ customer_field['custom_field_id'] }}">{{ customer_field['name'] }}</label>
+							<div class="input-group date">
+								<input type="text" name="custom_field[{{ customer_field['location'] }}][{{ customer_field['custom_field_id'] }}]" value="{{ guest_custom_field[customer_field['custom_field_id']] ?? customer_field['value'] }}" placeholder="{{ customer_field['name'] }}" data-date-format="YYYY-MM-DD" id="input-customer-custom-field{{ customer_field['custom_field_id'] }}" class="form-control" />
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+								</span>
+							</div>
+						</div>
+					{% endif %}
+					{% if customer_field['type'] == 'time' %}
+						<div class="form-group col-xs-12 col-sm-6 custom-field{{ customer_field['required'] ? ' required' : '' }}" id="customer-custom-field{{ customer_field['custom_field_id'] }}">
+							<label class="control-label opc-label" for="input-customer-custom-field{{ customer_field['custom_field_id'] }}">{{ customer_field['name'] }}</label>
+							<div class="input-group time">
+								<input type="text" name="custom_field[{{ customer_field['location'] }}][{{ customer_field['custom_field_id'] }}]" value="{{ guest_custom_field[customer_field['custom_field_id']] ?? customer_field['value'] }}" placeholder="{{ customer_field['name'] }}" data-date-format="HH:mm" id="input-customer-custom-field{{ customer_field['custom_field_id'] }}" class="form-control" />
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+								</span>
+							</div>
+						</div>
+					{% endif %}
+					{% if customer_field['type'] == 'datetime' %}
+						<div class="form-group col-xs-12 col-sm-6 custom-field{{ customer_field['required'] ? ' required' : '' }}" id="customer-custom-field{{ customer_field['custom_field_id'] }}">
+							<label class="control-label opc-label" for="input-customer-custom-field{{ customer_field['custom_field_id'] }}">{{ customer_field['name'] }}</label>
+							<div class="input-group datetime">
+								<input type="text" name="custom_field[{{ customer_field['location'] }}][{{ customer_field['custom_field_id'] }}]" value="{{ guest_custom_field[customer_field['custom_field_id']] ?? customer_field['value'] }}" placeholder="{{ customer_field['name'] }}" data-date-format="YYYY-MM-DD HH:mm" id="input-customer-custom-field{{ customer_field['custom_field_id'] }}" class="form-control" />
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+								</span>
+							</div>
+						</div>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+
+		{% if register_status %}
+			<div class="form-group col-xs-12 mb-0" style="display: none;">
+				<label class="chm-checkbox mb-0">
+					<input class="checkbox-input" onclick="$('.register-form').toggle()" {% if register_checked %}checked="checked"{% endif %} type="checkbox" name="register" value="1" />
+					<span class="checkbox-check"></span>{{ text_register }}
+				</label>
+			</div>
+			<div class="register-form" {% if register_checked is empty %}style="display:none"{% endif %}>
+				<div class="form-group col-xs-12" style="display: {% if customer_groups|length > 1 %}block{% else %}none{% endif %}">
+					<label class="control-label">{{ entry_customer_group }}:&nbsp;</label>
+					{% for customer_group in customer_groups %}
+						{% if customer_group['customer_group_id'] == customer_group_id %}
+							<div class="radio chm-radio">
+								<label>
+									<input type="radio"  name="customer_group_id" value="{{ customer_group['customer_group_id'] }}" checked="checked" />
+									{{ customer_group['name'] }}
+								</label>
+							</div>
+						{% else %}
+							<div class="radio chm-radio">
+								<label>
+									<input type="radio" name="customer_group_id" value="{{ customer_group['customer_group_id'] }}" />
+									{{ customer_group['name'] }}
+								</label>
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+				<div class="form-group col-xs-12 col-sm-6 required mb-0">
+					<label for="input-payment-password" class="control-label opc-label">{{ entry_password }}</label>
+					<input id="input-payment-password" type="password" name="password" value="" placeholder="{{ entry_password }}" class="form-control" />
+				</div>
+				<div class="form-group col-xs-12 col-sm-6 required mb-0">
+					<label for="input-payment-confirm" class="control-label opc-label">{{ entry_confirm }}</label>
+					<input id="input-payment-confirm" type="password" name="confirm" value="" placeholder="{{ entry_confirm }}"  class="form-control" />
+				</div>
+			</div>
+		{% endif %}
+	</div>
+</div>
+<script>
+var iso_code = '{{ iso_code_2 }}';
+var calling_code = '{{ calling_code }}';
+var opc_telephone = $('#onepcheckout input[name="telephone"]').closest('.form-group');
+
+if (iso_code === 'ua') {
+	$('#onepcheckout #dropdownFlags').addClass('disabled');
+	$('#onepcheckout input[name="telephone"]').inputmask({
+		mask: '+380 (99) 999-99-99',
+		placeholder: 'X'
+	}).addClass('tel-ua');
+} else  {
+	$('#onepcheckout #dropdownFlags').removeClass('disabled');
+	$('#onepcheckout input[name="telephone"]').inputmask({
+		mask: '+' + calling_code.replace(/9/g, "\\9") + ' {{ number_lengths_mask }}',
+		placeholder: 'X'
+	}).removeClass('tel-ua');
+}
+
+$('#onepcheckout input[name="sms_code"]').inputmask({
+	mask: '9999',
+	placeholder: 'X'
+});
+
+$('#onepcheckout').on('select2:selecting', '#input-payment-country', function() {
+	$('#onepcheckout input[name="telephone"]').val('');
+});
+
+if ($('#onepcheckout #dropdownFlags').attr('data-iso-code') == 'ua') {
+	$.get('index.php?route=checkout/sms_validator/validateNumber&tel=' + encodeURIComponent($('#onepcheckout input[name="telephone"]').val()), function(step) {
+		switch(step) {
+			case '1':
+				opc_telephone.find('.check').hide();
+				opc_telephone.find('input[name="telephone"]').removeClass('error');
+				opc_telephone.find('#btn-send-sms').addClass('hidden');
+				opc_telephone.find('.form-error').text('');
+				break;
+			case '2':
+				opc_telephone.find('input[name="telephone"]').addClass('error');
+				opc_telephone.find('#btn-send-sms').removeClass('hidden');
+				opc_telephone.find('.form-error').text('{{ error_sms_please }}');
+				break;
+			case '3':
+				opc_telephone.find('.check').show();
+				break;
+		}
+	});
+}
+
+$('#onepcheckout').on('keyup', 'input[name="telephone"]', function() {
+	var iso_code = $('#onepcheckout #dropdownFlags').attr('data-iso-code');
+
+	if (iso_code == 'ua') {
+		$.get('index.php?route=checkout/sms_validator/validateNumber&tel=' + encodeURIComponent($(this).val()), function(step) {
+			switch(step) {
+				case '1':
+					opc_telephone.find('.check').hide();
+					opc_telephone.find('input[name="telephone"]').removeClass('error');
+					opc_telephone.find('#btn-send-sms').addClass('hidden');
+					opc_telephone.find('.form-error').text('');
+					break;
+				case '2':
+					opc_telephone.find('input[name="telephone"]').addClass('error');
+					opc_telephone.find('#btn-send-sms').removeClass('hidden');
+					opc_telephone.find('.form-error').text('{{ error_sms_please }}');
+					break;
+				case '3':
+					opc_telephone.find('.check').show();
+					break;
+			}
+		});
+	}
+});
+
+var int;
+$('#onepcheckout').on('click', '#btn-send-sms', function() {
+	var _Seconds = 120;
+
+	// opc_telephone.find('#dropdownFlags').prop('disabled', true);
+	opc_telephone.find('input[name="telephone"]').prop('disabled', true);
+	opc_telephone.find('#btn-send-sms').addClass('hidden');
+	opc_telephone.find('input[name="sms_code"]').removeClass('hidden').focus();
+	opc_telephone.find('.form-error').text('{{ text_sms_wait }} ' + _Seconds + ' {{ text_sms_wait_sec }}!');
+
+	clearInterval(int);
+	int = setInterval(function() {
+		if (_Seconds > 0) {
+			_Seconds--;
+			opc_telephone.find('.form-error').text('{{ text_sms_wait }} ' + _Seconds + ' {{ text_sms_wait_sec }}!');
+		} else {
+			clearInterval(int);
+
+			opc_telephone.find('input[name="sms_code"]').addClass('hidden').val('');
+			opc_telephone.find('#btn-send-sms').removeClass('hidden');
+			opc_telephone.find('.form-error').text('{{ error_sms_please }}');
+			// opc_telephone.find('#dropdownFlags').prop('disabled', false);
+			opc_telephone.find('input[name="telephone"]').prop('disabled', false);
+		}
+	}, 1000);
+
+	$.ajax({
+		url: 'index.php?route=checkout/sms_validator/sendSMS',
+		type: 'post',
+		dataType: 'json',
+		success: function(json) {
+			console.log(json);
+		}
+	});
+});
+
+$('#onepcheckout').on('keyup', 'input[name="sms_code"]', function() {
+	$.get("index.php?route=checkout/sms_validator/validateCode&code=" + encodeURIComponent($(this).val()), function(json) {
+		if (json['success']) {
+			clearInterval(int);
+
+			opc_telephone.find('input[name="telephone"]').removeClass('error').prop('disabled', false);
+			opc_telephone.find('input[name="sms_code"]').addClass('hidden').val('');
+			opc_telephone.find('#btn-send-sms').addClass('hidden');
+			opc_telephone.find('.form-error').text('');
+			opc_telephone.find('.check').show();
+			// opc_telephone.find('#dropdownFlags').prop('disabled', false);
+
+		}
+	});
+});
+</script>

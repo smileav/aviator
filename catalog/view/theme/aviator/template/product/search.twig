@@ -1,0 +1,68 @@
+{{ header }}
+<div class="container">
+{% include('aviator/template/common/breadcrumb.twig') %}
+</div>
+<div id="product-category" class="container">
+  <div class="row">
+    <div id="content" class="col-sm-12">
+      {% if products %}
+      {% include('aviator/template/extension/module/filter_a.twig') %}
+      {% if Filter_A.grid == 1 %}
+      {% set fia_product_class = 'col-md-6 col-sm-12 col-xs-12' %}
+      {% elseif Filter_A.grid == 2 %}
+      {% set fia_product_class = 'col-sm-6 col-xs-6' %}
+      {% elseif Filter_A.grid == 3 %}
+      {% set fia_product_class = 'col-sm-4 col-xs-6' %}
+      {% else %}
+      {% set fia_product_class = 'col-lg-3 col-md-4 col-sm-4 col-xs-6' %}
+      {% endif %}
+      <div class="row product-row">
+        {% for product in products %}
+        <div class="product-layout {{ fia_product_class }}">
+          {% include('aviator/template/product/product_thumb.twig') %}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="row">
+        <div class="col-sm-12">{{ pagination }}</div>
+      </div>
+      {% endif %}
+      {% if not products %}
+      <div class="results-empty">
+        <div class="results-empty-text">{{ text_empty }}</div>
+        <a href="{{ continue }}" class="btn-b">{{ button_catalog }}</a>
+      </div>
+      {{ latest }}
+      {{ special }}
+      <script>
+        function owlResized() {
+          var wW = $(window).width();
+
+          if (wW <= 767) {
+            $('.o-owl .product-layout').css({ 'width' : wW / 2 - 20 });
+          } else {
+            $('.o-owl .product-layout').css({ 'width' : 'auto' });
+          }
+        }
+
+        owlResized();
+
+        $(document).ready(function() {
+          $('.o-owl-latest .owl-carousel, .o-owl-special .owl-carousel').owlCarousel({
+            mouseDrag: true,
+            touchDrag: true,
+            lazyLoad: true,
+            loop: false,
+            nav: true,
+            navText: ['<svg class="i-owl-arrow2" width="27" height="28"><use xlink:href="image/icons.svg#i-owl-arrow2" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>', '<svg class="i-owl-arrow2" width="27" height="28"><use xlink:href="image/icons.svg#i-owl-arrow2" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>'],
+            dots: false,
+            responsive: { 0: { items: 2, nav: false, autoWidth: true, margin: 8 }, 767: { items: 2, nav: false, autoWidth: true, margin: 8 }, 768: { items: 3, margin: 8 }, 991: { items: 3, margin: 8 }, 992: { items: 3, margin: 16 }, 1200: { items: 4, margin: 16 } },
+            onResized: owlResized
+          });
+        });
+      </script>
+      {% endif %}
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

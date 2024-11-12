@@ -1,0 +1,23 @@
+<div class="checkout-payment-method h-100">
+	<div class="checkout-heading">{{ title_payment_method }}</div>
+	<div class="payment-method">
+		{% if error_warning %}
+			<div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+		{% endif %}
+		{% if payment_methods %}
+			{% for payment_method in payment_methods %}
+				<div class="radio chm-radio">
+					<label>
+						{% if (payment_method['code'] == payment_code or not payment_code) %}
+							{% set payment_code = payment_method['code'] %}
+							<input type="radio" name="payment_method" value="{{ payment_method['code'] }}" checked="checked" />
+						{% else %}
+							<input type="radio" name="payment_method" value="{{ payment_method['code'] }}" />
+						{% endif %}
+						{{ payment_method['title'] }}
+					</label>
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+</div>
