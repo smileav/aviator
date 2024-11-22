@@ -88,4 +88,5 @@ om-cache/*
 !om-cache/.htaccess
 xml/*
 price/*
+system/microdatapro.*
 
