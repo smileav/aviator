@@ -336,23 +336,6 @@ $PHONE_SENDER=$res2['data'][0]['Phones'];
 
 
 
-/*
-		if(isset($v['agent']['attributes'])) foreach($v['agent']['attributes'] as $ka=>$va){
-			 		if(!$FIO) if($va['name']=='Прізвище') $fname=$va['value'];
-			 		if(!$FIO) if($va['name']=="Iм'я") $lname=$va['value'];
-			 		if(!$FIO) if($va['name']=="По батькові") $mname=$va['value'];
-					if(!$chphone) if($va['name']=="Телефон") $chphone=$va['value']; 
-					if($va['name']=="Відділення НП") {
-						if(!$id_ref){
-							$tmp=$va['value']['meta']['href'];
-							$jsonx=ms_query($tmp);
-							$res=mysqli_query($db,"select id_ref,city from np_ware where id_ref='{$jsonx['code']}'");
-	        					list($id_ref,$city)=mysqli_fetch_row($res);
-						}
-
-					}
-		}
-*/
 		if(!$chphone) if($v['agent']['phone']) $chphone=$v['agent']['phone']; 
 		if(!$FIO) if($v['agent']['name']) $FIO=$v['agent']['name']; 
 
@@ -375,32 +358,6 @@ $PHONE_SENDER=$res2['data'][0]['Phones'];
 			if(isset($name[2])) $mname=$name[2];
 
 		}
-/*
-		if($cust_addr){
-			$cust_addr_=explode(",",$cust_addr);
-			$cust_addr=trim(str_replace($cust_addr_[0].",","",$cust_addr));
-			$res=mysqli_query($db,"select id_ref,city from np_ware where title='$cust_addr'");
-			list($id_ref,$city)=mysqli_fetch_row($res);
-
-		}
-*/
-
-
-/*
-		$agenttmp=explode(',',$v['agent']['actualAddress']);
-		$city_np=$agenttmp[0];
-		$ware_np=str_replace($agenttmp[0].', ','', $v['agent']['actualAddress']);
-		if($city_np and  $ware_np){
-			$res=mysqli_query($db,"select id_ref from np_cities where title_ru='$city_np'");
-			list($city)=mysqli_fetch_row($res);
-//echo("select id_ref from np_cities where title='$city_np' - $city!!!");
-			$res=mysqli_query($db,"select id_ref from np_ware where city='$city' and title_ru like '%$ware_np%'");
-			list($id_ref)=mysqli_fetch_row($res);
-
-
-
-		}
-*/
 
 		if($ves) $vesnow=$ves;
 
@@ -584,12 +541,6 @@ $PHONE_SENDER=$res2['data'][0]['Phones'];
 		}
 
 		
-//		$resz=mysqli_query($db,"select title_ru, area from np_cities where id_ref='$city'");
-//		list($city_name,$area)=mysqli_fetch_row($resz);
-
-//		$resz=mysqli_query($db,"select title_ru, area,region from np_cities where id_ref='$city'");
-//		list($city_name,$area,$region)=mysqli_fetch_row($resz);
-
 		$resz=mysqli_query($db,"select  area,region from np_cities where id_ref='$addr_city_code'");
 		list($area,$region)=mysqli_fetch_row($resz);
 		$resz=mysqli_query($db,"select title_ua from np_areas where id_ref='$area'");
@@ -632,7 +583,7 @@ $PHONE_SENDER=$res2['data'][0]['Phones'];
 			$addr_dostavka=array(
 			"CityRecipient"=>"$city",
 			"Recipient"=> "$who",
-			"RecipientAddress"=> "$id_ref",
+			"RecipientAddress"=> $id_ref,
 			"ContactRecipient"=> "$who_c",
 			"ServiceType"=> "WarehouseWarehouse",
 			"RecipientType"=>"$client_type"
