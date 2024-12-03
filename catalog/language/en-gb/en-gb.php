@@ -41,6 +41,7 @@ $_['text_work']             = 'Work Schedule';
 $_['text_work_store_pnsb']  = 'Mon-Sat: 10:00 AM - 6:00 PM';
 $_['text_work_store_pnsb_']  = 'Monday to Saturday: 10:00 AM - 6:00 PM';
 $_['text_work_time_1018']   = 'Open daily from 10:00 to 18:00';
+$_['text_work_time_1019']   = 'Open daily from 10:00 to 19:00';
 $_['text_work_time_1020']   = 'Open daily from 10:00 to 20:00';
 $_['text_work_time_1022']   = 'Open daily from 10:00 to 22:00';
 $_['text_work_time_1120']   = 'Open daily from 11:00 to 20:00';

@@ -2,6 +2,7 @@
   <nav id="menu" class="navbar">
     <div class="collapse navbar-collapse navbar-menu-collapse">
       <ul class="nav navbar-nav">
+        {#<li class="menu-outlet"><div class="menu-nav-link"><a href="{{ special }}">Black Friday</a></div></li>#}
         {% for category in categories %}
           {% if category.children %}
               <li class="dropdown clickable" data-id="{{ category.category_id }}"><div class="menu-nav-link"><a href="{{ category.href }}" class="dropdown-toggle" data-toggle="dropdown">{{ category.name }}</a><span class="caret"></span></div>

@@ -99,12 +99,12 @@ class ControllerCommonHeader extends Controller {
 		$data['logout'] = $this->url->link('account/logout', '', true);
 		$data['shopping_cart'] = $this->url->link('checkout/cart');
 		$data['checkout'] = $this->url->link('checkout/checkout', '', true);
-		$data['contact'] = $this->url->link('information/contact');
+		// $data['contact'] = $this->url->link('information/contact');
 		$data['telephone'] = $this->config->get('config_telephone');
 
 		$data['language'] = $this->load->controller('common/language');
 		$data['currency'] = $this->load->controller('common/currency');
-		$data['currency'] = $this->load->controller('common/currency');
+
 
         $data['about_us'] = $this->url->link('information/information', 'information_id=4');
         $data['delivery'] = $this->url->link('information/information', 'information_id=6');
