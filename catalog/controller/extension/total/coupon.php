@@ -41,6 +41,7 @@ class ControllerExtensionTotalCoupon extends Controller {
 			$json['redirect'] = $this->url->link('checkout/cart');
 		} else {
 			$json['error'] = $this->language->get('error_coupon');
+			unset($this->session->data['coupon']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

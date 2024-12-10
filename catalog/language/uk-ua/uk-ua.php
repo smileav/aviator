@@ -107,6 +107,7 @@ $_['button_quote']          = 'Запит цін';
 $_['button_list']           = 'Список';
 $_['button_grid']           = 'Сітка';
 $_['button_map']            = 'Переглянути карту';
+	$_['button_add']='Додати';
 
 // Error
 $_['error_exception']       = 'Помилка коду (%s): %s в %s у рядку %s';

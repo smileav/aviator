@@ -12,12 +12,12 @@
 		{% if coupon_status %}
 			<div class="cart-coupon d-f">
 				<div class="form-group" style="width:90%;">
-					<input id="input-coupon" style="height: 58px;line-height: 58px;" type="text" name="coupon" value="{{ coupon }}" class="form-checkout" >
+					<input id="input-coupon" style="height: 58px;line-height: 58px;" type="text" name="coupon" value="{{ coupon }}" class="form-checkout focus" >
 
 					<div class="float-label">{{ text_coupon }}</div>
 
-				</div>
-				<input type="button" value="ok" id="button-coupon" class="opc-btn w-20" style="height: 58px;line-height: 58px;"/>
+				</div>&nbsp;
+				<input type="button" value="{{ button_add }}" id="button-coupon" class="opc-btn w-20" style="height: 58px;line-height: 58px;"/>
 
 			</div>
 		{% endif %}

@@ -458,6 +458,7 @@
 					$('.alert').remove();
 					self.opcReloadAll();
 					if (json['error']) {
+						$('input[name=\'coupon\']').val('');
 						$('body').append('<div class="alert ch-alert-danger"><img class="warning-icon" alt="warning-icon" src="catalog/view/javascript/opc/image/warning-icon.svg"><div class="text-modal-block">' + json['error'] + '</div><button type="button" class="close" data-dismiss="alert"></button></div>');
 					}
 					if (json['success']) {
