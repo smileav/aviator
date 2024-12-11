@@ -1,3 +1,35 @@
+/* Встановлює одинкові базові значення для всіх елементів */
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* Встановлення шрифтів та інших стандартних стилів */
+body {
+	font-family: sans-serif;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Уніфікація вигляду елементів форм */
+input,
+button,
+textarea,
+select {
+	font: inherit;
+	color: inherit;
+	background: transparent;
+	border: none;
+	outline: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
 @font-face {
 	font-family: 'Inter';
 	font-style:  normal;
