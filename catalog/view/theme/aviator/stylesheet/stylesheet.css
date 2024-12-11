@@ -34,6 +34,18 @@ body {
 	padding-right: 24px;
 	padding-left: 24px;
 }
+button, input, textarea {
+	border-radius: 0;
+	-webkit-appearance: none;
+}
+input[type="submit"], input[type="button"], button {
+	border-radius: 0;
+	-webkit-appearance: none;
+}
+input:not([type="radio"]):not([type="checkbox"]) {
+	-webkit-appearance: none;
+	border-radius: 0;
+}
 @media (min-width: 1440px) {
 	.container {
 		width: 1440px;
