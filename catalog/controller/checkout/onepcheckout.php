@@ -188,6 +188,9 @@ class ControllerCheckoutOnepcheckout extends Controller {
 		$json = array();
 
 		if (!$this->cart->hasProducts()) {
+			if (isset($this->session->data['coupon'])) {
+				unset($this->session->data['coupon']);
+			}
 			$json['redirect'] = $this->url->link('checkout/cart');
 		} else {
 			$json['shipping_method'] = $this->shipping_method(false);
