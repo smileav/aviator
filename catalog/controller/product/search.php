@@ -98,6 +98,9 @@ class ControllerProductSearch extends Controller {
         if (isset($this->request->get['C'])) {
             $url .= '&C=' . $this->request->get['C'];
         }
+		if (isset($this->request->get['CO'])) {
+			$url .= '&CO=' . $this->request->get['CO'];
+		}
 
         if (isset($this->request->get['M'])) {
             $url .= '&M=' . $this->request->get['M'];

@@ -12,3 +12,4 @@ $_['text_fia_limit']            = '%d на сторінці';
 $_['text_fia_grid']             = 'Вигляд';
 $_['text_fia_clear']            = 'Очистити все';
 $_['text_fia_apply']            = 'Застосувати';
+	$_['text_fia_color']                  = 'Колір';

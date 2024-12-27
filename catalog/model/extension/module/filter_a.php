@@ -171,6 +171,9 @@ class ModelExtensionModuleFilterA extends Model {
         if ($data['key'] == 'C' && !empty($data['value'])) {
             $sql .= " LEFT JOIN `" . DB_PREFIX . "product_attribute` `paC` ON (`paC`.`product_id` = `p`.`product_id`)";
         }
+		if ($data['key'] == 'CO' && !empty($data['value'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_attribute` `paCO` ON (`paCO`.`product_id` = `p`.`product_id`)";
+		}
 
         if ($data['key'] == 'S' && !empty($data['value'])) {
             $sql .= " LEFT JOIN `" . DB_PREFIX . "product_option_value` `pov` ON (`pov`.`product_id` = `p`.`product_id`)";
@@ -189,6 +192,15 @@ class ModelExtensionModuleFilterA extends Model {
 
             $sql .= " AND `paC`.`text` IN ('" . implode('\',\'', $implode) . "')";
         }
+		if ($data['key'] == 'CO' && !empty($data['value'])) {
+			$implode = [];
+
+			foreach ($data['value'] as $value) {
+				$implode[] = $this->db->escape($value);
+			}
+
+			$sql .= " AND `paCO`.`text` IN ('" . implode('\',\'', $implode) . "')";
+		}
 
         if (!empty($data['fiaM'])) {
             $implode = [];
@@ -502,6 +514,11 @@ class ModelExtensionModuleFilterA extends Model {
             $sql .= ", `paG`.`text` AS `name`";
         }
 
+		if ($data['key'] == 'CO') {
+			$sql .= ", `paCO`.`attribute_id` AS `id`";
+			$sql .= ", `paCO`.`text` AS `name`";
+		}
+
         if ($data['key'] == 'C') {
             $sql .= ", `pa`.`attribute_id` AS `id`";
             $sql .= ", `pa`.`text` AS `name`";
@@ -542,7 +559,11 @@ class ModelExtensionModuleFilterA extends Model {
             $sql .= " LEFT JOIN `" . DB_PREFIX . "product_attribute` `paG` ON (`paG`.`product_id` = `p`.`product_id`)" . PHP_EOL;
         }
 
-        if ($data['key'] == 'G' || $data['key'] == 'C' || $data['key'] == 'M' || $data['key'] == 'S') {
+		if ($data['key'] == 'CO' || !empty($data['fia_GET']['CO'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_attribute` `paCO` ON (`paCO`.`product_id` = `p`.`product_id`)" . PHP_EOL;
+		}
+
+        if ($data['key'] == 'CO' || $data['key'] == 'G' || $data['key'] == 'C' || $data['key'] == 'M' || $data['key'] == 'S') {
             $sql .= " LEFT JOIN `" . DB_PREFIX . "product_attribute` `pa` ON (`pa`.`product_id` = `p`.`product_id`)" . PHP_EOL;
         }
 
@@ -556,7 +577,7 @@ class ModelExtensionModuleFilterA extends Model {
             }
         }
 
-        if (!empty($data['fia_GET']['C']) || $data['key'] == 'M' || !empty($data['fia_GET']['M']) || !empty($data['fia_GET']['S'])) {
+        if (!empty($data['fia_GET']['CO']) || !empty($data['fia_GET']['C']) || $data['key'] == 'M' || !empty($data['fia_GET']['M']) || !empty($data['fia_GET']['S'])) {
             $sql .= " LEFT JOIN `" . DB_PREFIX . "manufacturer_description` `md` ON (`md`.`manufacturer_id` = `p`.`manufacturer_id`)" . PHP_EOL;
         }
 
@@ -621,6 +642,16 @@ class ModelExtensionModuleFilterA extends Model {
                 $sql .= " AND `pa`.`text`               IN ('" . implode('\',\'', $implode) . "')";
             }
 
+			if (!empty($data['fia_GET']['CO'])) {
+				$implode = [];
+
+				foreach ($data['fia_GET']['CO'] as $value) {
+					$implode[] = $this->db->escape($value);
+				}
+
+				$sql .= " AND `paCO`.`text`               IN ('" . implode('\',\'', $implode) . "')";
+			}
+
             if (!empty($data['fia_GET']['M'])) {
                 $implode = [];
 
@@ -645,6 +676,52 @@ class ModelExtensionModuleFilterA extends Model {
             $sql .= " AND `paG`.`attribute_id`       = '" . (int)$data['attribute_id'] . "'";
         }
 
+		// color
+		if ($data['key'] == 'CO') {
+			if (!empty($data['fia_GET']['C'])) {
+				$implode = [];
+
+				foreach ($data['fia_GET']['C'] as $value) {
+					$implode[] = $this->db->escape($value);
+				}
+
+				$sql .= " AND `pa`.`text`               IN ('" . implode('\',\'', $implode) . "')";
+			}
+
+			if (!empty($data['fia_GET']['G'])) {
+				$implode = [];
+
+				foreach ($data['fia_GET']['G'] as $value) {
+					$implode[] = $this->db->escape($value);
+				}
+
+				$sql .= " AND `paG`.`text`               IN ('" . implode('\',\'', $implode) . "')";
+			}
+
+			if (!empty($data['fia_GET']['M'])) {
+				$implode = [];
+
+				foreach ($data['fia_GET']['M'] as $value) {
+					$implode[] = (int)$value;
+				}
+
+				$sql .= " AND `p`.`manufacturer_id` IN ('" . implode('\',\'', $implode) . "')";
+			}
+
+			if (!empty($data['fia_GET']['S'])) {
+				$implode = [];
+
+				foreach ($data['fia_GET']['S'] as $value) {
+					$implode[] = (int)$value;
+				}
+
+				$sql .= " AND `pov`.`option_value_id`   IN ('" . implode('\',\'', $implode) . "')";
+			}
+
+			$sql .= " AND `paCO`.`language_id`        = '" . $config_language_id . "'";
+			$sql .= " AND `paCO`.`attribute_id`       = '" . (int)$data['attribute_id'] . "'";
+		}
+
         // Categories
         if ($data['key'] == 'C') {
             if (!empty($data['fia_GET']['S'])) {
@@ -656,6 +733,15 @@ class ModelExtensionModuleFilterA extends Model {
 
                 $sql .= " AND `pov`.`option_value_id`   IN ('" . implode('\',\'', $implode) . "')";
             }
+			if (!empty($data['fia_GET']['CO'])) {
+				$implode = [];
+
+				foreach ($data['fia_GET']['CO'] as $value) {
+					$implode[] = $this->db->escape($value);
+				}
+
+				$sql .= " AND `paCO`.`text`               IN ('" . implode('\',\'', $implode) . "')";
+			}
 
             $sql .= " AND `pa`.`language_id`        = '" . $config_language_id . "'";
             $sql .= " AND `pa`.`attribute_id`       = '" . (int)$data['attribute_id'] . "'";
@@ -673,6 +759,16 @@ class ModelExtensionModuleFilterA extends Model {
 
                 $sql .= " AND `pa`.`text`               IN ('" . implode('\',\'', $implode) . "')";
             }
+			if (!empty($data['fia_GET']['CO'])) {
+				$implode = [];
+
+				foreach ($data['fia_GET']['CO'] as $value) {
+					$implode[] = $this->db->escape($value);
+				}
+
+
+				$sql .= " AND `paCO`.`text`               IN ('" . implode('\',\'', $implode) . "')";
+			}
 
             if (!empty($data['fia_GET']['M'])) {
                 if (!empty($data['fia_GET']['S'])) {
@@ -709,13 +805,23 @@ class ModelExtensionModuleFilterA extends Model {
 
                 $sql .= " AND `pa`.`text`               IN ('" . implode('\',\'', $implode) . "')";
             }
+			if (!empty($data['fia_GET']['CO'])) {
+				$implode = [];
+
+				foreach ($data['fia_GET']['CO'] as $value) {
+					$implode[] = $this->db->escape($value);
+				}
+
+
+				$sql .= " AND `paCO`.`text`               IN ('" . implode('\',\'', $implode) . "')";
+			}
 
             $sql .= " AND `pa`.`attribute_id`       = '" . (int)$data['attribute_id'] . "'";
             $sql .= " AND `ovd`.`language_id`       = '" . $config_language_id . "'";
         }
 
 
-        if (($data['key'] == 'C' || $data['key'] == 'S') && !empty($data['fia_GET']['M'])) {
+        if (($data['key'] == 'CO' || $data['key'] == 'C' || $data['key'] == 'S') && !empty($data['fia_GET']['M'])) {
             $implode = [];
 
             foreach ($data['fia_GET']['M'] as $value) {
@@ -843,6 +949,79 @@ class ModelExtensionModuleFilterA extends Model {
 
         return $return_data;
     }
+
+	//color
+	public function getFilterA_CO($data) {
+		$return_data = [];
+
+		$config_language_id = (int)$this->config->get('config_language_id');
+
+		$sql = "SELECT DISTINCT `p`.`product_id`, `pa`.`attribute_id` AS `id`, `pa`.`text` AS `name`";
+
+		if (!empty($data['special'])) {
+			$sql .= " FROM " . DB_PREFIX . "product_special ps";
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `ps`.`product_id`)";
+		} else {
+			$sql .= " FROM `" . DB_PREFIX . "product_to_category` `p2c`";
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2c`.`product_id`)";
+		}
+
+		if (!empty($data['search'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`pd`.`product_id` = `p`.`product_id`)";
+		}
+
+		$sql .= " LEFT JOIN `" . DB_PREFIX . "product_attribute` `pa` ON (`pa`.`product_id` = `p`.`product_id`)";
+		$sql .= " LEFT JOIN `" . DB_PREFIX . "attribute` `a` ON (`a`.`attribute_id` = `pa`.`attribute_id`)";
+		$sql .= " WHERE `pa`.`language_id`      = '" . $config_language_id . "'";
+		$sql .= " AND `pa`.`attribute_id`     = '" . (int)$data['attribute_id'] . "'";
+
+		if ($data['category_id']) {
+			$sql .= " AND `p2c`.`category_id`     = '" . (int)$data['category_id'] . "'";
+		}
+
+		if (!empty($data['search'])) {
+			$parts = explode(' ', $data['search']);
+
+			$addP = '';
+
+			foreach( $parts as $part ) {
+				$_len = utf8_strlen($part);
+
+				if ($_len >= 3 && $_len <= 7) {
+					$addP .= ' AND (LOWER(pd.name) LIKE "' . $this->db->escape($part) . '%" OR LOWER(pd.name) LIKE "% ' . $this->db->escape($part) . '%"';
+				} else {
+					$addP .= ' AND (LOWER(pd.name) LIKE "%' . $this->db->escape($part) . '%"';
+				}
+
+				$addP .= ' OR LOWER(p.model) LIKE "%' . $this->db->escape($part) . '%"';
+				$addP .= ')';
+			}
+
+			$addP = substr($addP, 4);
+
+			$sql .= ' AND ' . $addP;
+			$sql .= " AND `pd`.`language_id`      = '" . $config_language_id . "'";
+		}
+
+		$NOW = date('Y-m-d H:i') . ':00';
+
+		if (!empty($data['special'])) {
+			$sql .= " AND ((ps.date_start = '0000-00-00' OR ps.date_start < '" . $NOW . "') AND (ps.date_end = '0000-00-00' OR ps.date_end > '" . $NOW . "'))";
+		}
+
+		$sql .= " AND `p`.`quantity` > '0'";
+		$sql .= " AND `p`.`status` = '1'";
+		$sql .= " AND `p`.`date_available` <= '" . $NOW . "'";
+		$sql .= " ORDER BY `a`.`sort_order`";
+
+		$query = $this->db->query($sql);
+
+		foreach ($query->rows as $result) {
+			$return_data[$result['name']][$result['product_id']] = $result['id'];
+		}
+
+		return $return_data;
+	}
 
     public function getFilterA_C($data) {
         $return_data = [];

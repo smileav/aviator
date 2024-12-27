@@ -2928,3 +2928,9 @@ body .show-scroll::-webkit-scrollbar-track {
 		transform: translate(24px, 0);
 	}
 }
+
+@media (min-width: 992px) {
+	.col-md-3-4 {
+		width: 20%;
+	}
+}

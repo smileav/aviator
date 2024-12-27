@@ -113,7 +113,7 @@ $(document).ready(function() {
     });
 
     if ($(window).width() > 991) {
-        $('.fia-G-o, .fia-C-o, .fia-M-o, .fia-S-o').on('click', function (e) {
+        $('.fia-G-o, .fia-CO-o, .fia-C-o, .fia-M-o, .fia-S-o').on('click', function (e) {
             if ($(this).hasClass('disabled')) {
                 return false;
             }
@@ -129,7 +129,7 @@ $(document).ready(function() {
             fiaQ(fia);
         });
     } else {
-        $('.fia-G-o, .fia-C-o, .fia-M-o, .fia-S-o').on('click', function () {
+        $('.fia-G-o, .fia-CO-o, .fia-C-o, .fia-M-o, .fia-S-o').on('click', function () {
             if ($(this).hasClass('disabled')) {
                 return false;
             }
@@ -250,6 +250,14 @@ $(document).ready(function() {
     });
 
     $('.fia-C .filtered').text(filtered.replace(/\,\ $/g, ''));
+
+    var filtered = '';
+
+    $('.fia-CO .active').each(function() {
+        filtered += $.trim($(this).text()) + ', ';
+    });
+
+    $('.fia-CO .filtered').text(filtered.replace(/\,\ $/g, ''));
 
     var filtered = '';
 

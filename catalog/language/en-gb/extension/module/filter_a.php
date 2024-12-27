@@ -12,3 +12,4 @@ $_['text_fia_limit']            = '%d per page';
 $_['text_fia_grid']             = 'View';
 $_['text_fia_clear']            = 'Clear All';
 $_['text_fia_apply']            = 'Apply';
+$_['text_fia_color']                  = 'Color';

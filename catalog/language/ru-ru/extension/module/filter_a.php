@@ -12,3 +12,4 @@ $_['text_fia_limit']            = '%d на странице';
 $_['text_fia_grid']             = 'Вид';
 $_['text_fia_clear']            = 'Очистить все';
 $_['text_fia_apply']            = 'Применить';
+	$_['text_fia_color']                  = 'Цвет';

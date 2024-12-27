@@ -73,6 +73,11 @@ class ControllerExtensionModuleFilterA extends Controller {
                     $this->fia_GET['S'] = explode(',', str_replace ( '/', '', $this->request->get['S']));
                     $this->fia_GET_flip['S'] = array_flip($this->fia_GET['S']);
                     break;
+				case 'CO':
+					$this->fia['CO'] = [];
+					$this->fia_GET['CO'] = explode(',', str_replace ( '', '', $this->request->get['CO']));
+					$this->fia_GET_flip['CO'] = array_flip($this->fia_GET['CO']);
+					break;
             }
         }
 
@@ -105,6 +110,16 @@ class ControllerExtensionModuleFilterA extends Controller {
             ];
 
             $this->fia_ALL['G'] = $this->model_extension_module_filter_a->getFilterA_G($filter_data);
+
+			//color
+			$filter_data = [
+				'attribute_id' => 13,
+				'category_id' => $this->category_id,
+				'search' => $this->search,
+				'special' => $this->special
+			];
+
+			$this->fia_ALL['CO'] = $this->model_extension_module_filter_a->getFilterA_CO($filter_data);
 
             $filter_data = [
                 'attribute_id' => 60,
@@ -157,6 +172,9 @@ class ControllerExtensionModuleFilterA extends Controller {
                 $this->formatFilterA_Data_G('G');
             }
 
+			if (empty($this->fia_GET['CO'])) {
+				$this->formatFilterA_Data_CO('CO');
+			}
             if (empty($this->fia_GET['C'])) {
                 $this->formatFilterA_Data_C('C');
             }
@@ -170,7 +188,8 @@ class ControllerExtensionModuleFilterA extends Controller {
             }
 
             unset($this->fia['G']['G=']);
-            unset($this->fia['C']['C=']);
+			unset($this->fia['CO']['CO=']);
+			unset($this->fia['C']['C=']);
             unset($this->fia['S']['S=']);
             unset($this->fia['M']['M=']);
 
@@ -343,6 +362,68 @@ class ControllerExtensionModuleFilterA extends Controller {
             }
         }
     }
+
+	public function formatFilterA_Data_CO($fia_GET_key) {
+		$this->fia[$fia_GET_key] = [];
+		$this->fia[$fia_GET_key]['CO='] = [];
+
+		if (isset($this->fia_GET['CO'])) {
+			$fia_GET_G_flip = array_flip($this->fia_GET['CO']);
+		} else {
+			$fia_GET_G_flip = [];
+		}
+
+		if (!empty($this->fia_GET['P'][0]) && !empty($this->fia_GET['P'][1])) {
+			$price_MIN_MAX = true;
+		} else {
+			$price_MIN_MAX = false;
+		}
+
+		$filter_data = [
+			'category_id'   => $this->category_id,
+			'search'   => $this->search,
+			'special'   => $this->special,
+			'fia_GET'       => $this->fia_GET,
+			'key'           => 'CO',
+			'price_MIN_MAX' => $price_MIN_MAX,
+			'attribute_id'  => 13
+		];
+
+		$this->fia[$fia_GET_key]['CO='] = $this->model_extension_module_filter_a->getFilterA_CD($filter_data);
+//var_dump($this->fia[$fia_GET_key]['CO=']);
+		if ($price_MIN_MAX) {
+			$this->min_price = (float)$this->fia_GET['P'][0];
+			$this->max_price = (float)$this->fia_GET['P'][1];
+
+			unset($this->fia[$fia_GET_key]['CO=']['min_price']);
+			unset($this->fia[$fia_GET_key]['CO=']['max_price']);
+		}
+//var_dump($this->fia_ALL[$fia_GET_key]);
+		foreach ($this->fia_ALL[$fia_GET_key] as $name => $result) {
+			$id = reset($result);
+
+			if (!isset($this->fia[$fia_GET_key][$name])) {
+				$this->fia[$fia_GET_key][$name]['id'] = $id;
+				$this->fia[$fia_GET_key][$name]['='] = [];
+				$this->fia[$fia_GET_key][$name]['+'] = [];
+			}
+
+			if (isset($fia_GET_G_flip[$name])) {
+				$prefix = '=';
+			} else {
+				$prefix = '+';
+			}
+
+			if (!empty($this->fia[$fia_GET_key]['CO='][$name])) {
+				foreach ($result as $product_id => $result_id) {
+					if (isset($this->fia[$fia_GET_key]['CO='][$name][$product_id])) {
+						$this->fia[$fia_GET_key][$name][$prefix][$product_id] = $id;
+					}
+
+				}
+			}
+		}
+	}
 
     public function formatFilterA_Data_C($fia_GET_key) {
         $this->fia[$fia_GET_key] = [];
@@ -585,7 +666,7 @@ class ControllerExtensionModuleFilterA extends Controller {
 
                     } else {
                         if ($fia == 'CA') {
-                            $fia_keywords = ['CA', 'G', 'C', 'M', 'P', 'S'];
+                            $fia_keywords = ['CA', 'G', 'C', 'M', 'P', 'S','CO'];
 
                             if (!in_array($part_array[0], $fia_keywords)) {
                                 $query .= urldecode(http_build_query([$part_array[0] => $part_array[1]])) . '&';

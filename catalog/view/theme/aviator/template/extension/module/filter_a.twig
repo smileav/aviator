@@ -5,7 +5,7 @@
         <svg class="fia-i-close" width="14" height="14"><use xlink:href="image/fia-icons.svg#i-close" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
     </div>
     <div class="row">
-        <div class="col-md-3 fia-G fia-checkbox" data-fia="G">
+        <div class="col-md-3 col-md-3-4 fia-G fia-checkbox" data-fia="G">
             <div class="fia-in">
                 <button type="button" data-toggle="dropdown">
                     <div>{{ text_fia_gender }} <span>({{ Filter_A.fia_GET.G|length }})</span><div class="filtered"></div></div> <span class="caret"></span></button>
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 fia-C fia-checkbox" data-fia="C">
+        <div class="col-md-3 col-md-3-4 fia-C fia-checkbox" data-fia="C">
             <div class="fia-in">
                 <button type="button" data-toggle="dropdown">
                     <div>{{ text_fia_category }} <span>({{ Filter_A.fia_GET.C|length }})</span><div class="filtered"></div></div> <span class="caret"></span></button>
@@ -68,7 +68,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 fia-M fia-checkbox" data-fia="M">
+        <div class="col-md-3 col-md-3-4 fia-M fia-checkbox" data-fia="M">
             <div class="fia-in">
                 <button type="button" data-toggle="dropdown">
                     <div>{{ text_fia_manufacturers }} <span>({{ Filter_A.fia_GET.M|length }})</span><div class="filtered"></div></div> <span class="caret"></span></button>
@@ -99,7 +99,41 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 fia-P">
+        <div class="col-md-3 col-md-3-4 fia-CO fia-checkbox" data-fia="CO">
+            <div class="fia-in">
+                <button type="button" data-toggle="dropdown">
+                    <div>{{ text_fia_color }} <span>({{ Filter_A.fia_GET.CO|length }})</span><div class="filtered"></div></div> <span class="caret"></span></button>
+                <div class="dropdown-menu fia-scroll">
+                    {% for name, value in Filter_A.fia.CO %}
+                        {% set active = name in Filter_A.fia_GET.CO %}
+                        {% set disabled = 1 %}
+                        {% set total_eq = value['=']|length %}
+                        {% set total_ad = value['+']|length %}
+                        {% set total = 0 %}
+                        {% if active and total_eq %}
+                            {% set disabled = 0 %}
+                            {% set total = '(' ~ total_eq ~ ')' %}
+                        {% elseif
+                            active and not total_eq and not total_ad %}
+                            {% set active = 0 %}
+                            {% set disabled = 1 %}
+                        {% elseif
+                            not active and total_ad %}
+                            {% set disabled = 0 %}
+                            {% set total = '(+' ~ total_ad ~ ')' %}
+                            {% if Filter_A.fia_GET.CO is empty %}
+                                {% set total = '(' ~ total_ad ~ ')' %}
+                            {% endif %}
+                        {% endif %}
+                        <div class="fia-CO-o{% if active %} active{% endif %}{% if disabled %} disabled{% endif %}" data-filter="{{ name }}"><span><svg class="fia-i-check" width="10" height="8"><use xlink:href="image/fia-icons.svg#i-check" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></span>{{ name }}&nbsp;<span>{{ total }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-3 col-md-3-4 fia-P">
             <div class="fia-in" data-fia="P">
                 <button type="button" data-toggle="dropdown">
                     <div>{{ text_fia_price }}<div class="filtered">{{ Filter_A.min_price_nf }} грн - {{ Filter_A.max_price_nf }} грн</div></div> <span class="caret"></span></button>
@@ -220,6 +254,12 @@
             {% if value|first in Filter_A.fia_GET.M %}
             {% set filter_count = filter_count + 1 %}
             <li data-clear="M={{ value|first }}"><span>{{ text_fia_manufacturer }}: {{ name }}</span> <svg class="fia-i-clear" width="10" height="10"><use xlink:href="image/fia-icons.svg#i-clear" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></li>
+            {% endif %}
+        {% endfor %}
+        {% for name, value in Filter_A.fia.CO %}
+            {% if name in Filter_A.fia_GET.CO %}
+                {% set filter_count = filter_count + 1 %}
+                <li data-clear="CO={{ name }}"><span>{{ text_fia_color }}: {{ name }}</span> <svg class="fia-i-clear" width="10" height="10"><use xlink:href="image/fia-icons.svg#i-clear" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></li>
             {% endif %}
         {% endfor %}
         {% if Filter_A.fia_GET.P %}

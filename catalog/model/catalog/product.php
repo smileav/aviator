@@ -96,6 +96,9 @@ class ModelCatalogProduct extends Model {
         if (!empty($data['fia_GET']['G'])) {
             $sql .= " LEFT JOIN `" . DB_PREFIX . "product_attribute` `paG` ON (`paG`.`product_id` = `p`.`product_id`)";
         }
+		if (!empty($data['fia_GET']['CO'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_attribute` `paCO` ON (`paCO`.`product_id` = `p`.`product_id`)";
+		}
 
         // if (!empty($data['fiaG']) || !empty($data['fiaC'])) {
         if (!empty($data['fia_GET']['C'])) {
@@ -130,7 +133,15 @@ class ModelCatalogProduct extends Model {
 
             $sql .= " AND `paG`.`text` IN ('" . implode('\',\'', $implode) . "')";
         }
+		if (!empty($data['fia_GET']['CO'])) {
+			$implode = [];
 
+			foreach ($data['fia_GET']['CO'] as $value) {
+				$implode[] =  $this->db->escape($value);
+			}
+
+			$sql .= " AND `paCO`.`text` IN ('" . implode('\',\'', $implode) . "')";
+		}
         if (!empty($data['fia_GET']['C'])) {
             $implode = [];
 
@@ -627,6 +638,9 @@ class ModelCatalogProduct extends Model {
         if (!empty($data['fia_GET']['G'])) {
             $sql .= " LEFT JOIN `" . DB_PREFIX . "product_attribute` `paG` ON (`paG`.`product_id` = `p`.`product_id`)";
         }
+		if (!empty($data['fia_GET']['CO'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_attribute` `paCO` ON (`paCO`.`product_id` = `p`.`product_id`)";
+		}
 
         if (!empty($data['fia_GET']['C'])) {
             $sql .= " LEFT JOIN `" . DB_PREFIX . "product_attribute` `paC` ON (`paC`.`product_id` = `p`.`product_id`)";
@@ -654,6 +668,15 @@ class ModelCatalogProduct extends Model {
 
             $sql .= " AND `paG`.`text` IN ('" . implode('\',\'', $implode) . "')";
         }
+		if (!empty($data['fia_GET']['CO'])) {
+			$implode = [];
+
+			foreach ($data['fia_GET']['CO'] as $value) {
+				$implode[] =  $this->db->escape($value);
+			}
+
+			$sql .= " AND `paCO`.`text` IN ('" . implode('\',\'', $implode) . "')";
+		}
 
         if (!empty($data['fia_GET']['C'])) {
             $implode = [];
