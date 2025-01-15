@@ -2934,3 +2934,247 @@ body .show-scroll::-webkit-scrollbar-track {
 		width: 20%;
 	}
 }
+
+:root{
+	--bg-color: #F5F7F8;
+	--border-color: #EBEDEE;
+	--black-color: #000000;
+}
+.account{
+	background: var(--bg-color);
+	padding: 30px 0;
+	margin-bottom: -80px;
+}
+.account .col-left #column-left{
+	float: none;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	display: block !important;
+}
+.account .dflex{
+	display: flex;
+	flex-wrap: wrap;
+}
+.account .col-left{
+	width: 40%;
+	padding-right: 20px;
+}
+.account .col-right{
+	width: 60%;
+}
+.account_menu{
+	background: var(--back-color);
+	padding: 30px;
+}
+.account_menu .head{
+	margin-bottom: 30px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.account_menu .head .name{
+	flex: 1;
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 25px;
+	text-align: left;
+	text-transform: uppercase;
+}
+.account_menu .head .contact{
+	flex: 1;
+	color: #00000066;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 20px;
+	text-align: right;
+}
+.account_menu .head .logout{
+	background-image: url("../image/log-out.svg");
+	width: 24px;
+	height: 24px;
+	display: block;
+	margin-left: 24px;
+}
+.account_menu .list{
+	display: flex;
+	flex-direction: column;
+}
+.account_menu .list .item{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px;
+	border: 1px solid var(--border-color);
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 20px;
+	color: #1A2540;
+}
+.account_menu .list .item + .item{
+	margin-top:12px
+}
+.account_menu .list .item:after{
+	content: '';
+	background: url('../image/arrow.svg') no-repeat center;
+	width: 18px;
+	height: 18px;
+	display: flex;
+	margin-left: 15px;
+}
+.account_menu .list .item svg{
+	margin-right: 12px;
+}
+.account_menu .list .item .text{
+	flex: 1;
+}
+.account_menu .list .item .count{
+	color: var(--bg-color);
+	background: var(--black-color);
+	width: 20px;
+	height: 20px;
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	border-radius: 10px;
+	font-size: 12px;
+	line-height: 14px;
+}
+.account_menu .list .item.active{
+	color: var(--bg-color);
+	background: var(--black-color);
+}
+.account_menu .list .item.active svg path{
+	fill: var(--bg-color);
+}
+.account_menu .list .item.active:after{
+	background: url('../image/arrow_white.svg') no-repeat center;
+}
+.account_menu .list .item.active .count{
+	background: var(--bg-color);
+	color: var(--black-color);
+}
+.account .col-right{
+	padding: 25px;
+	background: var(--back-color);
+}
+.account .col-right > .head{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom:1px solid var(--border-color);
+	padding-bottom: 30px;
+	margin-bottom: 30px;
+}
+.account .col-right > .head h1{
+	flex: 1;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 34px;
+	margin: 0;
+}
+.account .col-right .head .last_orders{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 19px;
+	border-bottom: 1px solid;
+}
+.account .col-right > .head .last_orders svg{
+	margin-right: 5px;
+}
+.account .list_orders .order{
+	display: flex;
+	flex-direction: column;
+}
+.account .list_orders .order + .order{
+	margin-top: 30px;
+}
+.account .list_orders .order .order_info{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.account .list_orders .order .head{
+	flex: 1;
+}
+.account .list_orders .order .head .order_id{
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 28px;
+	text-transform: uppercase;
+}
+.account .list_orders .order .count,
+.account .list_orders .order .date{
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 16px;
+	color: #0000004D;
+}
+.account .list_orders .order .wrap_totals{
+	display: flex;
+	flex-direction: row;
+}
+.account .list_orders .order .totals{
+	margin: 0 24px;
+	text-align: right;
+}
+.account .list_orders .order .total{
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 23px;
+	text-transform: uppercase;
+}
+.account .list_orders .order .status{
+	height: 30px;
+	padding: 0 12px;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 30px;
+	text-align: center;
+	background: #000;
+	color: #fff;
+}
+.account .list_orders .order .products{
+	display: flex;
+	flex-wrap: wrap;
+}
+.account .list_orders .order .products .product{
+	margin-right: 8px;
+}
+
+
+@media (min-width: 992px) and (max-width: 1199px) {
+	.account_menu .head {flex-wrap: wrap;}
+	.account_menu .head .name{order: 1;}
+	.account_menu .head .contact{text-align: left;order:3;width: 100%;}
+	.account_menu .head .logout{order: 2;}
+}
+@media (min-width: 0px) and (max-width: 991px) {
+	.account {padding: 5px 0;}
+
+	.account .col-left,.account .col-right{width: 100%;}
+	.account .col-left{margin-bottom: 5px;padding: 0;}
+	.account_menu {padding: 15px;}
+	.account_menu .head {margin-bottom: 20px;}
+	.account_menu .head .name{font-size: 13px;line-height: 16px}
+	.account_menu .head .contact{font-size: 12px;line-height: 16px}
+	.account_menu .head .logout{margin-left: 10px;}
+
+}
+@media (min-width: 0px) and (max-width: 767px) {
+	.account .container{padding: 0; margin: 0;}
+	.account .col-right > .head h1 {font-size: 18px;line-height: 22px;text-transform: none;}
+	.account .col-right .head .last_orders {font-size: 10px;}
+}
+@media (min-width: 0px) and (max-width: 600px) {
+	.account .list_orders .order .wrap_totals {
+		flex-direction: column;
+		align-items: end;
+	}
+	.account .list_orders .order .totals{
+		margin: 0 0 5px 0;
+	}
+}

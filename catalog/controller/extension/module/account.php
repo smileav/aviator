@@ -2,6 +2,30 @@
 class ControllerExtensionModuleAccount extends Controller {
 	public function index() {
 		$this->load->language('extension/module/account');
+        $this->load->model('account/customer');
+        $this->load->model('account/order');
+        $this->load->model('account/wishlist');
+
+
+        if ($this->customer->isLogged()) {
+            $customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
+        }
+
+        if(isset($this->request->get['route']) && $this->request->get['route']){
+            $data['route'] = $this->request->get['route'];
+        }else{
+            $data['route'] = '';
+        }
+
+
+        if($customer_info){
+            $data['customer_name'] = $customer_info['firstname'] . ' ' . $customer_info['lastname'];
+            $data['contact'] = implode('<br>',[$customer_info['telephone'],$customer_info['email']]);
+            $data['order_total'] = $this->model_account_order->getTotalOrders();
+            $data['order_total_wishlist'] = $this->model_account_wishlist->getTotalWishlist();
+        }
+
+
 
 		$data['logged'] = $this->customer->isLogged();
 		$data['register'] = $this->url->link('account/register', '', true);

@@ -3,7 +3,8 @@ class ModelLocalisationOrderStatus extends Model {
 	public function addOrderStatus($data) {
 		foreach ($data['order_status'] as $language_id => $value) {
 			if (isset($order_status_id)) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "order_status SET order_status_id = '" . (int)$order_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+				$this->db->query("
+                    INSERT INTO " . DB_PREFIX . "order_status SET order_status_id = '" . (int)$order_status_id . "', language_id = '" . (int)$language_id . "', bg_color = '" . $this->db->escape($data['bg_color']) . "', txt_color = '" . $this->db->escape($data['txt_color']) . "', name = '" . $this->db->escape($value['name']) . "'");
 			} else {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "order_status SET language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 
@@ -20,7 +21,7 @@ class ModelLocalisationOrderStatus extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "'");
 
 		foreach ($data['order_status'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "order_status SET order_status_id = '" . (int)$order_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order_status SET order_status_id = '" . (int)$order_status_id . "', language_id = '" . (int)$language_id . "', bg_color = '" . $this->db->escape($data['bg_color']) . "', txt_color = '" . $this->db->escape($data['txt_color']) . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
 
 		$this->cache->delete('order_status');
@@ -86,7 +87,7 @@ class ModelLocalisationOrderStatus extends Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "'");
 
 		foreach ($query->rows as $result) {
-			$order_status_data[$result['language_id']] = array('name' => $result['name']);
+			$order_status_data[$result['language_id']] = array('name' => $result['name'],'bg_color'=>$result['bg_color'],'txt_color'=>$result['txt_color']);
 		}
 
 		return $order_status_data;

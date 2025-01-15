@@ -1,0 +1,55 @@
+{{ header }}
+<div  class="container">
+  {% include('aviator/template/common/breadcrumb.twig') %}
+</div>
+<div class="account" id="account-account">
+  <div  class="container">
+    {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
+    {% endif %}
+    <div class="dflex">
+      <div class="col-left">
+        {{ column_left }}
+      </div>
+      <div class="col-right">
+        <div class="head">
+          <h1>{{ text_last_orders }}</h1>
+          <a href="{{ order }}" class="last_orders">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.5509 5.81766C17.5501 5.81599 17.5509 5.81434 17.5501 5.81184C17.5484 5.80767 17.5443 5.80433 17.5418 5.80016C17.2401 5.261 16.7751 4.81598 16.1876 4.55515L11.1876 2.33266C10.4343 1.99849 9.57177 1.99849 8.81761 2.33266L3.81761 4.55515C3.23011 4.81598 2.76511 5.261 2.46344 5.80016C2.46094 5.80433 2.4576 5.80767 2.4551 5.81184C2.45427 5.8135 2.45512 5.81516 2.45428 5.81766C2.22178 6.24016 2.08594 6.71848 2.08594 7.22015V12.776C2.08594 13.9277 2.76511 14.9735 3.81761 15.441L8.81761 17.6635C9.19261 17.8293 9.59422 17.9126 9.99589 17.9135C9.99839 17.9135 10.0001 17.9143 10.0026 17.9143C10.0051 17.9143 10.0068 17.9135 10.0093 17.9135C10.4118 17.9126 10.8126 17.8293 11.1876 17.6635L16.1876 15.441C17.2401 14.9735 17.9193 13.9277 17.9193 12.776V7.22015C17.9193 6.71848 17.7834 6.24099 17.5509 5.81766ZM9.15594 3.09516C9.42428 2.976 9.71344 2.916 10.0026 2.916C10.2918 2.916 10.5801 2.976 10.8493 3.09516L15.8493 5.31766C16.1118 5.43432 16.3259 5.61433 16.5142 5.81766L13.8701 6.99266L7.32265 3.911L9.15594 3.09516ZM4.15594 5.31682L6.31506 4.35684L12.8626 7.43931L10.8509 8.33351C10.3126 8.56934 9.69265 8.56932 9.15432 8.33432L3.49015 5.81682C3.67932 5.61349 3.89344 5.43348 4.15594 5.31682ZM4.15594 14.6802C3.40511 14.346 2.91927 13.5985 2.91927 12.776V7.22015C2.91927 6.97931 2.97178 6.75099 3.04928 6.53182L8.81923 9.09683C9.06507 9.20433 9.32427 9.26348 9.58594 9.30015V17.0377C9.43927 17.0077 9.29511 16.9635 9.15594 16.9018L4.15594 14.6802ZM17.0859 12.776C17.0859 13.5985 16.6001 14.346 15.8493 14.6802L10.8493 16.9027C10.7101 16.9643 10.5659 17.0085 10.4193 17.0385V9.30099C10.6818 9.26349 10.9409 9.20433 11.1884 9.09683L13.4443 8.09432V9.90765C13.4443 10.1377 13.6309 10.3243 13.8609 10.3243C14.0909 10.3243 14.2776 10.1377 14.2776 9.90765V7.72348L16.9559 6.5335C17.0334 6.75267 17.0859 6.98183 17.0859 7.22183V12.776Z" fill="black"/>
+            </svg>
+            {{ text_all_orders }}</a>
+        </div>
+        <div class="list_orders">
+          {% for order in orders %}
+            <a href="{{ order.view }}" class="order">
+              <div class="order_info">
+                <div class="head">
+                  <div class="order_id">{{ text_my_orders }}: {{ order.order_id }}</div>
+                  <div class="count">{{ order.products_count }} {{ text_product }}</div>
+                </div>
+                <div class="wrap_totals">
+                  <div class="totals">
+                    <div class="total">{{ order.total }}</div>
+                    <div class="date">{{ order.date_added }}</div>
+                  </div>
+                  <div class="status" style="background:#{{ order.status_bg_color }};color: #{{ order.status_color }}">{{ order.status }}</div>
+                </div>
+              </div>
+              {% if order.products %}
+                <div class="products">
+                  {% for product in order.products %}
+                    <div class="product">
+                      <img src="{{ product.image }}" />
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

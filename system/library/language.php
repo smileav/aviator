@@ -93,4 +93,15 @@ class Language {
             $this->data = array_pop($this->backup);
         }
     }
+
+    public function date_current_lang($date, $month_array) {
+
+        $date = strtotime($date);
+
+        $day = date('d',$date);
+        $month = $month_array[(int)date('m',$date)];
+        $year = date('Y',$date);
+
+        return implode(' ',[$day,$month,$year]);;
+    }
 }

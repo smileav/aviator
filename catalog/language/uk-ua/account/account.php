@@ -1,11 +1,13 @@
 <?php
 
 // Heading
-$_['heading_title']      = 'Особистий кабінет';
+$_['heading_title']      = 'Профіль';
 
 // Text
-$_['text_account']       = 'Особистий кабінет';
+$_['text_account']       = 'Профіль';
 $_['text_my_account']    = 'Обліковий запис';
+$_['text_last_orders']     = 'Останні замовлення';
+$_['text_all_orders']     = 'Всі замовлення';
 $_['text_my_orders']     = 'Замовлення';
 $_['text_my_affiliate']  = 'Партнерській розділ';
 $_['text_my_newsletter'] = 'Підписка';
@@ -26,3 +28,4 @@ $_['text_affiliate_add'] = 'Реєстрація партнерського об
 $_['text_affiliate_edit'] = 'Керування партнерською інформацією';
 $_['text_tracking']      = 'Код відстеження партнерів';
 $_['text_wishlist']      = 'Закладки';
+$_['text_product']      = 'одиниць(ці)';

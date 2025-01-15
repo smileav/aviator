@@ -1,11 +1,13 @@
 <?php
 // Heading
-$_['heading_title']       = 'My Account';
+$_['heading_title']       = 'Account';
 
 // Text
 $_['text_account']        = 'Account';
+$_['text_last_orders'] = 'Last orders';
+$_['text_all_orders'] = 'All orders';
 $_['text_my_account']     = 'My Account';
-$_['text_my_orders']      = 'My Orders';
+$_['text_my_orders']      = 'Order';
 $_['text_my_affiliate']   = 'My Affiliate Account';
 $_['text_my_newsletter']  = 'Newsletter';
 $_['text_edit']           = 'Edit your account information';
@@ -24,3 +26,4 @@ $_['text_transactions']   = 'Transactions';
 $_['text_affiliate_add']  = 'Register for an affiliate account';
 $_['text_affiliate_edit'] = 'Edit your affiliate information';
 $_['text_tracking']       = 'Custom Affiliate Tracking Code';
+$_['text_product']      = 'item(s)';

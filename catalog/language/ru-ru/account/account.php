@@ -3,20 +3,22 @@
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
 // Heading
-$_['heading_title']      = 'Личный кабинет';
+$_['heading_title']      = 'Профиль';
 
 // Text
-$_['text_account']       = 'Личный кабинет';
+$_['text_account']       = 'Профиль';
+$_['text_last_orders'] = 'Последние заказы';
+$_['text_all_orders'] = 'Все заказы';
 $_['text_my_account']    = 'Моя учетная запись';
-$_['text_my_orders']     = 'Мои заказы';
+$_['text_my_orders']     = 'Заказ';
 $_['text_my_affiliate']  = 'Партнерcкий раздел';
 $_['text_my_newsletter'] = 'Подписка';
-$_['text_edit']          = 'Изменить контактную информацию';
+$_['text_edit']          = 'Персональные данные';
 $_['text_password']      = 'Изменить свой пароль';
 $_['text_address']       = 'Изменить мои адреса';
 $_['text_credit_card']   = 'Управление сохраненными кредитными картами';
-$_['text_wishlist']      = 'Изменить закладки';
-$_['text_order']         = 'История заказов';
+$_['text_wishlist']      = 'Избранные товары';
+$_['text_order']         = 'Заказы';
 $_['text_download']      = 'Файлы для скачивания';
 $_['text_reward']        = 'Бонусные баллы';
 $_['text_return']        = 'Запросы на возврат';
@@ -27,3 +29,4 @@ $_['text_transactions']  = 'Операции';
 $_['text_affiliate_add']  = 'Зарегистрировать партнерский аккаунт';
 $_['text_affiliate_edit'] = 'Изменить партнерскую информацию';
 $_['text_tracking']       = 'Код отслеживания партнеров';
+$_['text_product']      = 'единиц(а)';
