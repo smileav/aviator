@@ -1,10 +1,10 @@
 <?php
 
 // Heading
-$_['heading_title']         = 'Історія замовлень';
+$_['heading_title']         = 'Замовлення';
 
 // Text
-$_['text_account']          = 'Особистий кабінет';
+$_['text_account']          = 'Профіль';
 $_['text_order']            = 'Замовлення';
 $_['text_order_detail']     = 'Деталі замовлення';
 $_['text_invoice_no']       = '№ рахунку:';
@@ -20,6 +20,8 @@ $_['text_history']          = 'Історія замовлення';
 $_['text_success']          = 'Товари із замовлення <a href="%s">%s</a> додані <a href="%s">у кошик</a>';
 $_['text_empty']            = 'У вас ще не було покупок';
 $_['text_error']            = 'Такого замовлення не існує';
+$_['text_product']      = 'одиниць(ці)';
+$_['text_my_orders']     = 'Замовлення';
 
 // Column
 $_['column_order_id']       = '№ замовлення';

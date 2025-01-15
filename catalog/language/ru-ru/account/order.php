@@ -3,10 +3,10 @@
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
 // Heading
-$_['heading_title']         = 'История заказов';
+$_['heading_title']         = 'Заказы';
 
 // Text
-$_['text_account']          = 'Личный кабинет';
+$_['text_account']          = 'Профиль';
 $_['text_order']            = 'Заказ';
 $_['text_order_detail']     = 'Детали заказа';
 $_['text_invoice_no']       = '№ Счета:';
@@ -21,6 +21,8 @@ $_['text_history']          = 'История заказа';
 $_['text_success']          = 'Товары из заказа <a href="%s">%s</a> успешно добавлены <a href="%s">в вашу корзину</a>!';
 $_['text_empty']            = 'Вы еще не совершали покупок!';
 $_['text_error']            = 'Запрошенный заказ не найден!';
+$_['text_product']      = 'единиц(а)';
+$_['text_my_orders']     = 'Заказ';
 
 // Column
 $_['column_order_id']       = '№ Заказа';

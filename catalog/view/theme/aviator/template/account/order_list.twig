@@ -1,0 +1,53 @@
+{{ header }}
+<div  class="container">
+  {% include('aviator/template/common/breadcrumb.twig') %}
+</div>
+<div class="account" id="account-account">
+  <div  class="container">
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
+    {% endif %}
+    <div class="dflex">
+      <div class="col-left">
+        {{ column_left }}
+      </div>
+      <div class="col-right">
+        <div class="head">
+          <h1>{{ heading_title }}</h1>
+        </div>
+        <div class="list_orders">
+          {% for order in orders %}
+            <a href="{{ order.view }}" class="order">
+              <div class="order_info">
+                <div class="head">
+                  <div class="order_id">{{ text_my_orders }}: {{ order.order_id }}</div>
+                  <div class="count">{{ order.products_count }} {{ text_product }}</div>
+                </div>
+                <div class="wrap_totals">
+                  <div class="totals">
+                    <div class="total">{{ order.total }}</div>
+                    <div class="date">{{ order.date_added }}</div>
+                  </div>
+                  <div class="status" style="background:#{{ order.status_bg_color }};color: #{{ order.status_color }}">{{ order.status }}</div>
+                </div>
+              </div>
+              {% if order.products %}
+                <div class="products">
+                  {% for product in order.products %}
+                    <div class="product">
+                      <img src="{{ product.image }}" />
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </a>
+          {% endfor %}
+        </div>
+        <div class="row">
+          <div class="col-sm-12">{{ pagination }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}
