@@ -1,5 +1,28 @@
 <div class="product-thumb" data-id="{{ product.product_id }}">
-    <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" width="{{ product.thumb_w }}" height="{{ product.thumb_h }}" alt="{{ product.name }}" title="{{ product.name }}" loading="lazy" class="img-responsive"/></a></div>
+    {% if product.add_to_wishlist %}
+        <div class="wishlist" onclick="wishlist.add('{{ product.product_id }}');">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.7096 7.26666C17.7096 8.23333 17.343 9.20833 16.6013 9.95L15.368 11.1833L10.0596 16.4917C10.0346 16.5167 10.0263 16.525 10.0013 16.5417C9.9763 16.525 9.96797 16.5167 9.94297 16.4917L3.4013 9.95C2.65964 9.20833 2.29297 8.24166 2.29297 7.26666C2.29297 6.29166 2.65964 5.31667 3.4013 4.575C4.88464 3.1 7.28463 3.1 8.76797 4.575L9.99297 5.80833L11.2263 4.575C12.7096 3.1 15.1013 3.1 16.5846 4.575C17.343 5.31667 17.7096 6.28333 17.7096 7.26666Z"
+                      stroke="black" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round"/>
+            </svg>
+        </div>
+    {% endif %}
+    {% if product.remove_wishlist %}
+        <a href="{{ product.remove }}" class="wishlist">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M28.3307 11.6274C28.3307 13.1741 27.7441 14.7341 26.5574 15.9208L24.5841 17.8941L16.0907 26.3874C16.0507 26.4274 16.0374 26.4408 15.9974 26.4674C15.9574 26.4408 15.9441 26.4274 15.9041 26.3874L5.4374 15.9208C4.25073 14.7341 3.66406 13.1874 3.66406 11.6274C3.66406 10.0674 4.25073 8.50745 5.4374 7.32078C7.81073 4.96078 11.6507 4.96078 14.0241 7.32078L15.9841 9.29411L17.9574 7.32078C20.3307 4.96078 24.1574 4.96078 26.5307 7.32078C27.7441 8.50745 28.3307 10.0541 28.3307 11.6274Z" fill="black" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+        </a>
+    {% endif %}
+
+    <div class="image">
+        <a href="{{ product.href }}">
+            <img src="{{ product.thumb }}" width="{{ product.thumb_w }}" height="{{ product.thumb_h }}" alt="{{ product.name }}" title="{{ product.name }}" loading="lazy" class="img-responsive"/>
+        </a>
+    </div>
     <div>
         <div class="caption">
             <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>

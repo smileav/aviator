@@ -3,10 +3,9 @@
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
 // Heading
-$_['heading_title'] = 'Мои закладки';
-
+$_['heading_title'] = 'Избранные товары';
 // Text
-$_['text_account']  = 'Личный кабинет';
+$_['text_account']  = 'Профиль';
 $_['text_instock']  = 'В наличии';
 $_['text_wishlist'] = 'Закладки (%s)';
 $_['text_login']    = 'Необходимо войти в <a href="%s">Личный Кабинет</a> или <a href="%s">создать учетную запись</a>, чтобы сохранить товар <a href="%s">%s</a> в свои <a href="%s">закладки</a>!';
