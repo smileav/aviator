@@ -2961,9 +2961,6 @@ body .show-scroll::-webkit-scrollbar-track {
 	padding-right: 20px;
 }
 .account .col-right{
-	width: 100%;
-}
-.account .col-left + .col-right{
 	width: 60%;
 }
 .account_menu{
@@ -3383,15 +3380,99 @@ body .show-scroll::-webkit-scrollbar-track {
 #account-wishlist .head{
 	margin-bottom: 20px;
 }
+.account .form_edit .buttons > *{
+	width: 100%;
+	max-width: 100%;
+}
+.account .form_edit .newsletter{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	border: 1px solid #000;
+	padding: 16px 24px;
+	margin: 30px 4px 4px 4px;
+
+}
+.account .form_edit .newsletter .description{
+	flex: 1;
+	margin: 0 16px;
+	color: #1A2540;
+}
+.account .form_edit .newsletter .description .head{
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 22px;
+	text-transform: uppercase;
+	margin-bottom: 6px;
+}
+.account .form_edit .newsletter .radio_bul{
+	background: url("../image/radio.svg") no-repeat 0 0;
+	width: 70px;
+	height: 33px;
+	cursor: pointer;
+}
+.account .form_edit .newsletter .radio_bul.active{
+	background-position: 0 -38px;
+}
+.account .orders_empty{
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding: 30px;
+}
+.account .orders_empty .head{
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 24px;
+	text-align: center;
+	text-transform: uppercase;
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+.account .orders_empty .text{
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 22px;
+	text-align: center;
+	color: #00000099;
+	margin-bottom: 30px;
+}
+.account .orders_empty .buttons{
+	width: 100%;
+}
+.account .orders_empty .buttons .opc-btn{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.account .orders_empty .buttons .opc-btn:hover{
+	color: #fff;
+}
+.account .orders_empty .buttons .opc-btn.btn-white:hover{
+	color: #000;
+}
 
 
 
+@media (min-width: 1200px){
+	.form_edit form{
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+		margin-left: -4px;
+		margin-right: -4px;
+	}
+	.form_edit form > div{
+		width:50%;
+		padding: 4px;
+	}
+	.account .form_edit form .buttons{
+		width: 100%;
+	}
 
-
-
-
-
-
+}
 @media (min-width: 992px) and (max-width: 1199px) {
 	.account_menu .head {flex-wrap: wrap;}
 	.account_menu .head .name{order: 1;}
@@ -3417,12 +3498,8 @@ body .show-scroll::-webkit-scrollbar-track {
 	#account-wishlist{padding:0 15px;}
 }
 @media (min-width: 0px) and (max-width: 600px) {
-	.account .list_orders .order .wrap_totals {
-		flex-direction: column;
-		align-items: end;
-	}
-	.account .list_orders .order .totals{
-		margin: 0 0 5px 0;
-	}
+	.account .list_orders .order .wrap_totals {flex-direction: column;align-items: end;}
+	.account .list_orders .order .totals{margin: 0 0 5px 0;}
+	.account .form_edit .newsletter > svg{display: none}
 }
 

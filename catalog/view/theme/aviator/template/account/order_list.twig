@@ -16,32 +16,57 @@
           <h1>{{ heading_title }}</h1>
         </div>
         <div class="list_orders">
-          {% for order in orders %}
-            <a href="{{ order.view }}" class="order">
-              <div class="order_info">
-                <div class="head">
-                  <div class="order_id">{{ text_my_orders }}: {{ order.order_id }}</div>
-                  <div class="count">{{ order.products_count }} {{ text_product }}</div>
-                </div>
-                <div class="wrap_totals">
-                  <div class="totals">
-                    <div class="total">{{ order.total }}</div>
-                    <div class="date">{{ order.date_added }}</div>
+          {% if orders %}
+            {% for order in orders %}
+              <a href="{{ order.view }}" class="order">
+                <div class="order_info">
+                  <div class="head">
+                    <div class="order_id">{{ text_my_orders }}: {{ order.order_id }}</div>
+                    <div class="count">{{ order.products_count }} {{ text_product }}</div>
                   </div>
-                  <div class="status" style="background:#{{ order.status_bg_color }};color: #{{ order.status_color }}">{{ order.status }}</div>
-                </div>
-              </div>
-              {% if order.products %}
-                <div class="products">
-                  {% for product in order.products %}
-                    <div class="product">
-                      <img src="{{ product.image }}" />
+                  <div class="wrap_totals">
+                    <div class="totals">
+                      <div class="total">{{ order.total }}</div>
+                      <div class="date">{{ order.date_added }}</div>
                     </div>
-                  {% endfor %}
+                    <div class="status" style="background:#{{ order.status_bg_color }};color: #{{ order.status_color }}">{{ order.status }}</div>
+                  </div>
                 </div>
-              {% endif %}
-            </a>
-          {% endfor %}
+                {% if order.products %}
+                  <div class="products">
+                    {% for product in order.products %}
+                      <div class="product">
+                        <img src="{{ product.image }}" />
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </a>
+            {% endfor %}
+          {% else %}
+            <div class="orders_empty">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.6037 26.2387C10.711 24.9022 11.3177 23.6551 12.3031 22.7458C13.2885 21.8365 14.5803 21.3318 15.9211 21.332H48.0757C49.4166 21.3318 50.7083 21.8365 51.6937 22.7458C52.6791 23.6551 53.2858 24.9022 53.3931 26.2387L55.5344 52.9054C55.5933 53.6392 55.4996 54.3773 55.2593 55.0732C55.0189 55.769 54.6371 56.4076 54.1379 56.9487C53.6386 57.4898 53.0328 57.9216 52.3585 58.2171C51.6841 58.5125 50.9559 58.6651 50.2197 58.6654H13.7771C13.0409 58.6651 12.3127 58.5125 11.6384 58.2171C10.964 57.9216 10.3582 57.4898 9.85893 56.9487C9.35969 56.4076 8.97788 55.769 8.73753 55.0732C8.49718 54.3773 8.40351 53.6392 8.46241 52.9054L10.6037 26.2387Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M42.6693 29.332V15.9987C42.6693 13.1697 41.5455 10.4566 39.5451 8.45623C37.5447 6.45584 34.8316 5.33203 32.0026 5.33203C29.1736 5.33203 26.4605 6.45584 24.4601 8.45623C22.4597 10.4566 21.3359 13.1697 21.3359 15.9987V29.332" stroke="black" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
+              </svg>
+              <div class="head">{{ text_head_no_orders }}</div>
+              <div class="text">{{ text_no_orders }}</div>
+              <div class="buttons">
+                <a href="{{ wishlist }}" class="opc-btn">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.7057 7.26666C17.7057 8.23333 17.3391 9.20833 16.5974 9.95L15.3641 11.1833L10.0557 16.4917C10.0307 16.5167 10.0224 16.525 9.9974 16.5417C9.9724 16.525 9.96406 16.5167 9.93906 16.4917L3.3974 9.95C2.65573 9.20833 2.28906 8.24166 2.28906 7.26666C2.28906 6.29166 2.65573 5.31667 3.3974 4.575C4.88073 3.1 7.28073 3.1 8.76406 4.575L9.98906 5.80833L11.2224 4.575C12.7057 3.1 15.0974 3.1 16.5807 4.575C17.3391 5.31667 17.7057 6.28333 17.7057 7.26666Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>&nbsp;
+                  {{ button_wisthlist }}
+                </a>
+                <a href="/" class="opc-btn btn-white">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.4193 8.95703H12.9193C11.7451 8.95703 11.0443 8.2562 11.0443 7.08203V4.58203C11.0443 3.40786 11.7451 2.70703 12.9193 2.70703H15.4193C16.5934 2.70703 17.2943 3.40786 17.2943 4.58203V7.08203C17.2943 8.2562 16.5934 8.95703 15.4193 8.95703ZM12.9193 3.95703C12.4284 3.95703 12.2943 4.0912 12.2943 4.58203V7.08203C12.2943 7.57286 12.4284 7.70703 12.9193 7.70703H15.4193C15.9101 7.70703 16.0443 7.57286 16.0443 7.08203V4.58203C16.0443 4.0912 15.9101 3.95703 15.4193 3.95703H12.9193ZM7.08594 8.95703H4.58594C3.41177 8.95703 2.71094 8.2562 2.71094 7.08203V4.58203C2.71094 3.40786 3.41177 2.70703 4.58594 2.70703H7.08594C8.2601 2.70703 8.96094 3.40786 8.96094 4.58203V7.08203C8.96094 8.2562 8.2601 8.95703 7.08594 8.95703ZM4.58594 3.95703C4.0951 3.95703 3.96094 4.0912 3.96094 4.58203V7.08203C3.96094 7.57286 4.0951 7.70703 4.58594 7.70703H7.08594C7.57677 7.70703 7.71094 7.57286 7.71094 7.08203V4.58203C7.71094 4.0912 7.57677 3.95703 7.08594 3.95703H4.58594ZM15.4193 17.2904H12.9193C11.7451 17.2904 11.0443 16.5895 11.0443 15.4154V12.9154C11.0443 11.7412 11.7451 11.0404 12.9193 11.0404H15.4193C16.5934 11.0404 17.2943 11.7412 17.2943 12.9154V15.4154C17.2943 16.5895 16.5934 17.2904 15.4193 17.2904ZM12.9193 12.2904C12.4284 12.2904 12.2943 12.4245 12.2943 12.9154V15.4154C12.2943 15.9062 12.4284 16.0404 12.9193 16.0404H15.4193C15.9101 16.0404 16.0443 15.9062 16.0443 15.4154V12.9154C16.0443 12.4245 15.9101 12.2904 15.4193 12.2904H12.9193ZM7.08594 17.2904H4.58594C3.41177 17.2904 2.71094 16.5895 2.71094 15.4154V12.9154C2.71094 11.7412 3.41177 11.0404 4.58594 11.0404H7.08594C8.2601 11.0404 8.96094 11.7412 8.96094 12.9154V15.4154C8.96094 16.5895 8.2601 17.2904 7.08594 17.2904ZM4.58594 12.2904C4.0951 12.2904 3.96094 12.4245 3.96094 12.9154V15.4154C3.96094 15.9062 4.0951 16.0404 4.58594 16.0404H7.08594C7.57677 16.0404 7.71094 15.9062 7.71094 15.4154V12.9154C7.71094 12.4245 7.57677 12.2904 7.08594 12.2904H4.58594Z" fill="black"/>
+                  </svg>&nbsp;
+                  {{ button_main }}
+                </a>
+              </div>
+            </div>
+          {% endif %}
         </div>
         <div class="row">
           <div class="col-sm-12">{{ pagination }}</div>

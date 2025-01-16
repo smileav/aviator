@@ -27,3 +27,5 @@ $_['text_affiliate_add']  = 'Register for an affiliate account';
 $_['text_affiliate_edit'] = 'Edit your affiliate information';
 $_['text_tracking']       = 'Custom Affiliate Tracking Code';
 $_['text_product']      = 'item(s)';
+$_['text_head_no_orders'] = 'You have no orders';
+$_['text_no_orders'] = "Check if you have any items in your wishlist - make sure you don't miss them!";

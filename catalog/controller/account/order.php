@@ -4,6 +4,8 @@
 
 class ControllerAccountOrder extends Controller {
 	public function index() {
+
+        $this->document->addStyle('catalog/view/javascript/opc/style.css');
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/order', '', true);
 

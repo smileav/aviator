@@ -121,6 +121,8 @@ $_['button_list']           = 'List';
 $_['button_grid']           = 'Grid';
 $_['button_map']            = 'View Google Map';
 $_['button_add']='Add';
+$_['button_wisthlist']='Add to favorites';
+$_['button_main']='Add to catalog';
 
 // Error
 $_['error_exception']       = 'Error Code(%s): %s in %s on line %s';

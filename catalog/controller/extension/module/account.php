@@ -26,7 +26,7 @@ class ControllerExtensionModuleAccount extends Controller {
             $data['return_total'] = $this->model_account_return->getTotalReturns();
         }
 
-
+        $data['customer_name'] = trim($data['customer_name']);
 
 		$data['logged'] = $this->customer->isLogged();
 		$data['register'] = $this->url->link('account/register', '', true);

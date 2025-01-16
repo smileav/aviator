@@ -124,6 +124,8 @@ $_['button_list']           = 'Список';
 $_['button_grid']           = 'Сетка';
 $_['button_map']            = 'Посмотреть карту';
 	$_['button_add']='Добавить';
+$_['button_wisthlist']='В избранное';
+$_['button_main']='В каталог';
 
 // Error
 $_['error_exception']       = 'Ошибка кода(%s): %s в %s на строке %s';
