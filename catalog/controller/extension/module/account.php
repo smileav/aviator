@@ -5,6 +5,7 @@ class ControllerExtensionModuleAccount extends Controller {
         $this->load->model('account/customer');
         $this->load->model('account/order');
         $this->load->model('account/wishlist');
+        $this->load->model('account/return');
 
 
         if ($this->customer->isLogged()) {
@@ -22,6 +23,7 @@ class ControllerExtensionModuleAccount extends Controller {
             $data['contact'] = implode('<br>',[$customer_info['telephone'],$customer_info['email']]);
             $data['order_total'] = $this->model_account_order->getTotalOrders();
             $data['order_total_wishlist'] = $this->model_account_wishlist->getTotalWishlist();
+            $data['return_total'] = $this->model_account_return->getTotalReturns();
         }
 
 

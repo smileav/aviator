@@ -20,6 +20,8 @@ $_['text_comment']       = 'Return Comments';
 $_['text_history']       = 'Return History';
 $_['text_empty']         = 'You have not made any previous returns!';
 $_['text_agree']         = 'I have read and agree to the <a href="%s" class="agree"><b>%s</b></a>';
+$_['text_my_returs']         = 'Return';
+$_['text_my_orders']         = 'Order';
 
 // Column
 $_['column_return_id']   = 'Return ID';

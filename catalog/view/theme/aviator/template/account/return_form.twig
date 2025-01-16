@@ -1,0 +1,156 @@
+{{ header }}
+<div  class="container">
+  {% include('aviator/template/common/breadcrumb.twig') %}
+</div>
+<div class="account" id="account-return-form">
+  <div  class="container">
+    {% if success %}
+      <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
+    {% endif %}
+    <div class="dflex">
+      <div class="col-left">
+        {{ column_left }}
+      </div>
+      <div class="col-right">
+        <div class="head">
+          <h1>{{ heading_title }}</h1>
+        </div>
+        <div class="form_return" id="onepcheckout">
+          <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+            <fieldset>
+              <div class="form-group form-group-error required">
+                <input id="input-opc-firstname" type="text" name="firstname" value="{{ firstname }}" class="form-checkout focus">
+                <div class="float-label">{{ entry_firstname }} <span>*</span></div>
+                <div class="form-error">
+                  {% if error_firstname %}{{ error_firstname }}{% endif %}
+                </div>
+              </div>
+              <div class="form-group form-group-error required">
+                <input id="input-opc-lastname" type="text" name="lastname" value="{{ lastname }}" class="form-checkout focus">
+                <div class="float-label">{{ entry_lastname }} <span>*</span></div>
+                <div class="form-error">{% if error_lastname %}{{ error_lastname }}{% endif %}</div>
+              </div>
+              <div class="form-group form-group-error required">
+                <input id="input-opc-email" type="text" name="email" value="{{ email }}" class="form-checkout focus">
+                <div class="float-label">{{ entry_email }} <span>*</span></div>
+                <div class="form-error">{% if error_email %}{{ error_email }}{% endif %}</div>
+              </div>
+              <div class="form-group form-group-error required">
+                <input id="input-opc-telephone" type="text" name="telephone" placeholder="+380 (XX) XXX-XX-XX"  value="{{ telephone }}" class="form-checkout focus">
+                <div class="float-label">{{ entry_telephone }} <span>*</span></div>
+                <div class="form-error">{% if error_telephone %}{{ error_telephone }}{% endif %}</div>
+              </div>
+              <div class="form-group form-group-error required">
+                <input id="input-opc-order_id" type="text" name="order_id" value="{{ order_id }}" class="form-checkout focus">
+                <div class="float-label">{{ entry_order_id }} <span>*</span></div>
+                <div class="form-error">{% if error_order_id %}{{ error_order_id }}{% endif %}</div>
+              </div>
+              <div class="form-group date">
+                <input id="input-opc-date_ordered" type="text" name="date_ordered" value="{{ date_ordered }}" data-date-format="YYYY-MM-DD"  class="form-checkout focus">
+                <div class="float-label">{{ entry_date_ordered }} <span>*</span></div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="form-group form-group-error required">
+                <input id="input-opc-product" type="text" name="product" value="{{ product }}" class="form-checkout focus">
+                <input type="hidden" name="product_id" value="{{ product_id }}" />
+                <div class="float-label">{{ entry_product }} <span>*</span></div>
+                <div class="form-error">{% if error_product %}{{ error_product }}{% endif %}</div>
+              </div>
+              <div class="form-group form-group-error required">
+                <input id="input-opc-model" type="text" name="model" value="{{ model }}" class="form-checkout focus">
+                <div class="float-label">{{ entry_model }} <span>*</span></div>
+                <div class="form-error">{% if error_model %}{{ error_model }}{% endif %}</div>
+              </div>
+              <div class="form-group">
+                <input id="input-opc-quantity" type="text" name="quantity" value="{{ quantity }}" class="form-checkout focus">
+                <div class="float-label">{{ entry_quantity }}</div>
+              </div>
+              <div class="opc_block_shipping_address form-group required">
+                <div class="shipping-method open">
+                  <div class="shipping_method_title">{{ entry_reason }}</div>
+                  <div class="checkout-address">
+                    <div class="checkout-address-info">
+                      <div class="row">
+                        <div class="form-group col-xs-12 custom-field required2" id="address-custom-field7">
+                          <div id="return_reason">
+                            {% for return_reason in return_reasons %}
+                              <div class="radio">
+                                <label class="chm-radio">
+                                  <input class="checkbox-input" type="radio" name="return_reason_id" value="{{ return_reason.return_reason_id }}"  {% if return_reason.return_reason_id == return_reason_id %}checked="checked"{% endif %}>
+                                  <span class="checkbox-radio"></span>
+                                  {{ return_reason.name }}
+                                </label>
+                              </div>
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-error">{% if error_reason %}{{ error_reason }}{% endif %}</div>
+                </div>
+              </div>
+              <div class="opc_block_shipping_address form-group">
+                <div class="shipping-method open">
+                  <div class="shipping_method_title">{{ entry_opened }}</div>
+                  <div class="checkout-address">
+                    <div class="checkout-address-info">
+                      <div class="row">
+                        <div class="form-group col-xs-12 custom-field required2" id="address-custom-field7">
+                          <div id="return_opened">
+                            <div class="radio">
+                              <label class="chm-radio">
+                                <input class="checkbox-input" type="radio" name="opened" value="1"  {% if opened %}checked="checked"{% endif %}>
+                                <span class="checkbox-radio"></span>
+                                {{ text_yes }}
+                              </label>
+                            </div>
+                            <div class="radio">
+                              <label class="chm-radio">
+                                <input class="checkbox-input" type="radio" name="opened" value="0"  {% if not opened %}checked="checked"{% endif %}>
+                                <span class="checkbox-radio"></span>
+                                {{ text_no }}
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <textarea name="comment" rows="3" class="form-checkout">{{ comment }}</textarea>
+                <div class="float-label">{{ entry_fault_detail }}</div>
+              </div>
+
+            </fieldset>
+
+
+              <div class="buttons">
+                <a href="{{ back }}" class="opc-btn btn-white">{{ button_back }}</a>
+                <input type="submit" value="{{ button_submit }}" class="opc-btn" />
+              </div>
+          </form>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	language: '{{ datepicker }}',
+	pickTime: false
+});
+//--></script> 
+{{ footer }} 

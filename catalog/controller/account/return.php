@@ -48,6 +48,11 @@ class ControllerAccountReturn extends Controller {
 			$page = 1;
 		}
 
+        $this->load->model('catalog/product');
+        $this->load->model('account/order');
+        $this->load->model('tool/image');
+
+
 		$data['returns'] = array();
 
 		$return_total = $this->model_account_return->getTotalReturns();
@@ -55,12 +60,33 @@ class ControllerAccountReturn extends Controller {
 		$results = $this->model_account_return->getReturns(($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
+
+            $order_products = $this->model_account_order->getOrderProducts($result['order_id']);
+
+            $image = '';
+            $total = 0;
+            foreach($order_products as $product){
+                if($product['product_id'] == $result['product_id']){
+                    $product_info = $this->model_catalog_product->getProduct($result['product_id']);
+
+                    if ($product_info['image']) {
+                        $image = $this->model_tool_image->resize($product_info['image'], 100, 140, 'auto');
+                    } else {
+                        $image = $this->model_tool_image->resize('placeholder.png', 100, 140, 'auto');
+                    }
+
+                    $total = ((float)$product['price']) * $result['quantity'];
+                }
+            }
+
 			$data['returns'][] = array(
 				'return_id'  => $result['return_id'],
 				'order_id'   => $result['order_id'],
 				'name'       => $result['firstname'] . ' ' . $result['lastname'],
+                'image' => $image,
+                'total' => $this->currency->format($product['price'],$this->session->data['currency']),
 				'status'     => $result['status'],
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+                'date_added' => $this->language->date_current_lang($result['date_added'],$this->language->get('month')),
 				'href'       => $this->url->link('account/return/info', 'return_id=' . $result['return_id'] . $url, true)
 			);
 		}
@@ -71,7 +97,7 @@ class ControllerAccountReturn extends Controller {
 		$pagination->limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit');
 		$pagination->url = $this->url->link('account/return', 'page={page}', true);
 
-		$data['pagination'] = $pagination->render();
+        $data['pagination'] = $pagination->render_to_front();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')) + 1 : 0, ((($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')) > ($return_total - $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit'))) ? $return_total : ((($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')) + $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')), $return_total, ceil($return_total / $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit')));
 
@@ -139,8 +165,9 @@ class ControllerAccountReturn extends Controller {
 
 			$data['return_id'] = $return_info['return_id'];
 			$data['order_id'] = $return_info['order_id'];
-			$data['date_ordered'] = date($this->language->get('date_format_short'), strtotime($return_info['date_ordered']));
-			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($return_info['date_added']));
+			$data['status'] = $return_info['status'];
+			$data['date_ordered'] = $this->language->date_current_lang($return_info['date_ordered'],$this->language->get('month'));
+			$data['date_added'] = $this->language->date_current_lang($return_info['date_added'],$this->language->get('month'));
 			$data['firstname'] = $return_info['firstname'];
 			$data['lastname'] = $return_info['lastname'];
 			$data['email'] = $return_info['email'];
@@ -232,10 +259,27 @@ class ControllerAccountReturn extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->setRobots('noindex,follow');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
+		/*$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');*/
+
+        $this->document->addScript('catalog/view/javascript/opc/select2.min.js');
+        $this->document->addStyle('catalog/view/javascript/opc/select2.min.css');
+
+        $this->document->addScript('catalog/view/javascript/opc/opc.js');
+        $this->document->addStyle('catalog/view/javascript/opc/style.css');
+
+        $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
+        $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
+        $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
+        $this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+
+        $data['opc_mask'] = $this->config->get('opc_mask');
+
+        if(!empty($data['opc_mask'])){
+            $this->document->addScript('catalog/view/javascript/opc/maskedinput.js');
+        }
 
 		$data['breadcrumbs'] = array();
 
@@ -318,8 +362,8 @@ class ControllerAccountReturn extends Controller {
 
 		$this->load->model('catalog/product');
 
-		if (isset($this->request->get['product_id'])) {
-			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+		if (isset($this->request->get['products_id'])) {
+			$product_info = $this->model_catalog_product->getProduct($this->request->get['products_id']);
 		}
 
 		if (isset($this->request->post['order_id'])) {

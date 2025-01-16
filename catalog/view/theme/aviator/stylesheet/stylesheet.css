@@ -3350,3 +3350,55 @@ body .show-scroll::-webkit-scrollbar-track {
 		margin: 0 0 5px 0;
 	}
 }
+
+.account .form-horizontal .form-group{
+	margin-right: 0;
+	margin-left: 0;
+	margin-bottom:30px;
+}
+.account .form-horizontal .form-group.required{
+	margin-bottom: 0;
+}
+.account #onepcheckout input[name="telephone"] {
+	padding: 26px 16px 14px 16px;
+}
+.account .opc_block_shipping_address{
+	padding: 0;
+	margin: 0;
+	background: none;
+}
+.account .shipping-method.open{
+	margin: 0;
+}
+.account .shipping-method.open .shipping_method_title{
+	padding: 0;
+	height: auto;
+	margin-bottom: 15px;
+}
+.account #onepcheckout .float-label{
+	top: 10px;
+	left: 16px;
+	font-size: 10px;
+	text-transform: none;
+}
+.account input.form-checkout[disabled]{
+	background-color: var(--bg-color) !important;
+	border-color: transparent !important;
+}
+.account .buttons{
+	display: flex;
+	justify-content: space-between;
+	margin: 0;
+}
+.account .buttons > *{
+	width: 49%;
+}
+.account .buttons .opc-btn{
+	height: 70px;
+	line-height: 70px;
+}
+.account .btn-white{
+	background-color: #fff;
+	color: #000;
+	border: 1px solid #000;
+}
