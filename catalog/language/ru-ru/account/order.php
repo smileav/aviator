@@ -7,22 +7,29 @@ $_['heading_title']         = 'Заказы';
 
 // Text
 $_['text_account']          = 'Профиль';
-$_['text_order']            = 'Заказ';
+$_['text_order']            = 'Заказы';
 $_['text_order_detail']     = 'Детали заказа';
 $_['text_invoice_no']       = '№ Счета:';
-$_['text_order_id']         = '№ заказа:';
-$_['text_date_added']       = 'Дата добавления:';
+$_['text_order_id']         = 'Заказ:';
+$_['text_date_added']       = 'Дата заказа:';
+$_['text_shipping'] = 'Доставка';
 $_['text_shipping_address'] = 'Адрес доставки';
 $_['text_shipping_method']  = 'Способ доставки:';
 $_['text_payment_address']  = 'Платёжный адрес';
 $_['text_payment_method']   = 'Способ оплаты:';
-$_['text_comment']          = 'Комментарий к заказу';
+$_['text_comment']          = 'Комментарий';
 $_['text_history']          = 'История заказа';
 $_['text_success']          = 'Товары из заказа <a href="%s">%s</a> успешно добавлены <a href="%s">в вашу корзину</a>!';
 $_['text_empty']            = 'Вы еще не совершали покупок!';
 $_['text_error']            = 'Запрошенный заказ не найден!';
 $_['text_product']      = 'единиц(а)';
+$_['text_products']      = 'Товары в заказе';
+$_['text_product_one']      = 'Стоимость 1 единицы: ';
 $_['text_my_orders']     = 'Заказ';
+$_['text_city']     = 'Город:';
+$_['text_shipping_address_1']     = 'Отделение/Адрес:';
+$_['text_sub_total']     = 'Стоимость заказа:';
+$_['text_total']     = 'Общая стоимость заказа:';
 
 // Column
 $_['column_order_id']       = '№ Заказа';

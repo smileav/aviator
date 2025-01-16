@@ -17,7 +17,6 @@ class ControllerExtensionModuleAccount extends Controller {
             $data['route'] = '';
         }
 
-
         if($customer_info){
             $data['customer_name'] = $customer_info['firstname'] . ' ' . $customer_info['lastname'];
             $data['contact'] = implode('<br>',[$customer_info['telephone'],$customer_info['email']]);
