@@ -6,7 +6,7 @@
 $_['heading_title']    = 'Подписка на новости';
 
 // Text
-$_['text_account']     = 'Личный кабинет';
+$_['text_account']     = 'Профиль';
 $_['text_newsletter']  = 'Рассылка';
 $_['text_success']     = 'Ваша подписка успешно обновлена!';
 

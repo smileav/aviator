@@ -55,6 +55,8 @@ class ControllerAccountWishList extends Controller {
 			$data['success'] = '';
 		}
 
+        $data['href_account'] = $this->url->link('account/account', '', true);
+
 		$data['products'] = array();
 
 		$results = $this->model_account_wishlist->getWishlist();
@@ -63,11 +65,15 @@ class ControllerAccountWishList extends Controller {
 			$product_info = $this->model_catalog_product->getProduct($result['product_id']);
 
 			if ($product_info) {
-				if ($product_info['image']) {
-					$image = $this->model_tool_image->resize($product_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_wishlist_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_wishlist_height'));
-				} else {
-					$image = false;
-				}
+
+                $image_w = 336;
+                $image_h = 504;
+
+                if ($product_info['image']) {
+                    $image = $this->model_tool_image->resize($product_info['image'], $image_w, $image_h, 'auto');
+                } else {
+                    $image = $this->model_tool_image->resize('placeholder.png', $image_w, $image_h, 'auto');
+                }
 
 				if ($product_info['quantity'] <= 0) {
 					$stock = $product_info['stock_status'];
@@ -89,14 +95,21 @@ class ControllerAccountWishList extends Controller {
 					$special = false;
 				}
 
+                $product_options = $this->model_catalog_product->getProductThumbOptions($result['product_id']);
+
 				$data['products'][] = array(
 					'product_id' => $product_info['product_id'],
-					'thumb'      => $image,
+                    'add_to_wishlist' => true,
+                    'remove_wishlist' => true,
+					'thumb'       => $image,
+                    'thumb_w'     => $image_w,
+                    'thumb_h'     => $image_h,
 					'name'       => $product_info['name'],
 					'model'      => $product_info['model'],
 					'stock'      => $stock,
 					'price'      => $price,
 					'special'    => $special,
+                    'options'     => $product_options,
 					'href'       => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
 					'remove'     => $this->url->link('account/wishlist', 'remove=' . $product_info['product_id'])
 				);

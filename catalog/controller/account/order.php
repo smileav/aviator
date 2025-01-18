@@ -4,6 +4,8 @@
 
 class ControllerAccountOrder extends Controller {
 	public function index() {
+
+        $this->document->addStyle('catalog/view/javascript/opc/style.css');
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/order', '', true);
 
@@ -43,39 +45,64 @@ class ControllerAccountOrder extends Controller {
 		} else {
 			$page = 1;
 		}
+        $limit = 10;
 
 		$data['orders'] = array();
 
 		$this->load->model('account/order');
+        $this->load->model('catalog/product');
+        $this->load->model('tool/image');
 
 		$order_total = $this->model_account_order->getTotalOrders();
 
-		$results = $this->model_account_order->getOrders(($page - 1) * 10, 10);
+		$results = $this->model_account_order->getOrders(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
 			$product_total = $this->model_account_order->getTotalOrderProductsByOrderId($result['order_id']);
 			$voucher_total = $this->model_account_order->getTotalOrderVouchersByOrderId($result['order_id']);
 
-			$data['orders'][] = array(
-				'order_id'   => $result['order_id'],
-				'name'       => $result['firstname'] . ' ' . $result['lastname'],
-				'status'     => $result['status'],
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'products'   => ($product_total + $voucher_total),
-				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
-				'view'       => $this->url->link('account/order/info', 'order_id=' . $result['order_id'], true),
-			);
+            $list_products = array();
+
+            $products = $this->model_account_order->getOrderProducts($result['order_id']);
+
+            foreach ($products as $product) {
+                $product_info = $this->model_catalog_product->getProduct($product['product_id']);
+
+                if ($product_info['image']) {
+                    $image = $this->model_tool_image->resize($product_info['image'], 100, 140, 'auto');
+                } else {
+                    $image = $this->model_tool_image->resize('placeholder.png', 100, 140, 'auto');
+                }
+
+                $list_products[] = array(
+                    'name'     => $product['name'],
+                    'image'    => $image,
+                );
+            }
+
+            $data['orders'][] = array(
+                'order_id'   => $result['order_id'],
+                'name'       => $result['firstname'] . ' ' . $result['lastname'],
+                'status'     => $result['status'],
+                'status_bg_color'     => $result['status_bg_color'],
+                'status_color'     => $result['status_color'],
+                'products'   => $list_products,
+                'date_added' => $this->language->date_current_lang($result['date_added'],$this->language->get('month')),
+                'products_count'   => ($product_total + $voucher_total),
+                'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
+                'view'       => $this->url->link('account/order/info', 'order_id=' . $result['order_id'], true),
+            );
 		}
 
 		$pagination = new Pagination();
 		$pagination->total = $order_total;
 		$pagination->page = $page;
-		$pagination->limit = 10;
+		$pagination->limit = $limit;
 		$pagination->url = $this->url->link('account/order', 'page={page}', true);
 
-		$data['pagination'] = $pagination->render();
+        $data['pagination'] = $pagination->render_to_front();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($order_total - 10)) ? $order_total : ((($page - 1) * 10) + 10), $order_total, ceil($order_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($order_total - $limit)) ? $order_total : ((($page - 1) * $limit) + $limit), $order_total, ceil($order_total / $limit));
 
 		$data['continue'] = $this->url->link('account/account', '', true);
 
@@ -109,7 +136,7 @@ class ControllerAccountOrder extends Controller {
 		$order_info = $this->model_account_order->getOrder($order_id);
 
 		if ($order_info) {
-			$this->document->setTitle($this->language->get('text_order'));
+
 
 			$url = '';
 
@@ -130,14 +157,18 @@ class ControllerAccountOrder extends Controller {
 			);
 
 			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('heading_title'),
+				'text' => $this->language->get('text_order'),
 				'href' => $this->url->link('account/order', $url, true)
 			);
 
 			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_order'),
+				'text' => $this->language->get('heading_title') . ': №' . $order_info['order_id'],
 				'href' => $this->url->link('account/order/info', 'order_id=' . $this->request->get['order_id'] . $url, true)
 			);
+
+
+            $data['heading_title'] = $this->language->get('heading_title') . ': №' . $order_info['order_id'];
+            $this->document->setTitle($data['heading_title']);
 
 			if (isset($this->session->data['error'])) {
 				$data['error_warning'] = $this->session->data['error'];
@@ -162,7 +193,14 @@ class ControllerAccountOrder extends Controller {
 			}
 
 			$data['order_id'] = (int)$this->request->get['order_id'];
-			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
+			$data['date_added'] = $this->language->date_current_lang($order_info['date_added'],$this->language->get('month'));
+
+
+            $this->load->model('localisation/order_status');
+
+            $data['status'] = $this->model_localisation_order_status->getOrderStatus($order_info['order_status_id']);
+            $data['shipping_city'] = $order_info['shipping_city'];
+            $data['shipping_address_1'] = $order_info['shipping_address_1'];
 
 			if ($order_info['payment_address_format']) {
 				$format = $order_info['payment_address_format'];
@@ -238,11 +276,20 @@ class ControllerAccountOrder extends Controller {
 
 			$this->load->model('catalog/product');
 			$this->load->model('tool/upload');
+			$this->load->model('tool/image');
 
 			// Products
 			$data['products'] = array();
 
 			$products = $this->model_account_order->getOrderProducts($this->request->get['order_id']);
+
+            $data['count_products'] = count($products);
+            if($data['count_products'] <= 5){
+                $data['count_products'] .= ' ' . $this->language->get('text_product_count')[$data['count_products']];
+            }else{
+                $data['count_products'] .= ' ' . $this->language->get('text_product_count')[5];
+            }
+
 
 			foreach ($products as $product) {
 				$option_data = array();
@@ -276,15 +323,23 @@ class ControllerAccountOrder extends Controller {
 					$reorder = '';
 				}
 
+                if ($product_info['image']) {
+                    $image = $this->model_tool_image->resize($product_info['image'], 100, 140, 'auto');
+                } else {
+                    $image = $this->model_tool_image->resize('placeholder.png', 100, 140, 'auto');
+                }
+
 				$data['products'][] = array(
+					'product_id'     => $product['product_id'],
 					'name'     => $product['name'],
 					'model'    => $product['model'],
 					'option'   => $option_data,
+					'image'   => $image,
 					'quantity' => $product['quantity'],
 					'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'reorder'  => $reorder,
-					'return'   => $this->url->link('account/return/add', 'order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'], true)
+					'return'   => $this->url->link('account/return/add', 'order_id=' . $order_info['order_id'] . '&products_id=' . $product['product_id'], true)
 				);
 			}
 
@@ -306,13 +361,20 @@ class ControllerAccountOrder extends Controller {
 			$totals = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
 
 			foreach ($totals as $total) {
+                $title = $total['title'] . ':';
+                if($total['code'] == 'sub_total'){
+                    $title = $this->language->get('text_sub_total');
+                }
+				if($total['code'] == 'total'){
+                    $title = $this->language->get('text_total');
+                }
 				$data['totals'][] = array(
-					'title' => $total['title'],
+					'title' => $title,
 					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
 				);
 			}
 
-			$data['comment'] = nl2br($order_info['comment']);
+			$data['comment'] = html_entity_decode(nl2br(trim($order_info['comment'])), ENT_QUOTES, 'UTF-8');
 
 			// History
 			$data['histories'] = array();

@@ -6,16 +6,17 @@
 $_['heading_title']    = 'Личный кабинет';
 
 // Text
+$_['text_hello']    = 'Добро пожаловать';
 $_['text_register']    = 'Регистрация';
 $_['text_login']       = 'Вход';
 $_['text_logout']      = 'Выход';
 $_['text_forgotten']   = 'Забыли пароль?';
 $_['text_account']     = 'Моя информация';
-$_['text_edit']        = 'Изменить контактную информацию';
+$_['text_edit']        = 'Персональные данные';
 $_['text_password']    = 'Пароль';
 $_['text_address']     = 'Список контактов';
-$_['text_wishlist']    = 'Закладки';
-$_['text_order']       = 'История заказов';
+$_['text_wishlist']    = 'Избранные товары';
+$_['text_order']       = 'Заказы';
 $_['text_download']    = 'Файлы для скачивания';
 $_['text_reward']      = 'Бонусные баллы';
 $_['text_return']      = 'Возвраты';

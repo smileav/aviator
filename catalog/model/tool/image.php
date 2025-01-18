@@ -2,7 +2,9 @@
 class ModelToolImage extends Model {
 	public function resize($filename, $width, $height, $default = '') {
 		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != str_replace('\\', '/', DIR_IMAGE)) {
-			return;
+
+            $filename = 'placeholder.png';
+            //return;
 		}
 
 		$extension = pathinfo($filename, PATHINFO_EXTENSION);

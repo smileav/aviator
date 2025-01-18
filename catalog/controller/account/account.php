@@ -4,6 +4,9 @@
 
 class ControllerAccountAccount extends Controller {
 	public function index() {
+
+        $this->document->addStyle('catalog/view/javascript/opc/style.css');
+
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/account', '', true);
 
@@ -86,7 +89,49 @@ class ControllerAccountAccount extends Controller {
 		} else {
 			$data['tracking'] = '';
 		}
-		
+
+        $this->load->model('account/order');
+        $this->load->model('catalog/product');
+        $this->load->model('tool/image');
+        $results = $this->model_account_order->getOrders(0, 3);
+
+        foreach ($results as $result) {
+            $product_total = $this->model_account_order->getTotalOrderProductsByOrderId($result['order_id']);
+            $voucher_total = $this->model_account_order->getTotalOrderVouchersByOrderId($result['order_id']);
+
+            $list_products = array();
+
+            $products = $this->model_account_order->getOrderProducts($result['order_id']);
+
+            foreach ($products as $product) {
+                $product_info = $this->model_catalog_product->getProduct($product['product_id']);
+
+                if ($product_info['image']) {
+                    $image = $this->model_tool_image->resize($product_info['image'], 100, 140, 'auto');
+                } else {
+                    $image = $this->model_tool_image->resize('placeholder.png', 100, 140, 'auto');
+                }
+
+                $list_products[] = array(
+                    'name'     => $product['name'],
+                    'image'    => $image,
+                );
+            }
+
+            $data['orders'][] = array(
+                'order_id'   => $result['order_id'],
+                'name'       => $result['firstname'] . ' ' . $result['lastname'],
+                'status'     => $result['status'],
+                'status_bg_color'     => $result['status_bg_color'],
+                'status_color'     => $result['status_color'],
+                'products'   => $list_products,
+                'date_added' => $this->language->date_current_lang($result['date_added'],$this->language->get('month')),
+                'products_count'   => ($product_total + $voucher_total),
+                'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
+                'view'       => $this->url->link('account/order/info', 'order_id=' . $result['order_id'], true),
+            );
+        }
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');

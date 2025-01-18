@@ -6,7 +6,7 @@
 $_['heading_title']  = 'Смена пароля';
 
 // Text
-$_['text_account']   = 'Личный кабинет';
+$_['text_account']   = 'Профиль';
 $_['text_password']  = 'Ваш пароль';
 $_['text_success']   = 'Ваш пароль успешно изменен!';
 

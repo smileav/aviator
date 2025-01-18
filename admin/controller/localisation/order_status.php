@@ -296,13 +296,55 @@ class ControllerLocalisationOrderStatus extends Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['order_status'])) {
+        if (isset($this->request->post['order_status'])) {
+            $data['order_status'] = $this->request->post['order_status'];
+
+            $data['bg_color'] = $this->request->post['bg_color'];
+            $data['txt_color'] = $this->request->post['txt_color'];
+
+        } elseif (isset($this->request->get['order_status_id'])) {
+            $data['order_status'] = $this->model_localisation_order_status->getOrderStatusDescriptions($this->request->get['order_status_id']);
+
+            foreach ($data['languages'] as $language) {
+                $data['bg_color']  = empty($data['order_status'][$language['language_id']]['bg_color'])?'ffffff': $data['order_status'][$language['language_id']]['bg_color'];
+                $data['txt_color'] = empty($data['order_status'][$language['language_id']]['txt_color'])?'000000':$data['order_status'][$language['language_id']]['txt_color'];
+            }
+
+        } else {
+            $data['order_status'] = array();
+
+            $data['bg_color'] = 'ffffff';
+            $data['txt_color'] = '000000';
+
+        }
+
+		/*if (isset($this->request->post['order_status'])) {
 			$data['order_status'] = $this->request->post['order_status'];
 		} elseif (isset($this->request->get['order_status_id'])) {
 			$data['order_status'] = $this->model_localisation_order_status->getOrderStatusDescriptions($this->request->get['order_status_id']);
 		} else {
 			$data['order_status'] = array();
 		}
+
+        if (isset($this->request->get['order_status_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+            $order_status_info = $this->model_localisation_order_status->getOrderStatus($this->request->get['order_status_id']);
+        }
+
+        if (isset($this->request->post['bg_color'])) {
+            $data['bg_color'] = $this->request->post['bg_color'];
+        } elseif (!empty($order_status_info)) {
+            $data['bg_color'] = $order_status_info['bg_color'];
+        } else {
+            $data['bg_color'] = '';
+        }
+
+		if (isset($this->request->post['txt_color'])) {
+            $data['txt_color'] = $this->request->post['txt_color'];
+        } elseif (!empty($order_status_info)) {
+            $data['txt_color'] = $order_status_info['txt_color'];
+        } else {
+            $data['txt_color'] = '';
+        }*/
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

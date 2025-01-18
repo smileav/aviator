@@ -4,6 +4,7 @@
 
 class ControllerAccountEdit extends Controller {
 	private $error = array();
+	private $success = array();
 
 	public function index() {
 		if (!$this->customer->isLogged()) {
@@ -17,20 +18,46 @@ class ControllerAccountEdit extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->setRobots('noindex,follow');
 
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
+		/*$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');*/
+
+        $this->document->addScript('catalog/view/javascript/opc/select2.min.js');
+        $this->document->addStyle('catalog/view/javascript/opc/select2.min.css');
+
+        $this->document->addScript('catalog/view/javascript/opc/opc.js');
+        $this->document->addStyle('catalog/view/javascript/opc/style.css');
+
+        $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
+        $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
+        $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
+        $this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
 		$this->load->model('account/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_account_customer->editCustomer($this->customer->getId(), $this->request->post);
 
-			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('account/account', '', true));
+            if(!$this->request->post['newsletter']){
+                $this->request->post['newsletter'] = 0;
+            }
+            $this->model_account_customer->editNewsletter($this->request->post['newsletter']);
+
+            if($this->request->post['password']) {
+                $this->model_account_customer->editPassword($this->customer->getEmail(), $this->request->post['password']);
+            }
+
+            $this->session->data['success'] = $this->language->get('text_success');
+            $this->success = $this->session->data['success'] ;
+
+
+			//$this->response->redirect($this->url->link('account/edit', '', true));
 		}
+
+        $data['success'] = $this->success;
+        $this->success = '';
 
 		$data['breadcrumbs'] = array();
 
@@ -85,6 +112,18 @@ class ControllerAccountEdit extends Controller {
 			$data['error_custom_field'] = array();
 		}
 
+        if (isset($this->error['password'])) {
+            $data['error_pas'] = $this->error['password'];
+        } else {
+            $data['error_pas'] = '';
+        }
+
+		if (isset($this->error['confirm'])) {
+            $data['error_confirm'] = $this->error['confirm'];
+        } else {
+            $data['error_confirm'] = '';
+        }
+
 		$data['action'] = $this->url->link('account/edit', '', true);
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
@@ -122,6 +161,26 @@ class ControllerAccountEdit extends Controller {
 		} else {
 			$data['telephone'] = '';
 		}
+
+        if (isset($this->request->post['newsletter'])) {
+			$data['newsletter'] = $this->request->post['newsletter'];
+		} elseif (!empty($customer_info)) {
+			$data['newsletter'] = $customer_info['newsletter'];
+		} else {
+			$data['newsletter'] = '';
+		}
+
+        if (isset($this->request->post['password'])) {
+            $data['password'] = $this->request->post['password'];
+        } else {
+            $data['password'] = '';
+        }
+
+        if (isset($this->request->post['confirm'])) {
+            $data['confirm'] = $this->request->post['confirm'];
+        } else {
+            $data['confirm'] = '';
+        }
 
 		// Custom Fields
 		$data['custom_fields'] = array();
@@ -176,6 +235,15 @@ class ControllerAccountEdit extends Controller {
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
+
+        if ($this->request->post['confirm'] && $this->request->post['password']) {
+            if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+                $this->error['password'] = $this->language->get('error_password');
+            }
+        }
+        if ($this->request->post['confirm'] != $this->request->post['password']) {
+            $this->error['confirm'] = $this->language->get('error_confirm');
+        }
 
 		// Custom field validation
 		$this->load->model('account/custom_field');

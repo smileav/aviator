@@ -8,6 +8,20 @@ $_['time_format']           = 'h:i:s A';
 $_['datetime_format']       = 'd/m/Y H:i:s';
 $_['decimal_point']         = '.';
 $_['thousand_point']        = ' ';
+$_['month'] = array(
+    '1' => "January",
+    '2' => "February",
+    '3' => "March",
+    '4' => "April",
+    '5' => "May",
+    '6' => "June",
+    '7' => "July",
+    '8' => "August",
+    '9' => "September",
+    '10' => "October",
+    '11' => "November",
+    '12' => "December"
+);
 
 // Text
 $_['text_home']             = 'Home';
@@ -107,6 +121,8 @@ $_['button_list']           = 'List';
 $_['button_grid']           = 'Grid';
 $_['button_map']            = 'View Google Map';
 $_['button_add']='Add';
+$_['button_wisthlist']='Add to favorites';
+$_['button_main']='Add to catalog';
 
 // Error
 $_['error_exception']       = 'Error Code(%s): %s in %s on line %s';
