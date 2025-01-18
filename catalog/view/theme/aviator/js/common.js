@@ -418,3 +418,50 @@ $(document).delegate('.agree', 'click', function(e) {
 		});
 	}
 })(window.jQuery);
+
+
+$(document).on('click','span[data-href]',function(){
+	$.ajax({
+		url: $(this).data('href'),
+		type: 'get',
+		dataType: 'json',
+		success: function(json) {
+
+			html = '  <div class="modal-dialog">';
+			html+=json.template;
+			html += '  </div>';
+
+
+			$('#modal-account').html(html);
+
+			$('#modal-account').modal('show');
+		}
+	});
+})
+
+$(document).on('submit','#register_form',function(e){
+	e.preventDefault();
+	$.ajax({
+		url: $(this).attr('action'),
+		type: 'post',
+		dataType: 'json',
+		data:$('#register_form').serialize(),
+		success: function(json) {
+
+			if(typeof json.success=='undefined') {
+				html = '  <div class="modal-dialog">';
+				html += json.template;
+				html += '  </div>';
+
+
+				$('#modal-account').html(html);
+			}else{
+				$('#modal-account').modal('hide');
+
+				$('#customer_in_header').html($(json.success).find('#customer_in_header'));
+			}
+
+		}
+	});
+
+})

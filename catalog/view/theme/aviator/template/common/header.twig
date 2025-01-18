@@ -122,6 +122,22 @@
           <div class="h-search d-f ai-c"><svg class="i-search" width="25" height="25"><use xlink:href="image/icons.svg#i-search" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>{{ search }}</div>
           {#<div class="h-cart d-f ai-c"><svg class="i-cart" width="25" height="24"><use xlink:href="image/icons.svg#i-cart" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></div>#}
           <div class="h-cart">{{ cart }}</div>
+          <ul class="list-inline" id="customer_in_header">
+              <li class="dropdown"><a href="{{ account }}" title="{{ text_account }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_account }}</span> <span class="caret"></span></a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                      {% if logged %}
+                          <li><a href="{{ account }}">{{ text_account }}</a></li>
+                          <li><a href="{{ order }}">{{ text_order }}</a></li>
+                          <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+                          <li><a href="{{ download }}">{{ text_download }}</a></li>
+                          <li><a href="{{ logout }}">{{ text_logout }}</a></li>
+                      {% else %}
+                          <li><span data-href="{{ register }}">{{ text_register }}</span></li>
+                          <li><span data-href="{{ login }}">{{ text_login }}</span></li>
+                      {% endif %}
+                  </ul>
+              </li>
+          </ul>
       </div>
   </div>
 </header>

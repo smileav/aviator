@@ -91,8 +91,8 @@ class ControllerCommonHeader extends Controller {
 		$data['wishlist'] = $this->url->link('account/wishlist', '', true);
 		$data['logged'] = $this->customer->isLogged();
 		$data['account'] = $this->url->link('account/account', '', true);
-		$data['register'] = $this->url->link('account/register', '', true);
-		$data['login'] = $this->url->link('account/login', '', true);
+		$data['register'] = $this->url->link('account/register/mini', '', true);
+		$data['login'] = $this->url->link('account/login/mini', '', true);
 		$data['order'] = $this->url->link('account/order', '', true);
 		$data['transaction'] = $this->url->link('account/transaction', '', true);
 		$data['download'] = $this->url->link('account/download', '', true);

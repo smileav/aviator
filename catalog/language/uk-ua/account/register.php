@@ -1,11 +1,11 @@
 <?php
 
 // Heading
-$_['heading_title']        = 'Реєстрація';
+$_['heading_title']        = 'Створити акаунт';
 
 // Text
 $_['text_account']         = 'Обліковий запис';
-$_['text_register']        = 'Реєстрація';
+$_['text_register']        = 'Створити акаунт';
 $_['text_account_already'] = 'Якщо ви вже зареєстровані, перейдіть на сторінку <a href="%s">входу в систему</a>.';
 $_['text_your_details']    = 'Контактні дані';
 $_['text_your_address']    = 'Ваша адреса';
@@ -29,7 +29,7 @@ $_['entry_country']        = 'Країна';
 $_['entry_zone']           = 'Регіон / Область';
 $_['entry_newsletter']     = 'Отримувати новини на E-Mail';
 $_['entry_password']       = 'Пароль';
-$_['entry_confirm']        = 'Підтвердіть пароль';
+$_['entry_confirm']        = 'Повторіть пароль';
 
 // Error
 $_['error_exists']         = 'Така адреса E-Mail вже зареєстрована';
