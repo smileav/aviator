@@ -3464,7 +3464,12 @@ body .show-scroll::-webkit-scrollbar-track {
 .h-account > span{
 	margin-left: 6px;
 }
+
+.modal-open .modal{
+	z-index: 99999;
+}
 .modal-backdrop.in{
+	z-index: 99998;
 	opacity: 0.8;
 }
 .modal.in .modal-dialog{
@@ -3519,7 +3524,22 @@ body .show-scroll::-webkit-scrollbar-track {
 
 
 
+
 @media (min-width: 1200px){
+	#register_form{
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+	#register_form .form-group{
+		width: 50%;
+		padding: 4px;
+	}
+	#register_form .buttons {
+		margin: 4px;
+		width: 100%;
+	}
+
 	.form_edit form{
 		display: flex;
 		flex-wrap: wrap;

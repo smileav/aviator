@@ -123,6 +123,8 @@ $_['button_map']            = 'View Google Map';
 $_['button_add']='Add';
 $_['button_wisthlist']='Add to favorites';
 $_['button_main']='Add to catalog';
+$_['button_already_have']='Already have an account? Log in';
+$_['button_create_account']='Create account';
 
 // Error
 $_['error_exception']       = 'Error Code(%s): %s in %s on line %s';

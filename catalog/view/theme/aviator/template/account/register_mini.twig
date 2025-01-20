@@ -7,7 +7,7 @@
           {% if error_warning %}
               <div class="warning">{{ error_warning }}</div>
           {% endif %}
-          <form action="{{ action }}" id="register_form" method="post" enctype="multipart/form-data" class="form-horizontal">
+          <form action="{{ action }}" id="register_form" method="post" enctype="multipart/form-data">
                   <div class="form-group form-group-error required">
                       <input type="text" name="firstname" value="{{ firstname }}"  id="input-opc-firstname" class="form-checkout focus" />
                       <div class="float-label">{{ entry_firstname }} <span>*</span></div>
