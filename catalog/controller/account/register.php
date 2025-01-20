@@ -228,6 +228,9 @@ class ControllerAccountRegister extends Controller {
 		$this->load->language('account/register');
 		$this->load->model('account/customer');
 
+
+
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
@@ -317,7 +320,7 @@ class ControllerAccountRegister extends Controller {
 		} else {
 			$data['telephone'] = '';
 		}
-
+		$data['login'] = $this->url->link('account/login/mini', '', true);
 		$json['template']=$this->load->view('account/register_mini', $data);
 		$this->response->setOutput(json_encode($json));
 
@@ -332,11 +335,12 @@ class ControllerAccountRegister extends Controller {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+
+		if (isset($this->request->post['email'])&&((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL))) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
-		if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+		if (isset($this->request->post['email'])&&$this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
 			$this->error['warning'] = $this->language->get('error_exists');
 		}
 

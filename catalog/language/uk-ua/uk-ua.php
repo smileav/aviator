@@ -125,6 +125,8 @@ $_['button_map']            = 'Переглянути карту';
 $_['button_add']='Додати';
 $_['button_wisthlist']='До обраного';
 $_['button_main']='До каталогу';
+$_['button_already_have']='Вже є акканут? Увійти';
+$_['button_create_account']='Створити аккаунт';
 
 // Error
 $_['error_exception']       = 'Помилка коду (%s): %s в %s у рядку %s';

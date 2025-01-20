@@ -13,6 +13,22 @@ class ControllerCommonHeader extends Controller {
             }
         }
 
+		$this->document->addScript('catalog/view/javascript/opc/select2.min.js');
+		$this->document->addStyle('catalog/view/javascript/opc/select2.min.css');
+
+		$this->document->addScript('catalog/view/javascript/opc/opc.js');
+		$this->document->addStyle('catalog/view/javascript/opc/style.css');
+
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
+		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+
+
+		$this->document->addScript('catalog/view/javascript/opc/maskedinput.js');
+
+
+
 		// Analytics
 		$this->load->model('setting/extension');
 
