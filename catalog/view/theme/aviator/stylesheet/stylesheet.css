@@ -3454,6 +3454,69 @@ body .show-scroll::-webkit-scrollbar-track {
 	color: #000;
 }
 
+.h-account{
+	margin-left: 26px;
+	margin-left: 26px;
+	flex-direction: row;
+	align-items: center;
+	cursor: pointer;
+}
+.h-account > span{
+	margin-left: 6px;
+}
+.modal-backdrop.in{
+	opacity: 0.8;
+}
+.modal.in .modal-dialog{
+	display: flex;
+	align-items: center;
+	height: 100%;
+	margin: 0;
+	justify-content: center;
+	width: 100%;
+}
+.modal-content{
+	width:90%;
+	max-width: 600px;
+}
+.modal-header {
+	padding:30px 30px 0;
+	border-bottom: none;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.modal-header h4{
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 31px;
+	flex: 1;
+	order: 1;
+}
+.modal .close{
+	text-indent: -1000000px;
+	background: url(../image/close.svg) no-repeat center center;
+	width: 20px;
+	height: 20px;
+	display: flex;
+	order: 2;
+}
+.modal-dialog .buttons .opc-btn{
+	width: 100%;
+	max-width: unset;
+}
+.modal-dialog .buttons * + *{
+	border-top:1px solid var(--border-color);
+	margin-top: 24px;
+}
+.modal-dialog .buttons .border{
+	border-top:1px solid var(--border-color);
+}
+.modal-dialog .buttons .btn-gray{
+	background: #F1F2F5;
+	color:#000;
+}
+
 
 
 @media (min-width: 1200px){
@@ -3473,15 +3536,19 @@ body .show-scroll::-webkit-scrollbar-track {
 	}
 
 }
+@media (max-width: 1199px) {
+	.h-account > span{display: none;}
+}
 @media (min-width: 992px) and (max-width: 1199px) {
 	.account_menu .head {flex-wrap: wrap;}
 	.account_menu .head .name{order: 1;}
 	.account_menu .head .contact{text-align: left;order:3;width: 100%;}
 	.account_menu .head .logout{order: 2;}
+	.h-search{margin-right: 10px;}
+	.h-account{margin-left:10px}
 }
 @media (min-width: 0px) and (max-width: 991px) {
 	.account {padding: 5px 0;}
-
 	.account .col-left,.account .col-right{width: 100%;}
 	.account .col-left{margin-bottom: 5px;padding: 0;}
 	.account_menu {padding: 15px;}
@@ -3489,6 +3556,7 @@ body .show-scroll::-webkit-scrollbar-track {
 	.account_menu .head .name{font-size: 13px;line-height: 16px}
 	.account_menu .head .contact{font-size: 12px;line-height: 16px}
 	.account_menu .head .logout{margin-left: 10px;}
+	.h-account{margin-left:18px}
 
 }
 @media (min-width: 0px) and (max-width: 767px) {
@@ -3501,5 +3569,10 @@ body .show-scroll::-webkit-scrollbar-track {
 	.account .list_orders .order .wrap_totals {flex-direction: column;align-items: end;}
 	.account .list_orders .order .totals{margin: 0 0 5px 0;}
 	.account .form_edit .newsletter > svg{display: none}
-}
 
+}
+@media (min-width: 0px) and (max-width: 400px) {
+	.h-cart-it {margin-left: 2px;}
+	.h-search {margin-right: 10px;}
+	.h-account {margin-left: 10px;}
+}

@@ -106,6 +106,12 @@ class ControllerCommonHeader extends Controller {
 		$data['home'] = $this->url->link('common/home');
 		$data['wishlist'] = $this->url->link('account/wishlist', '', true);
 		$data['logged'] = $this->customer->isLogged();
+		if($this->customer->getFirstName()){
+            $data['text_account'] = $this->customer->getFirstName();
+        }else{
+            $data['text_account'] = '';
+        }
+
 		$data['account'] = $this->url->link('account/account', '', true);
 		$data['register'] = $this->url->link('account/register/mini', '', true);
 		$data['login'] = $this->url->link('account/login/mini', '', true);

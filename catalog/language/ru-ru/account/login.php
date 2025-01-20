@@ -3,7 +3,11 @@
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
 // Heading
-$_['heading_title']                = 'Авторизация';
+$_['heading_title']                = 'Войти';
+
+//Button
+$_['button_login']                 = 'Войти';
+$_['button_create_account']                 = 'Создать аккаунт';
 
 // Text
 $_['text_account']                 = 'Аккаунт';

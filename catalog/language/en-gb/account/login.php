@@ -1,6 +1,10 @@
 <?php
 // Heading
-$_['heading_title']                = 'Account Login';
+$_['heading_title']                = 'Account';
+
+//Button
+$_['button_login']                 = 'Login';
+$_['button_create_account']                 = 'Register Account';
 
 // Text
 $_['text_account']                 = 'Account';
