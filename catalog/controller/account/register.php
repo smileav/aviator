@@ -320,6 +320,32 @@ class ControllerAccountRegister extends Controller {
 		} else {
 			$data['telephone'] = '';
 		}
+
+
+		if(!empty($this->config->get('config_country_id'))){
+			$this->load->model('localisation/country');
+			$data['countries'] = $this->model_localisation_country->getCountries();
+			$country_info = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
+			$data['iso_code_2']=$country_info ? $country_info['iso_code_2'] : '';
+
+			//$shipping_address['country'] = $this->session->data['shipping_address']['country'] = $country_info ? $country_info['name'] : '';
+
+		}
+		$iso_code_2 = 'UA';
+		$this->load->language('checkout/sms_validator');
+
+		$rinvex = new rinvex\country;
+
+		$country_data = $rinvex->getData($iso_code_2);
+
+		$data['iso_code_2']             = $country_data['iso_code_2'];
+		$data['calling_code']           = $country_data['calling_code'];
+		$data['number_lengths_mask']    = $country_data['number_lengths_mask'];
+		$data['flag']                   = $country_data['flag'];
+
+
+
+
 		$data['login'] = $this->url->link('account/login/mini', '', true);
 		$json['template']=$this->load->view('account/register_mini', $data);
 		$this->response->setOutput(json_encode($json));
@@ -346,6 +372,27 @@ class ControllerAccountRegister extends Controller {
 
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
+		}
+
+		$this->load->language('checkout/sms_validator');
+		$iso_code_2 = 'UA';
+		$rinvex = new rinvex\country;
+
+		$country_data = $rinvex->getData($iso_code_2, $this->request->post['telephone'], true);
+
+		if ($country_data['valid']) {
+			$telephone = $country_data['telephone'];
+
+			if ($country_data['iso_code_2'] == 'ua') {
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sms_validator` WHERE `telephone` = '" . $this->db->escape($telephone) . "'");
+
+				if (!$query->num_rows) {
+					$this->error['telephone'] = $this->language->get('error_sms_please');
+				}
+			}
+
+		} else {
+			$this->error['telephone'] =  $this->language->get('error_telephone');
 		}
 
 		// Customer Group

@@ -1,35 +1,30 @@
-<div class="modal-content">
+<div class="modal-content" id="onepcheckout">
          <div class="modal-header">
                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title">{{ heading_title }}</h4>
             </div>
       <div class="modal-body">
+          {% if error_warning %}
+              <div class="warning">{{ error_warning }}</div>
+          {% endif %}
           <form action="{{ action }}" id="register_form" method="post" enctype="multipart/form-data" class="form-horizontal">
+                  <div class="form-group form-group-error required">
+                      <input type="text" name="firstname" value="{{ firstname }}"  id="input-opc-firstname" class="form-checkout focus" />
+                      <div class="float-label">{{ entry_firstname }} <span>*</span></div>
+                      <div class="form-error">
+                          {% if error_firstname %}{{ error_firstname }}{% endif %}
+                      </div>
 
-                  <div class="form-group required">
-                      <label class="col-sm-2 control-label" for="input-firstname">{{ entry_firstname }}</label>
-                      <div class="col-sm-10">
-                          <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control" />
-                          {% if error_firstname %}
-                              <div class="text-danger">{{ error_firstname }}</div>
-                          {% endif %} </div>
                   </div>
-                  <div class="form-group required">
-                      <label class="col-sm-2 control-label" for="input-lastname">{{ entry_lastname }}</label>
-                      <div class="col-sm-10">
-                          <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control" />
-                          {% if error_lastname %}
-                              <div class="text-danger">{{ error_lastname }}</div>
-                          {% endif %} </div>
+              <div class="form-group form-group-error required">
+                  <input type="text" name="lastname" value="{{ lastname }}"  id="input-opc-lastname" class="form-checkout focus" />
+                  <div class="float-label">{{ entry_lastname }} <span>*</span></div>
+                  <div class="form-error">
+                      {% if error_lastname %}{{ error_lastname }}{% endif %}
                   </div>
-              <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-telephone">{{ entry_telephone }}</label>
-                  <div class="col-sm-10">
-                      <input type="tel" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control" />
-                      {% if error_telephone %}
-                          <div class="text-danger">{{ error_telephone }}</div>
-                      {% endif %} </div>
+
               </div>
+
               <div class="form-group form-group-error{% if customer_field['status'] == 'required' %} required{% endif %}">
                   {#<label for="input-opc-telephone" class="control-label opc-label">{{ entry_telephone }}</label>#}
                   <div class="flag-container">
@@ -54,47 +49,37 @@
                   <div class="float-label">{{ entry_telephone }}{% if customer_field['status'] == 'required' %} <span>*</span>{% endif %}</div>
                   <div class="form-error"></div>
               </div>
-
-              <div class="form-group required">
-                      <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
-                      <div class="col-sm-10">
-                          <input type="email" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
-                          {% if error_email %}
-                              <div class="text-danger">{{ error_email }}</div>
-                          {% endif %} </div>
+              <div class="form-group form-group-error required">
+                  <input type="text" name="email" value="{{ email }}"  id="input-opc-email" class="form-checkout focus" />
+                  <div class="float-label">{{ entry_email }} <span>*</span></div>
+                  <div class="form-error">
+                      {% if error_email %}{{ error_email }}{% endif %}
                   </div>
 
-
-
-
-                  <div class="form-group required">
-                      <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
-                      <div class="col-sm-10">
-                          <input type="password" name="password" value="{{ password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
-                          {% if error_password %}
-                              <div class="text-danger">{{ error_password }}</div>
-                          {% endif %} </div>
-                  </div>
-                  <div class="form-group required">
-                      <label class="col-sm-2 control-label" for="input-confirm">{{ entry_confirm }}</label>
-                      <div class="col-sm-10">
-                          <input type="password" name="confirm" value="{{ confirm }}" placeholder="{{ entry_confirm }}" id="input-confirm" class="form-control" />
-                          {% if error_confirm %}
-                              <div class="text-danger">{{ error_confirm }}</div>
-                          {% endif %} </div>
+              </div>
+              <div class="form-group form-group-error required">
+                  <input type="password" name="password" value="{{ password }}"  id="input-opc-password" class="form-checkout focus" />
+                  <div class="float-label">{{ entry_password }} <span>*</span></div>
+                  <div class="form-error">
+                      {% if error_password %}{{ error_password }}{% endif %}
                   </div>
 
-
-
-
-                  <div class="buttons">
-                      <div class="pull-right">
-                          <input type="submit" value="{{ heading_title }}" class="btn btn-primary" />
-                          <span data-href="{{ login }}"   class="btn btn-primary" >{{ button_already_have }}</span>
-                      </div>
+              </div>
+              <div class="form-group form-group-error required">
+                  <input type="password" name="confirm" value="{{ confirm }}"  id="input-opc-confirm" class="form-checkout focus" />
+                  <div class="float-label">{{ entry_confirm }} <span>*</span></div>
+                  <div class="form-error">
+                      {% if error_confirm %}{{ error_confirm }}{% endif %}
                   </div>
 
-          </form></div>
+              </div>
+              <div class="buttons">
+                  <input type="submit" value="{{ heading_title }}" class="opc-btn" />
+                  <span data-href="{{ login }}"   class="opc-btn btn-gray" >{{ button_already_have }}</span>
+              </div>
+
+          </form>
+      </div>
      </div>
 
 <script type="text/javascript">
@@ -125,5 +110,106 @@
 		$('#register_form').on('select2:selecting', '#input-payment-country', function() {
 			$('#register_form input[name="telephone"]').val('');
 		});
+
+
+
+		if ($('#register_form #dropdownFlags').attr('data-iso-code') == 'ua') {
+			$.get('index.php?route=checkout/sms_validator/validateNumber&tel=' + encodeURIComponent($('#register_form input[name="telephone"]').val()), function(step) {
+				switch(step) {
+					case '1':
+						opc_telephone.find('.check').hide();
+						opc_telephone.find('input[name="telephone"]').removeClass('error');
+						opc_telephone.find('#btn-send-sms').addClass('hidden');
+						opc_telephone.find('.form-error').text('');
+						break;
+					case '2':
+						opc_telephone.find('input[name="telephone"]').addClass('error');
+						opc_telephone.find('#btn-send-sms').removeClass('hidden');
+						opc_telephone.find('.form-error').text('{{ error_sms_please }}');
+						break;
+					case '3':
+						opc_telephone.find('.check').show();
+						break;
+				}
+			});
+		}
+
+		$('#register_form').on('keyup', 'input[name="telephone"]', function() {
+			var iso_code = $('#register_form #dropdownFlags').attr('data-iso-code');
+
+			if (iso_code == 'ua') {
+				$.get('index.php?route=checkout/sms_validator/validateNumber&tel=' + encodeURIComponent($(this).val()), function(step) {
+					switch(step) {
+						case '1':
+							opc_telephone.find('.check').hide();
+							opc_telephone.find('input[name="telephone"]').removeClass('error');
+							opc_telephone.find('#btn-send-sms').addClass('hidden');
+							opc_telephone.find('.form-error').text('');
+							break;
+						case '2':
+							opc_telephone.find('input[name="telephone"]').addClass('error');
+							opc_telephone.find('#btn-send-sms').removeClass('hidden');
+							opc_telephone.find('.form-error').text('{{ error_sms_please }}');
+							break;
+						case '3':
+							opc_telephone.find('.check').show();
+							break;
+					}
+				});
+			}
+		});
+
+		var int;
+		$('#register_form').on('click', '#btn-send-sms', function() {
+			var _Seconds = 120;
+
+			// opc_telephone.find('#dropdownFlags').prop('disabled', true);
+			opc_telephone.find('input[name="telephone"]').prop('disabled', true);
+			opc_telephone.find('#btn-send-sms').addClass('hidden');
+			opc_telephone.find('input[name="sms_code"]').removeClass('hidden').focus();
+			opc_telephone.find('.form-error').text('{{ text_sms_wait }} ' + _Seconds + ' {{ text_sms_wait_sec }}!');
+
+			clearInterval(int);
+			int = setInterval(function() {
+				if (_Seconds > 0) {
+					_Seconds--;
+					opc_telephone.find('.form-error').text('{{ text_sms_wait }} ' + _Seconds + ' {{ text_sms_wait_sec }}!');
+				} else {
+					clearInterval(int);
+
+					opc_telephone.find('input[name="sms_code"]').addClass('hidden').val('');
+					opc_telephone.find('#btn-send-sms').removeClass('hidden');
+					opc_telephone.find('.form-error').text('{{ error_sms_please }}');
+					// opc_telephone.find('#dropdownFlags').prop('disabled', false);
+					opc_telephone.find('input[name="telephone"]').prop('disabled', false);
+				}
+			}, 1000);
+
+			$.ajax({
+				url: 'index.php?route=checkout/sms_validator/sendSMS',
+				type: 'post',
+				dataType: 'json',
+				success: function(json) {
+					console.log(json);
+				}
+			});
+		});
+
+		$('#register_form').on('keyup', 'input[name="sms_code"]', function() {
+			$.get("index.php?route=checkout/sms_validator/validateCode&code=" + encodeURIComponent($(this).val()), function(json) {
+				if (json['success']) {
+					clearInterval(int);
+
+					opc_telephone.find('input[name="telephone"]').removeClass('error').prop('disabled', false);
+					opc_telephone.find('input[name="sms_code"]').addClass('hidden').val('');
+					opc_telephone.find('#btn-send-sms').addClass('hidden');
+					opc_telephone.find('.form-error').text('');
+					opc_telephone.find('.check').show();
+					// opc_telephone.find('#dropdownFlags').prop('disabled', false);
+
+				}
+			});
+		});
 	})
+
 </script>

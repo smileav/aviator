@@ -40,7 +40,7 @@
         $openMinify->minifier->addStyle('catalog/view/javascript/bootstrap/css/bootstrap.min.css');
         // $openMinify->minifier->addStyle('catalog/view/javascript/font-awesome/css/font-awesome.min.css');
 		$openMinify->minifier->addStyle('catalog/view/theme/aviator/stylesheet/stylesheet.css');
-		//$openMinify->minifier->addStyle('catalog/view/javascript/opc/style.css');
+		$openMinify->minifier->addStyle('catalog/view/javascript/opc/style.css');
 		//$openMinify->minifier->addStyle('catalog/view/javascript/opc/select2.min.css');
 
 		$openMinify->minifier->addStyle('catalog/view/theme/aviator/stylesheet/jquery.mCustomScrollbar.min.css');
