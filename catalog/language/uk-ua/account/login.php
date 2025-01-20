@@ -1,7 +1,11 @@
 <?php
 
 // Heading
-$_['heading_title']                = 'Авторизація';
+$_['heading_title']                = 'Увійти';
+
+//Button
+$_['button_login']                 = 'Увійти';
+$_['button_create_account']                 = 'Створити аккаунт';
 
 // Text
 $_['text_account']                 = 'Обліковий запис';
