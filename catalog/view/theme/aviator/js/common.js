@@ -420,6 +420,7 @@ $(document).delegate('.agree', 'click', function(e) {
 })(window.jQuery);
 
 
+
 $(document).on('click','span[data-href]',function(){
 
 	$('#modal-account').modal('hide');

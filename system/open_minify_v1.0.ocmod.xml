@@ -40,6 +40,9 @@
         $openMinify->minifier->addStyle('catalog/view/javascript/bootstrap/css/bootstrap.min.css');
         // $openMinify->minifier->addStyle('catalog/view/javascript/font-awesome/css/font-awesome.min.css');
 		$openMinify->minifier->addStyle('catalog/view/theme/aviator/stylesheet/stylesheet.css');
+		//$openMinify->minifier->addStyle('catalog/view/javascript/opc/style.css');
+		//$openMinify->minifier->addStyle('catalog/view/javascript/opc/select2.min.css');
+
 		$openMinify->minifier->addStyle('catalog/view/theme/aviator/stylesheet/jquery.mCustomScrollbar.min.css');
 		$openMinify->minifier->addStyle('catalog/view/theme/aviator/stylesheet/search.css');
 		$openMinify->minifier->addStyle('catalog/view/javascript/OwlCarousel2/assets/owl.carousel.min.css');
@@ -64,6 +67,10 @@
         $openMinify->minifier->addScript('catalog/view/javascript/jquery/jquery-ui.min.js', 'header');
         $openMinify->minifier->addScript('catalog/view/javascript/jquery/jquery.ui.touch-punch.min.js', 'header');
 		$openMinify->minifier->addScript('catalog/view/javascript/bootstrap/js/bootstrap.min.js', 'header');
+		$openMinify->minifier->addScript('catalog/view/javascript/inputmask/jquery.inputmask.js', 'header');
+		//$openMinify->minifier->addScript('catalog/view/javascript/inputmask/bindings/inputmask.binding.js', 'header');
+		//$openMinify->minifier->addScript('catalog/view/javascript/opc/opc.js', 'header');
+		//$openMinify->minifier->addScript('catalog/view/javascript/opc/select2.min.js', 'header');
 		$openMinify->minifier->addScript('catalog/view/theme/aviator/js/common.js', 'header');
 		$openMinify->minifier->addScript('catalog/view/theme/aviator/js/jquery.mCustomScrollbar.min.js', 'header');
 		$openMinify->minifier->addScript('catalog/view/theme/aviator/js/search.js', 'header');

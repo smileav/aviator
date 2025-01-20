@@ -97,33 +97,33 @@
           </form></div>
      </div>
 
-<script>
-$(document).ready(function(){
-	var iso_code = '{{ iso_code_2 }}';
-	var calling_code = '{{ calling_code }}';
-	var opc_telephone = $('#register_form input[name="telephone"]').closest('.form-group');
+<script type="text/javascript">
+	$(document).ready(function(){
+		var iso_code = '{{ iso_code_2 }}';
+		var calling_code = '{{ calling_code }}';
+		var opc_telephone = $('#register_form input[name="telephone"]').closest('.form-group');
 
-	if (iso_code === 'ua') {
-		$('#register_form #dropdownFlags').addClass('disabled');
-		$('#register_form input[name="telephone"]').inputmask({
-			mask: '+380 (99) 999-99-99',
-			placeholder: 'X'
-		}).addClass('tel-ua');
-	} else  {
-		$('#register_form #dropdownFlags').removeClass('disabled');
-		$('#register_form input[name="telephone"]').inputmask({
-			mask: '+' + calling_code.replace(/9/g, "\\9") + ' {{ number_lengths_mask }}',
-			placeholder: 'X'
-		}).removeClass('tel-ua');
-	}
+		if (iso_code === 'ua') {
+			$('#register_form #dropdownFlags').addClass('disabled');
+			$('#register_form input[name="telephone"]').inputmask({
+				mask: '+380 (99) 999-99-99',
+				placeholder: 'X'
+			}).addClass('tel-ua');
+		} else  {
+			$('#register_form #dropdownFlags').removeClass('disabled');
+			$('#register_form input[name="telephone"]').inputmask({
+				mask: '+' + calling_code.replace(/9/g, "\\9") + ' {{ number_lengths_mask }}',
+				placeholder: 'X'
+			}).removeClass('tel-ua');
+		}
 
-	$('#register_form input[name="sms_code"]').inputmask({
-		mask: '9999',
-		placeholder: 'X'
-	});
+		//$('#register_form input[name="sms_code"]').inputmask({
+		//	mask: '9999',
+		//	placeholder: 'X'
+		//});
 
-	$('#register_form').on('select2:selecting', '#input-payment-country', function() {
-		$('#register_form input[name="telephone"]').val('');
-	});
-})
+		$('#register_form').on('select2:selecting', '#input-payment-country', function() {
+			$('#register_form input[name="telephone"]').val('');
+		});
+	})
 </script>
