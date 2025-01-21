@@ -93,7 +93,7 @@ $_['button_cart_in']        = 'В корзине';
 $_['button_quick']          = 'Быстрый заказ';
 $_['button_cancel']         = 'Отмена';
 $_['button_compare']        = 'В сравнение';
-$_['button_wishlist']       = 'В закладки';
+$_['button_wishlist']       = 'К избранному';
 $_['button_checkout']       = 'Оформление заказа';
 $_['button_confirm']        = 'Подтверждение заказа';
 $_['button_coupon']         = 'Применение купона';
@@ -126,6 +126,8 @@ $_['button_map']            = 'Посмотреть карту';
 	$_['button_add']='Добавить';
 $_['button_wisthlist']='В избранное';
 $_['button_main']='В каталог';
+$_['button_already_have']='Уже есть акканут? Войти';
+$_['button_create_account']='Создать аккаунт';
 
 // Error
 $_['error_exception']       = 'Ошибка кода(%s): %s в %s на строке %s';
