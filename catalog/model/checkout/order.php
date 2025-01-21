@@ -243,6 +243,21 @@ class ModelCheckoutOrder extends Model {
 		return $query->rows;
 	}
 
+	public function getOrderProductsFilter($order_id, $filter) {
+
+		$sql="SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'";
+		if(isset($filter['filter_name']) && !empty($filter['filter_name'])) {
+			$sql.="AND name LIKE '%" . $this->db->escape($filter['filter_name']) . "%'";
+		}
+		if(isset($filter['filter_model']) && !empty($filter['filter_model'])) {
+			$sql.="AND model LIKE '%" . $this->db->escape($filter['filter_model']) . "%'";
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->rows;
+	}
+
 	public function getOrderOptions($order_id, $order_product_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
 

@@ -1,9 +1,39 @@
 <?php
 class ModelAccountReturn extends Model {
 	public function addReturn($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "return` SET order_id = '" . (int)$data['order_id'] . "', product_id = '" . (int)$data['product_id'] . "', customer_id = '" . (int)$this->customer->getId() . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', product = '" . $this->db->escape($data['product']) . "', model = '" . $this->db->escape($data['model']) . "', quantity = '" . (int)$data['quantity'] . "', opened = '" . (int)$data['opened'] . "', return_reason_id = '" . (int)$data['return_reason_id'] . "', return_status_id = '" . (int)$this->config->get('config_return_status_id') . "', comment = '" . $this->db->escape($data['comment']) . "', date_ordered = '" . $this->db->escape($data['date_ordered']) . "', date_added = NOW(), date_modified = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "return` SET 
+		order_id = '" . (int)$data['order_id'] . "', 
+		
+		customer_id = '" . (int)$this->customer->getId() . "', 
+		firstname = '" . $this->db->escape($data['firstname']) . "', 
+		lastname = '" . $this->db->escape($data['lastname']) . "', 
+		email = '" . $this->db->escape($data['email']) . "', 
+		telephone = '" . $this->db->escape($data['telephone']) . "', 
+		
+		opened = '" . (int)$data['opened'] . "', 
+		return_reason_id = '" . (int)$data['return_reason_id'] . "', 
+		return_status_id = '" . (int)$this->config->get('config_return_status_id') . "', 
+		comment = '" . $this->db->escape($data['comment']) . "', 
+		date_ordered = '" . $this->db->escape($data['date_ordered']) . "', date_added = NOW(), date_modified = NOW()");
 
-		return $this->db->getLastId();
+		$return_id=$this->db->getLastId();
+		$this->load->model('catalog/product');
+		foreach($data['products'] as $product) {
+			$product_info=$this->model_catalog_product->getProduct($product['product_id']);
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "return_products` SET
+			return_id = '" . (int)$return_id . "',
+			product_id = '" . (int)$product['product_id'] . "',
+			quantity = '" . (int)$product['quantity'] . "',
+			name = '" . $this->db->escape($product_info['name']) . "',
+			model = '" . $this->db->escape($product_info['model']) . "'");
+		}
+
+		return $return_id;
+	}
+
+	public function getReturnProducts($return_id) {
+		$query=$this->db->query("SELECT  * FROM `" . DB_PREFIX . "return_products` r where return_id = '" . (int)$return_id . "'");
+		return $query->rows;
 	}
 
 	public function getReturn($return_id) {

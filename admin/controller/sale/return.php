@@ -356,6 +356,8 @@ class ControllerSaleReturn extends Controller {
 		$results = $this->model_sale_return->getReturns($filter_data);
 
 		foreach ($results as $result) {
+			$prodcuts = $this->model_sale_return->getReturnProducts($result['return_id']);
+
 			$data['returns'][] = array(
 				'return_id'     => $result['return_id'],
 				'order_id'      => $result['order_id'],
@@ -363,6 +365,7 @@ class ControllerSaleReturn extends Controller {
 				'product'       => $result['product'],
 				'model'         => $result['model'],
 				'return_status' => $result['return_status'],
+				'products'=>implode("<br>",array_column($prodcuts,'name')),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'edit'          => $this->url->link('sale/return/edit', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $result['return_id'] . $url, true)
@@ -716,7 +719,7 @@ class ControllerSaleReturn extends Controller {
 			$data['telephone'] = '';
 		}
 
-		if (isset($this->request->post['product'])) {
+		/*if (isset($this->request->post['product'])) {
 			$data['product'] = $this->request->post['product'];
 		} elseif (!empty($return_info)) {
 			$data['product'] = $return_info['product'];
@@ -747,6 +750,25 @@ class ControllerSaleReturn extends Controller {
 		} else {
 			$data['quantity'] = '';
 		}
+*/
+
+
+
+		if (isset($this->request->post['products'])) {
+			$data['products'] = $this->request->post['products'];
+		} elseif (!empty($return_info)) {
+			$prodcuts = $this->model_sale_return->getReturnProducts($return_info['return_id']);
+			$data['products']=array_map(function ($item) {
+				return [
+					'product_id' => $item['product_id'],
+					'name' => $item['name'],
+					'quantity' => $item['quantity'],
+				];
+			},$prodcuts);
+		} else {
+			$data['products'] = [];
+		}
+
 
 		if (isset($this->request->post['opened'])) {
 			$data['opened'] = $this->request->post['opened'];
@@ -832,13 +854,11 @@ class ControllerSaleReturn extends Controller {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 
-		if ((utf8_strlen($this->request->post['product']) < 1) || (utf8_strlen($this->request->post['product']) > 255)) {
+		if (empty($this->request->post['products'])) {
 			$this->error['product'] = $this->language->get('error_product');
 		}
 
-		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
-			$this->error['model'] = $this->language->get('error_model');
-		}
+
 
 		if (empty($this->request->post['return_reason_id'])) {
 			$this->error['reason'] = $this->language->get('error_reason');
@@ -915,5 +935,67 @@ class ControllerSaleReturn extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}	
+	}
+
+	public function autocomplete() {
+		$json = array();
+
+		if (isset($this->request->get['order_id']) && (isset($this->request->get['filter_name']) || isset($this->request->get['filter_model']))) {
+			$this->load->model('sale/return');
+
+
+			if (isset($this->request->get['filter_name'])) {
+				$filter_name = $this->request->get['filter_name'];
+			} else {
+				$filter_name = '';
+			}
+
+			if (isset($this->request->get['filter_model'])) {
+				$filter_model = $this->request->get['filter_model'];
+			} else {
+				$filter_model = '';
+			}
+
+			if (isset($this->request->get['limit'])) {
+				$limit = (int)$this->request->get['limit'];
+			} else {
+				$limit = $this->config->get('config_limit_autocomplete');
+			}
+
+			if (isset($this->request->get['filter_color'])) {
+				$filter_color = $this->request->get['filter_name'];
+			} else {
+				$filter_color = '';
+			}
+
+			$filter_data = array(
+				'order_id' => $this->request->get['order_id'],
+				'filter_name'  => $filter_name,
+				'filter_model' => $filter_model,
+				'filter_color' => $filter_color,
+				'start'        => 0,
+				'limit'        => $limit
+			);
+
+			if (isset($this->request->get['filter_kit'])) {
+				$filter_data['filter_kit'] = $this->request->get['filter_name'];
+				$filter_data['filter_name'] = '';
+			}
+
+			$results = $this->model_sale_return->getOrderProductsFilter($this->request->get['order_id'], $filter_data);
+
+			foreach ($results as $result) {
+
+				$json[] = array(
+					'product_id' => $result['product_id'],
+					'name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+					'model'      => $result['model'],
+
+				);
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

@@ -31,13 +31,15 @@
                   <div class="status" style="background:#787878;color: #ffffff">{{ return.status }}</div>
                 </div>
               </div>
-              {% if return.image %}
+
                 <div class="products">
+                  {% for product in return.return_products %}
                   <div class="product">
-                    <img src="{{ return.image }}" />
+                    <img src="{{ product.image }}" />
                   </div>
+                  {% endfor %}
                 </div>
-              {% endif %}
+
             </a>
           {% endfor %}
         </div>
