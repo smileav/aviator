@@ -3,7 +3,7 @@
   {% include('aviator/template/common/breadcrumb.twig') %}
 </div>
 
-<div class="account" id="account-account">
+<div class="account" id="account-return_info">
   <div class="container">
     {% if success %}
       <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
@@ -62,11 +62,12 @@
             </div>
           </div>
         {% endif %}
-          <div class="block_order_info">
+          <div class="block_order_info return_product_info">
             <div class="head">{{ text_product }}</div>
             <div class="table products">
               {% for product in return_products %}
                 <div class="product">
+                  <img src="{{ product.image }}" />
                   <div class="product_info">
                     <div class="name">{{ product.name }}</div>
                     <div class="model">{{ column_model }}: {{ product.model }}</div>

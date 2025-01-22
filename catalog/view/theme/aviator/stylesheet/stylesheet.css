@@ -3521,8 +3521,55 @@ body .show-scroll::-webkit-scrollbar-track {
 	background: #F1F2F5;
 	color:#000;
 }
-
-
+.well{
+	padding: 10px 0;
+	background: none;
+	border: none;
+	margin: 0;
+	min-height: unset;
+	height: auto !important;
+	box-shadow: none;
+}
+.well > div{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.well > div + div{
+	margin-top: 10px;
+}
+.well > div > .fa-minus-circle{
+	background: url("../image/delete.svg") no-repeat center center;
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+.well > div > span{
+	flex: 1;
+	font-size: 16px;
+	font-weight: 500;
+}
+.well > div .quantity{
+	background: #fff;
+	border-bottom: 1px solid #000;
+	width: 40px;
+	text-align: center;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 30px;
+	height: 30px;
+	margin-left: 10px;
+}
+.account .return_product_info .product img{
+	margin-right: 16px;
+}
+.account .return_product_info .product .product_info{
+	justify-content: start;
+}
+#account-return_info .block_order_info .table_row .col2{
+	text-transform: none;
+}
 
 
 @media (min-width: 1200px){
@@ -3586,7 +3633,7 @@ body .show-scroll::-webkit-scrollbar-track {
 	#account-wishlist{padding:0 15px;}
 }
 @media (min-width: 0px) and (max-width: 600px) {
-	.account .list_orders .order .wrap_totals {flex-direction: column;align-items: end;}
+	.account .list_orders .order .wrap_totals {flex-direction: column;align-items: end;margin-bottom: 16px;}
 	.account .list_orders .order .totals{margin: 0 0 5px 0;}
 	.account .form_edit .newsletter > svg{display: none}
 

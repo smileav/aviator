@@ -184,12 +184,22 @@ class ControllerAccountReturn extends Controller {
 			$data['email'] = $return_info['email'];
 			$data['telephone'] = $return_info['telephone'];
 
+            $this->load->model('tool/image');
+            $this->load->model('catalog/product');
 			$data['return_products']=[];
 			$return_products = $this->model_account_return->getReturnProducts($return_info['return_id']);
 			foreach ($return_products as $product) {
+                $product_info = $this->model_catalog_product->getProduct($product['product_id']);
+
+                if ($product_info['image']) {
+                    $image = $this->model_tool_image->resize($product_info['image'], 100, 140, 'auto');
+                } else {
+                    $image = $this->model_tool_image->resize('placeholder.png', 100, 140, 'auto');
+                }
 				$data['return_products'][]=[
 					'product_id' => $product['product_id'],
 					'quantity' => $product['quantity'],
+                    'image'=> $image,
 					'name' => $product['name'],
 					'model' => $product['model'],
 				];
