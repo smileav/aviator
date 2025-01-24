@@ -3464,7 +3464,7 @@ body .show-scroll::-webkit-scrollbar-track {
 .h-account > span{
 	margin-left: 6px;
 }
-
+/*
 .modal-open .modal{
 	z-index: 99999;
 }
@@ -3505,7 +3505,7 @@ body .show-scroll::-webkit-scrollbar-track {
 	height: 20px;
 	display: flex;
 	order: 2;
-}
+}*/
 .modal-dialog .buttons .opc-btn{
 	width: 100%;
 	max-width: unset;
@@ -3579,8 +3579,12 @@ body .show-scroll::-webkit-scrollbar-track {
 		flex-wrap: wrap;
 	}
 	#register_form .form-group{
-		width: 50%;
+		width: 100%;
 		padding: 4px;
+	}
+	#register_form .form-group #btn-send-sms{
+		top:8px;
+		right: 8px;
 	}
 	#register_form .buttons {
 		margin: 4px;
