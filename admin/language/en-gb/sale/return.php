@@ -47,6 +47,10 @@ $_['entry_notify']         = 'Notify Customer';
 $_['entry_return_id']      = 'Return ID';
 $_['entry_date_added']     = 'Date Added';
 $_['entry_date_modified']  = 'Date Modified';
+	$_['entry_receiver']='Name of recipient';
+	$_['entry_inn']='TIN';
+	$_['entry_iban']='IBAN';
+	$_['text_receiver']='Details of the recipient';
 
 // Help
 $_['help_product']         = '(Autocomplete)';
@@ -61,3 +65,6 @@ $_['error_email']          = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']      = 'Telephone must be between 3 and 32 characters!';
 $_['error_product']        = 'Product Name must be greater than 3 and less than 255 characters!';
 $_['error_model']          = 'Product Model must be greater than 3 and less than 64 characters!';
+	$_['error_receiver']='The recipient must contain from 1 to 32 characters';
+	$_['error_iban']='Wrong Iban format! Use the format: UA XX XXXXXX XXXXX XXXX XXXX XXXX XX';
+	$_['error_inn']='Invalid TIN';

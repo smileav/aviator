@@ -51,6 +51,10 @@ $_['entry_quantity']     = 'Quantity';
 $_['entry_reason']       = 'Reason for Return';
 $_['entry_opened']       = 'Product is opened';
 $_['entry_fault_detail'] = 'Faulty or other details';
+	$_['entry_receiver']='Name of recipient';
+	$_['entry_inn']='TIN';
+	$_['entry_iban']='IBAN';
+	$_['text_receiver']='Details of the recipient';
 
 // Error
 $_['text_error']         = 'The returns you requested could not be found!';
@@ -63,3 +67,6 @@ $_['error_product']      = 'Product Name must be greater than 3 and less than 25
 $_['error_model']        = 'Product Model must be greater than 3 and less than 64 characters!';
 $_['error_reason']       = 'You must select a return product reason!';
 $_['error_agree']        = 'Warning: You must agree to the %s!';
+	$_['error_receiver']='The recipient must contain from 1 to 32 characters';
+	$_['error_iban']='Wrong Iban format! Use the format: UA XX XXXXXX XXXXX XXXX XXXX XXXX XX';
+	$_['error_inn']='Invalid TIN';

@@ -385,6 +385,24 @@ class ControllerAccountReturn extends Controller {
 			$data['error_reason'] = '';
 		}
 
+		if (isset($this->error['receiver'])) {
+			$data['error_receiver'] = $this->error['receiver'];
+		} else {
+			$data['error_receiver'] = '';
+		}
+
+		if (isset($this->error['inn'])) {
+			$data['error_inn'] = $this->error['inn'];
+		} else {
+			$data['error_inn'] = '';
+		}
+
+		if (isset($this->error['iban'])) {
+			$data['error_iban'] = $this->error['iban'];
+		} else {
+			$data['error_iban'] = '';
+		}
+
 		$data['action'] = $this->url->link('account/return/add', '', true);
 
 		$this->load->model('account/order');
@@ -505,6 +523,22 @@ class ControllerAccountReturn extends Controller {
 			$data['return_reason_id'] = '';
 		}
 
+		if (isset($this->request->post['receiver'])) {
+			$data['receiver'] = $this->request->post['receiver'];
+		} else {
+			$data['receiver'] = '';
+		}
+		if (isset($this->request->post['inn'])) {
+			$data['inn'] = $this->request->post['inn'];
+		} else {
+			$data['inn'] = '';
+		}
+		if (isset($this->request->post['iban'])) {
+			$data['iban'] = $this->request->post['iban'];
+		} else {
+			$data['iban'] = '';
+		}
+
 		$this->load->model('localisation/return_reason');
 
 		$data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
@@ -541,8 +575,13 @@ class ControllerAccountReturn extends Controller {
 		} else {
 			$data['agree'] = false;
 		}
+		if($this->customer->isLogged()) {
+			$data['back'] = $this->url->link('account/account', '', true);
 
-		$data['back'] = $this->url->link('account/account', '', true);
+		}else{
+			$data['back'] = $this->url->link('common/home', '', true);
+
+		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -562,6 +601,17 @@ class ControllerAccountReturn extends Controller {
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
+		if ((utf8_strlen(trim($this->request->post['receiver'])) < 1) || (utf8_strlen(trim($this->request->post['receiver'])) > 32)) {
+			$this->error['receiver'] = $this->language->get('error_receiver');
+		}
+		if ((utf8_strlen(trim($this->request->post['inn'])) < 10) || (utf8_strlen(trim($this->request->post['inn'])) > 12)) {
+			$this->error['inn'] = $this->language->get('error_inn');
+		}
+
+		if (!$this->validateIban($this->request->post['iban'])) {
+			$this->error['iban'] = $this->language->get('error_iban');
+			//$json['error']['iban'] = 'Неправильний формат IBAN! Використовуйте формат: UA XX XXXXXX XXXXX XXXX XXXX XXXX XX';
+		}
 
 		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
 			$this->error['lastname'] = $this->language->get('error_lastname');
@@ -573,6 +623,13 @@ class ControllerAccountReturn extends Controller {
 
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
+		}else{
+			$pattern = '/^\+380 \(\d{2}\) \d{3}-\d{2}-\d{2}$/';
+
+			if (!preg_match($pattern, $this->request->post['telephone'])) {
+				$this->error['telephone'] = $this->language->get('error_telephone');
+			}
+
 		}
 
 		if (empty($this->request->post['products'])) {
@@ -604,6 +661,44 @@ class ControllerAccountReturn extends Controller {
 
 		return !$this->error;
 	}
+
+	private function validateIban($iban) {
+
+		$iban = str_replace(' ', '', $iban);
+
+		$pattern = '/^UA\d{2}\d{6}\d{19}$/';
+
+		if (!preg_match($pattern, $iban)) {
+			return false;
+		}
+
+		// Перевірка контрольних цифр IBAN
+		if (!$this->validateIbanChecksum($iban)) {
+			return false;
+		}
+
+		return true;
+	}
+
+		// Перевірка контрольних цифр IBAN
+		private function validateIbanChecksum($iban) {
+			// Переміщуємо перші чотири символи в кінець
+			$iban = substr($iban, 4) . substr($iban, 0, 4);
+
+			// Замінюємо літери на їх числові значення (A=10, B=11, ..., Z=35)
+			$iban = preg_replace_callback('/[A-Z]/', function ($match) {
+				return ord($match[0]) - 55;
+			}, $iban);
+
+			// Рахуємо модуль 97
+			$mod = intval(substr($iban, 0, 1));
+			for ($i = 1, $len = strlen($iban); $i < $len; $i++) {
+				$mod = ($mod * 10 + intval($iban[$i])) % 97;
+			}
+
+			return $mod === 1; // Валідний, якщо залишок дорівнює 1
+		}
+
 
 	public function success() {
 		$this->load->language('account/return');

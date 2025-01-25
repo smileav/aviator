@@ -19,7 +19,7 @@
 
         <h5>{{ text_for_customers }} <span class="caret"></span></h5>
         <ul class="list-unstyled">
-          {#  <li><a href="{{ return }}">{{ text_return }}</a></li> #}
+          <li><a href="{{ return }}">{{ text_return }}</a></li>
           <li><a href="{{ information.6.href }}">{{ information.6.meta_h1 }}</a></li>
           <li><a href="{{ information.8.href }}">{{ information.8.title }}</a></li>
           <li><a href="{{ information.10.href }}">{{ information.10.title }}</a></li>
@@ -109,7 +109,8 @@
 })(document, window, 'script');
 </script>
 {% endif %}
-<div id="modal-account" class="modal">
+
+<div id="modal-account" class="modal fade" role="dialog">
 
 </div>
 </body></html>

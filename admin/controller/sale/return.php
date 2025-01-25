@@ -585,6 +585,24 @@ class ControllerSaleReturn extends Controller {
 			$data['error_model'] = '';
 		}
 
+		if (isset($this->error['receiver'])) {
+			$data['error_receiver'] = $this->error['receiver'];
+		} else {
+			$data['error_receiver'] = '';
+		}
+
+		if (isset($this->error['inn'])) {
+			$data['error_inn'] = $this->error['inn'];
+		} else {
+			$data['error_inn'] = '';
+		}
+
+		if (isset($this->error['iban'])) {
+			$data['error_iban'] = $this->error['iban'];
+		} else {
+			$data['error_iban'] = '';
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['filter_return_id'])) {
@@ -718,6 +736,31 @@ class ControllerSaleReturn extends Controller {
 		} else {
 			$data['telephone'] = '';
 		}
+		if (isset($this->request->post['receiver'])) {
+			$data['receiver'] = $this->request->post['receiver'];
+		} elseif (!empty($return_info)) {
+			$data['receiver'] = $return_info['receiver'];
+		} else {
+			$data['receiver'] = '';
+		}
+		if (isset($this->request->post['inn'])) {
+			$data['inn'] = $this->request->post['inn'];
+		} elseif (!empty($return_info)) {
+			$data['inn'] = $return_info['inn'];
+		} else {
+			$data['inn'] = '';
+		}
+		if (isset($this->request->post['iban'])) {
+			$data['iban'] = $this->request->post['iban'];
+		} elseif (!empty($return_info)) {
+			$data['iban'] = $return_info['iban'];
+		} else {
+			$data['iban'] = '';
+		}
+
+
+
+
 
 		/*if (isset($this->request->post['product'])) {
 			$data['product'] = $this->request->post['product'];
@@ -852,6 +895,24 @@ class ControllerSaleReturn extends Controller {
 
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
+		}else{
+			$pattern = '/^\+380 \(\d{2}\) \d{3}-\d{2}-\d{2}$/';
+
+			if (!preg_match($pattern, $this->request->post['telephone'])) {
+				$this->error['telephone'] = $this->language->get('error_telephone');
+			}
+
+		}
+		if ((utf8_strlen(trim($this->request->post['receiver'])) < 1) || (utf8_strlen(trim($this->request->post['receiver'])) > 32)) {
+			$this->error['receiver'] = $this->language->get('error_receiver');
+		}
+		if ((utf8_strlen(trim($this->request->post['inn'])) < 10) || (utf8_strlen(trim($this->request->post['inn'])) > 12)) {
+			$this->error['inn'] = $this->language->get('error_inn');
+		}
+
+		if (!$this->validateIban($this->request->post['iban'])) {
+			$this->error['iban'] = $this->language->get('error_iban');
+			//$json['error']['iban'] = 'Неправильний формат IBAN! Використовуйте формат: UA XX XXXXXX XXXXX XXXX XXXX XXXX XX';
 		}
 
 		if (empty($this->request->post['products'])) {
@@ -871,6 +932,42 @@ class ControllerSaleReturn extends Controller {
 		return !$this->error;
 	}
 
+	private function validateIban($iban) {
+
+		$iban = str_replace(' ', '', $iban);
+
+		$pattern = '/^UA\d{2}\d{6}\d{19}$/';
+
+		if (!preg_match($pattern, $iban)) {
+			return false;
+		}
+
+		// Перевірка контрольних цифр IBAN
+		if (!$this->validateIbanChecksum($iban)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	// Перевірка контрольних цифр IBAN
+	private function validateIbanChecksum($iban) {
+		// Переміщуємо перші чотири символи в кінець
+		$iban = substr($iban, 4) . substr($iban, 0, 4);
+
+		// Замінюємо літери на їх числові значення (A=10, B=11, ..., Z=35)
+		$iban = preg_replace_callback('/[A-Z]/', function ($match) {
+			return ord($match[0]) - 55;
+		}, $iban);
+
+		// Рахуємо модуль 97
+		$mod = intval(substr($iban, 0, 1));
+		for ($i = 1, $len = strlen($iban); $i < $len; $i++) {
+			$mod = ($mod * 10 + intval($iban[$i])) % 97;
+		}
+
+		return $mod === 1; // Валідний, якщо залишок дорівнює 1
+	}
 	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'sale/return')) {
 			$this->error['warning'] = $this->language->get('error_permission');

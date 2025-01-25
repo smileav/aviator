@@ -9,7 +9,9 @@ class ModelSaleReturn extends Model {
 		lastname = '" . $this->db->escape($data['lastname']) . "', 
 		email = '" . $this->db->escape($data['email']) . "', 
 		telephone = '" . $this->db->escape($data['telephone']) . "', 
-		
+		receiver = '" . $this->db->escape($data['receiver']) . "',
+		inn = '" . $this->db->escape($data['inn']) . "',
+		iban = '" . $this->db->escape($data['iban']) . "',
 		opened = '" . (int)$data['opened'] . "', 
 		return_reason_id = '" . (int)$data['return_reason_id'] . "', 
 		return_action_id = '" . (int)$data['return_action_id'] . "',
@@ -42,7 +44,9 @@ class ModelSaleReturn extends Model {
 		lastname = '" . $this->db->escape($data['lastname']) . "', 
 		email = '" . $this->db->escape($data['email']) . "', 
 		telephone = '" . $this->db->escape($data['telephone']) . "', 
-		
+		receiver = '" . $this->db->escape($data['receiver']) . "',
+		inn = '" . $this->db->escape($data['inn']) . "',
+		iban = '" . $this->db->escape($data['iban']) . "',
 		 opened = '" . (int)$data['opened'] . "', 
 		 return_reason_id = '" . (int)$data['return_reason_id'] . "', 
 		 return_action_id = '" . (int)$data['return_action_id'] . "', 

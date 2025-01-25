@@ -40,7 +40,7 @@ class ControllerCommonFooter extends Controller {
 
         $data['blog'] = $this->url->link('blog/latest', '', true);
         $data['gift_card'] = $this->url->link('product/category', 'path=206', true);
-
+		$data['return'] = $this->url->link('account/return/add', '', true);
         /*
 		$data['contact'] = $this->url->link('information/contact');
 		$data['return'] = $this->url->link('account/return/add', '', true);
