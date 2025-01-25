@@ -3464,15 +3464,15 @@ body .show-scroll::-webkit-scrollbar-track {
 .h-account > span{
 	margin-left: 6px;
 }
-/*
-.modal-open .modal{
-	z-index: 99999;
+
+.modal-open #modal-account {
+	z-index: 10000;
 }
-.modal-backdrop.in{
+#modal-account .modal-backdrop.in{
 	z-index: 99998;
 	opacity: 0.8;
 }
-.modal.in .modal-dialog{
+#modal-account.modal.in .modal-dialog{
 	display: flex;
 	align-items: center;
 	height: 100%;
@@ -3480,47 +3480,58 @@ body .show-scroll::-webkit-scrollbar-track {
 	justify-content: center;
 	width: 100%;
 }
-.modal-content{
+#modal-account .modal-content{
 	width:90%;
 	max-width: 600px;
 }
-.modal-header {
+#modal-account .modal-header {
 	padding:30px 30px 0;
 	border-bottom: none;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 }
-.modal-header h4{
+#modal-account .modal-header h4{
 	font-size: 24px;
 	font-weight: 700;
 	line-height: 31px;
 	flex: 1;
 	order: 1;
 }
-.modal .close{
+#modal-account.modal .close{
 	text-indent: -1000000px;
 	background: url(../image/close.svg) no-repeat center center;
 	width: 20px;
 	height: 20px;
 	display: flex;
 	order: 2;
-}*/
-.modal-dialog .buttons .opc-btn{
+}
+#modal-account .modal-dialog .buttons .opc-btn{
 	width: 100%;
 	max-width: unset;
 }
-.modal-dialog .buttons * + *{
+#modal-account .modal-dialog .buttons * + *{
 	border-top:1px solid var(--border-color);
 	margin-top: 24px;
 }
-.modal-dialog .buttons .border{
+#modal-account .modal-dialog .buttons .border{
 	border-top:1px solid var(--border-color);
 }
-.modal-dialog .buttons .btn-gray{
+#modal-account .modal-dialog .buttons .btn-gray{
 	background: #F1F2F5;
 	color:#000;
 }
+.modal-open .modal-backdrop {
+	z-index: 9999;
+}
+#modal-account .right{
+	text-align: right;
+}
+#modal-account .btn-href{
+	text-decoration: underline;
+	cursor: pointer;
+}
+
 .well{
 	padding: 10px 0;
 	background: none;
