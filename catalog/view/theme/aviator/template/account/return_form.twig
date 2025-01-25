@@ -8,9 +8,11 @@
       <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
     {% endif %}
     <div class="dflex">
+      {% if column_left %}
       <div class="col-left">
         {{ column_left }}
       </div>
+      {% endif %}
       <div class="col-right">
         <div class="head">
           <h1>{{ heading_title }}</h1>

@@ -46,7 +46,9 @@ class ControllerAccountLogin extends Controller {
 
 		if ($this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', '', true));
-		}
+		}else{
+            $this->response->redirect($this->url->link('common/home', '', true));
+        }
 
 		$this->load->language('account/login');
 
