@@ -1,7 +1,7 @@
 <div class="product-thumb" data-id="{{ product.product_id }}">
     {% if product.add_to_wishlist %}
-        <div class="wishlist" onclick="wishlist.add('{{ product.product_id }}');">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+        <div class="wishlist" id="button-wish{{ product.product_id }}" onclick="wishlist.add('{{ product.product_id }}');">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="{% if product.is_wishlist %}black{% else %}none{% endif %}"
                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.7096 7.26666C17.7096 8.23333 17.343 9.20833 16.6013 9.95L15.368 11.1833L10.0596 16.4917C10.0346 16.5167 10.0263 16.525 10.0013 16.5417C9.9763 16.525 9.96797 16.5167 9.94297 16.4917L3.4013 9.95C2.65964 9.20833 2.29297 8.24166 2.29297 7.26666C2.29297 6.29166 2.65964 5.31667 3.4013 4.575C4.88464 3.1 7.28463 3.1 8.76797 4.575L9.99297 5.80833L11.2263 4.575C12.7096 3.1 15.1013 3.1 16.5846 4.575C17.343 5.31667 17.7096 6.28333 17.7096 7.26666Z"
                       stroke="black" stroke-width="1.5" stroke-linecap="round"

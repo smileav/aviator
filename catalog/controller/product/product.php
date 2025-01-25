@@ -697,6 +697,10 @@ class ControllerProductProduct extends Controller {
                 $data['size_description'] = $size ? html_entity_decode($size['description'], ENT_QUOTES, 'UTF-8') : '';
             }
 
+			$this->load->model('account/wishlist');
+
+			$data['is_wishlist']=$this->model_account_wishlist->checkProductInWishlist($this->request->get['product_id']);
+
             $this->model_catalog_product->updateViewed($this->request->get['product_id']);
 
 			$data['column_left'] = $this->load->controller('common/column_left');

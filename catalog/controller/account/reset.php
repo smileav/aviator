@@ -32,9 +32,9 @@ class ControllerAccountReset extends Controller {
 				// Clear any previous login attempts
 				$this->model_account_customer->deleteLoginAttempts($customer_info['email']);
 
-				$this->session->data['success'] = $this->language->get('text_success');
+				$data['success'] = $this->language->get('text_success');
 
-				$this->response->redirect($this->url->link('account/login', '', true));
+				//$this->response->redirect($this->url->link('account/login', '', true));
 			}
 
 			$data['breadcrumbs'] = array();

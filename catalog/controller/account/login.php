@@ -276,7 +276,7 @@ class ControllerAccountLogin extends Controller {
 
 		$data['action'] = $this->url->link('account/login/mini', '', true);
 		$data['register'] = $this->url->link('account/register/mini', '', true);
-		$data['forgotten'] = $this->url->link('account/forgotten', '', true);
+		$data['forgotten'] = $this->url->link('account/forgotten/mini', '', true);
 
 		// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
 		if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {

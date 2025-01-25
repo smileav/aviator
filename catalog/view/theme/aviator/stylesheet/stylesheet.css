@@ -1288,9 +1288,11 @@ footer .row > div:first-child h5 {
 	border-radius: 0;
 	margin-bottom: 24px;
 }
-.alert a {
+.alert a, .alert span {
 	font-weight: 500;
 	text-decoration: underline;
+	color: #000;
+	cursor: pointer;
 }
 
 .alert a:hover {
@@ -3584,6 +3586,10 @@ body .show-scroll::-webkit-scrollbar-track {
 #account-return_info .block_order_info .table_row .col2{
 	text-transform: none;
 }
+#modal-account .warning.form-error{
+	height: auto;
+	margin-bottom: 10px;
+}
 
 
 @media (min-width: 1200px){
@@ -3635,6 +3641,7 @@ body .show-scroll::-webkit-scrollbar-track {
 @media (min-width: 0px) and (max-width: 991px) {
 	.account {padding: 5px 0;}
 	.account .col-left,.account .col-right{width: 100%;}
+	.account .col-left + .col-right{width: 100%;}
 	.account .col-left{margin-bottom: 5px;padding: 0;}
 	.account_menu {padding: 15px;}
 	.account_menu .head {margin-bottom: 20px;}
@@ -3654,7 +3661,10 @@ body .show-scroll::-webkit-scrollbar-track {
 	.account .list_orders .order .wrap_totals {flex-direction: column;align-items: end;margin-bottom: 16px;}
 	.account .list_orders .order .totals{margin: 0 0 5px 0;}
 	.account .form_edit .newsletter > svg{display: none}
-
+	.account .orders_empty{padding: 0}
+	.account .orders_empty .buttons{flex-direction: column;}
+	.account .orders_empty .buttons > *{width: 100%;}
+	.account .orders_empty .buttons > * + *{margin-left:0;margin-top: 10px}
 }
 @media (min-width: 0px) and (max-width: 400px) {
 	.h-cart-it {margin-left: 2px;}

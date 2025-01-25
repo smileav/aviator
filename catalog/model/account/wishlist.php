@@ -21,4 +21,9 @@ class ModelAccountWishlist extends Model {
 
 		return $query->row['total'];
 	}
+
+	public function checkProductInWishlist($product_id) {
+		$query=$this->db->query("SELECT * FROM " . DB_PREFIX . "customer_wishlist WHERE customer_id = '" . (int)$this->customer->getId() . "' AND product_id = '" . (int)$product_id . "'");
+		return ($query->num_rows)?true:false;
+	}
 }

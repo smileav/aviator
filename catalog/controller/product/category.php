@@ -304,7 +304,7 @@ class ControllerProductCategory extends Controller {
             $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
 			$results = $this->model_catalog_product->getProducts($filter_data);
-
+			$this->load->model('account/wishlist');
 			foreach ($results as $result) {
 
                 if ($category_id != 206) {
@@ -340,6 +340,8 @@ class ControllerProductCategory extends Controller {
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
+					'add_to_wishlist' => true,
+					'is_wishlist'=>$this->model_account_wishlist->checkProductInWishlist($result['product_id']),
 					'thumb'       => $image,
 					'thumb_w'     => $image_w,
 					'thumb_h'     => $image_h,

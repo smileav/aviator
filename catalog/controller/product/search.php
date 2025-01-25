@@ -184,7 +184,7 @@ class ControllerProductSearch extends Controller {
 			$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
 			$results = $this->model_catalog_product->getProducts($filter_data);
-
+			$this->load->model('account/wishlist');
 			foreach ($results as $result) {
                 if ($result['image']) {
                     $image = $this->model_tool_image->resize($result['image'], $image_w, $image_h, 'auto');
@@ -208,6 +208,8 @@ class ControllerProductSearch extends Controller {
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
+					'add_to_wishlist' => true,
+					'is_wishlist'=>$this->model_account_wishlist->checkProductInWishlist($result['product_id']),
 					'thumb'       => $image,
                     'thumb_w'     => $image_w,
                     'thumb_h'     => $image_h,

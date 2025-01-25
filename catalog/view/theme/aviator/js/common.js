@@ -214,7 +214,14 @@ var wishlist = {
 				}
 
 				if (json['success']) {
-					$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content').parent().before('<div class="alert"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					setTimeout(function () {
+						$('.alert').slideUp(1500);
+					}, 5000);
+
+				}
+				if(typeof json['product_id'] != 'undefined') {
+					$('#button-wish'+product_id+' svg').attr('fill', 'black');
 				}
 
 				$('#wishlist-total span').html(json['total']);
@@ -488,6 +495,35 @@ $(document).on('submit','#login_form',function(e){
 				$('#modal-account').modal('hide');
 
 				$('#customer_in_header').html($(json.success).find('#customer_in_header'));
+			}
+
+		}
+	});
+
+})
+
+$(document).on('submit','#forgotten_form',function(e){
+	e.preventDefault();
+	$.ajax({
+		url: $(this).attr('action'),
+		type: 'post',
+		dataType: 'json',
+		data:$('#forgotten_form').serialize(),
+		success: function(json) {
+
+			if(typeof json.success=='undefined') {
+				html = '  <div class="modal-dialog">';
+				html += json.template;
+				html += '  </div>';
+
+
+				$('#modal-account').html(html);
+			}else{
+
+				$('#modal-account .modal-body').html(json.success);
+				//$('#modal-account').modal('hide');
+
+				//$('#customer_in_header').html($(json.success).find('#customer_in_header'));
 			}
 
 		}
