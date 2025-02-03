@@ -2,7 +2,7 @@
 <div  class="container">
   {% include('aviator/template/common/breadcrumb.twig') %}
 </div>
-<div class="account" id="account-return-form">
+<div class="account return" id="account-return-form">
   <div  class="container">
     {% if success %}
       <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
@@ -37,12 +37,39 @@
                 <div class="float-label">{{ entry_email }} <span>*</span></div>
                 <div class="form-error">{% if error_email %}{{ error_email }}{% endif %}</div>
               </div>
+
+              <div class="form-group form-group-error required">
+                {#<label for="input-opc-telephone" class="control-label opc-label">{{ entry_telephone }}</label>#}
+                <div class="flag-container">
+                  <div id="dropdownFlags" data-iso-code="{{ iso_code_2 }}">
+                    <div class="flag"><img src="{{ flag }}" alt="" width="24" height="16"/></div>
+                    {#<span class="caret"></span>#}
+                  </div>
+                  {#<ul class="dropdown-menu scroll" aria-labelledby="dropdownFlags">
+								{% for key, country in countries_t %}
+									<li data-iso-code="{{ country.iso_code_2 }}" data-calling-code="{{ country.calling_code }}" data-number-mask="{{ country.number_lengths_mask }}" aria-selected="{% if country.iso_code_2 == iso_code_2 %}true{% else %}false{% endif %}"><img src="{{ country.flag }}" alt="" width="24" height="16"/><span>{{ country.name }}</span><span>+{{ country.calling_code }}</span></li>
+								{% endfor %}
+							</ul>#}
+                </div>
+                {% if iso_code_2 == 'ua' %}
+                  <input id="input-opc-telephone" type="text" name="telephone" value="{% if telephone is defined %}{{ telephone }}{% endif %}" placeholder="+380 (XX) XXX-XX-XX" class="form-checkout focus" required/>
+                {% else %}
+                  <input id="input-opc-telephone" type="text" name="telephone" value="{% if telephone is defined %}{{ telephone }}{% endif %}" placeholder="+{{ calling_code}} {{ number_lengths_mask }}" class="form-checkout focus" required/>
+                {% endif %}
+                <svg width="18" height="13" class="check" style="display: none;"><use xlink:href="image/icons.svg#check" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                <input type="text" name="sms_code" value="" placeholder="XXXX" class="hidden" autocomplete="off" im-insert="true"/>
+                <button type="button" id="btn-send-sms" class="hidden">{{ text_sms_confirm }}</button>
+                <div class="float-label">{{ entry_telephone }} <span>*</span></div>
+                <div class="form-error"></div>
+              </div>
+
+{#
               <div class="form-group form-group-error required">
                 <input id="input-opc-telephone" type="text" name="telephone" placeholder="+380 (XX) XXX-XX-XX"  value="{{ telephone }}" class="form-checkout focus">
                 <div class="float-label">{{ entry_telephone }} <span>*</span></div>
                 <div class="form-error">{% if error_telephone %}{{ error_telephone }}{% endif %}</div>
               </div>
-              <div class="form-group form-group-error required">
+   #}           <div class="form-group form-group-error required">
                 <input id="input-opc-order_id" type="text" name="order_id" value="{{ order_id }}" class="form-checkout focus">
                 <div class="float-label">{{ entry_order_id }} <span>*</span></div>
                 <div class="form-error">{% if error_order_id %}{{ error_order_id }}{% endif %}</div>
@@ -161,11 +188,136 @@
 
 
 <script type="text/javascript"><!--
-  $(document).ready(function() {
-    $('input[name="telephone"]').inputmask({
+
+
+  var iso_code = '{{ iso_code_2 }}';
+  var calling_code = '{{ calling_code }}';
+  var opc_telephone = $('#onepcheckout input[name="telephone"]').closest('.form-group');
+
+  if (iso_code === 'ua') {
+    $('#onepcheckout #dropdownFlags').addClass('disabled');
+    $('#onepcheckout input[name="telephone"]').inputmask({
       mask: '+380 (99) 999-99-99',
       placeholder: 'X'
     }).addClass('tel-ua');
+  } else  {
+    $('#onepcheckout #dropdownFlags').removeClass('disabled');
+    $('#onepcheckout input[name="telephone"]').inputmask({
+      mask: '+' + calling_code.replace(/9/g, "\\9") + ' {{ number_lengths_mask }}',
+      placeholder: 'X'
+    }).removeClass('tel-ua');
+  }
+
+  $('#onepcheckout input[name="sms_code"]').inputmask({
+    mask: '9999',
+    placeholder: 'X'
+  });
+
+  $('#onepcheckout').on('select2:selecting', '#input-payment-country', function() {
+    $('#onepcheckout input[name="telephone"]').val('');
+  });
+
+  if ($('#onepcheckout #dropdownFlags').attr('data-iso-code') == 'ua') {
+    $.get('index.php?route=checkout/sms_validator/validateNumber&tel=' + encodeURIComponent($('#onepcheckout input[name="telephone"]').val()), function(step) {
+      switch(step) {
+        case '1':
+          opc_telephone.find('.check').hide();
+          opc_telephone.find('input[name="telephone"]').removeClass('error');
+          opc_telephone.find('#btn-send-sms').addClass('hidden');
+          opc_telephone.find('.form-error').text('');
+          break;
+        case '2':
+          opc_telephone.find('input[name="telephone"]').addClass('error');
+          opc_telephone.find('#btn-send-sms').removeClass('hidden');
+          opc_telephone.find('.form-error').text('{{ error_sms_please }}');
+          break;
+        case '3':
+          opc_telephone.find('.check').show();
+          break;
+      }
+    });
+  }
+
+  $('#onepcheckout').on('keyup', 'input[name="telephone"]', function() {
+    var iso_code = $('#onepcheckout #dropdownFlags').attr('data-iso-code');
+
+    if (iso_code == 'ua') {
+      $.get('index.php?route=checkout/sms_validator/validateNumber&tel=' + encodeURIComponent($(this).val()), function(step) {
+        switch(step) {
+          case '1':
+            opc_telephone.find('.check').hide();
+            opc_telephone.find('input[name="telephone"]').removeClass('error');
+            opc_telephone.find('#btn-send-sms').addClass('hidden');
+            opc_telephone.find('.form-error').text('');
+            break;
+          case '2':
+            opc_telephone.find('input[name="telephone"]').addClass('error');
+            opc_telephone.find('#btn-send-sms').removeClass('hidden');
+            opc_telephone.find('.form-error').text('{{ error_sms_please }}');
+            break;
+          case '3':
+            opc_telephone.find('.check').show();
+            break;
+        }
+      });
+    }
+  });
+
+  var int;
+  $('#onepcheckout').on('click', '#btn-send-sms', function() {
+    var _Seconds = 120;
+
+    // opc_telephone.find('#dropdownFlags').prop('disabled', true);
+    opc_telephone.find('input[name="telephone"]').prop('disabled', true);
+    opc_telephone.find('#btn-send-sms').addClass('hidden');
+    opc_telephone.find('input[name="sms_code"]').removeClass('hidden').focus();
+    opc_telephone.find('.form-error').text('{{ text_sms_wait }} ' + _Seconds + ' {{ text_sms_wait_sec }}!');
+
+    clearInterval(int);
+    int = setInterval(function() {
+      if (_Seconds > 0) {
+        _Seconds--;
+        opc_telephone.find('.form-error').text('{{ text_sms_wait }} ' + _Seconds + ' {{ text_sms_wait_sec }}!');
+      } else {
+        clearInterval(int);
+
+        opc_telephone.find('input[name="sms_code"]').addClass('hidden').val('');
+        opc_telephone.find('#btn-send-sms').removeClass('hidden');
+        opc_telephone.find('.form-error').text('{{ error_sms_please }}');
+        // opc_telephone.find('#dropdownFlags').prop('disabled', false);
+        opc_telephone.find('input[name="telephone"]').prop('disabled', false);
+      }
+    }, 1000);
+
+    $.ajax({
+      url: 'index.php?route=checkout/sms_validator/sendSMS',
+      type: 'post',
+      dataType: 'json',
+      success: function(json) {
+        console.log(json);
+      }
+    });
+  });
+
+  $('#onepcheckout').on('keyup', 'input[name="sms_code"]', function() {
+    $.get("index.php?route=checkout/sms_validator/validateCode&code=" + encodeURIComponent($(this).val()), function(json) {
+      if (json['success']) {
+        clearInterval(int);
+
+        opc_telephone.find('input[name="telephone"]').removeClass('error').prop('disabled', false);
+        opc_telephone.find('input[name="sms_code"]').addClass('hidden').val('');
+        opc_telephone.find('#btn-send-sms').addClass('hidden');
+        opc_telephone.find('.form-error').text('');
+        opc_telephone.find('.check').show();
+        // opc_telephone.find('#dropdownFlags').prop('disabled', false);
+
+      }
+    });
+  });
+  $(document).ready(function() {
+
+
+
 
     $('input[name="iban"]').inputmask({
       mask: 'U\\A 99 999999 99999 9999 9999 9999 99',

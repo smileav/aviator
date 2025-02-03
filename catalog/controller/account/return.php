@@ -583,6 +583,18 @@ class ControllerAccountReturn extends Controller {
 
 		}
 
+		$iso_code_2 = 'UA';
+		$this->load->language('checkout/sms_validator');
+
+		$rinvex = new rinvex\country;
+
+		$country_data = $rinvex->getData($iso_code_2);
+
+		$data['iso_code_2']             = $country_data['iso_code_2'];
+		$data['calling_code']           = $country_data['calling_code'];
+		$data['number_lengths_mask']    = $country_data['number_lengths_mask'];
+		$data['flag']                   = $country_data['flag'];
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
