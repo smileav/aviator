@@ -1288,6 +1288,9 @@ footer .row > div:first-child h5 {
 	border-radius: 0;
 	margin-bottom: 24px;
 }
+.warning{
+	background-color: rgba(238, 119, 119, 0.64);
+}
 .alert a, .alert span {
 	font-weight: 500;
 	text-decoration: underline;
@@ -3321,8 +3324,16 @@ body .show-scroll::-webkit-scrollbar-track {
 .account .form-horizontal .form-group.required{
 	margin-bottom: 0;
 }
-.account #onepcheckout input[name="telephone"] {
+/*.account #onepcheckout input[name="telephone"] {
 	padding: 26px 16px 14px 16px;
+}*/
+@media (min-width: 1200px) {
+
+
+	.account #onepcheckout #dropdownFlags {
+
+		top: 29px;
+	}
 }
 .account .opc_block_shipping_address{
 	padding: 0;
@@ -3343,10 +3354,11 @@ body .show-scroll::-webkit-scrollbar-track {
 	font-size: 10px;
 	text-transform: none;
 }
+/*
 .account input.form-checkout[disabled]{
 	background-color: var(--bg-color) !important;
 	border-color: transparent !important;
-}
+}*/
 .account .buttons{
 	display: flex;
 	justify-content: space-between;

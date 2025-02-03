@@ -203,6 +203,39 @@ class ControllerAccountEdit extends Controller {
 			$data['account_custom_field'] = array();
 		}
 
+		if (isset($this->session->data['shipping_address']['iso_code_2'])) {
+			$iso_code_2 = $this->session->data['shipping_address']['iso_code_2'];
+		} else {
+			$iso_code_2 = 'UA';
+		}
+		$this->load->language('checkout/sms_validator');
+		$rinvex = new rinvex\country;
+
+		$country_data = $rinvex->getData($iso_code_2);
+
+		if ($country_data) {
+			$data['iso_code_2']             = $country_data['iso_code_2'];
+			$data['calling_code']           = $country_data['calling_code'];
+			$data['number_lengths_mask']    = $country_data['number_lengths_mask'];
+			$data['flag']                   = $country_data['flag'];
+		}
+
+		$this->load->model('localisation/country');
+
+		$data['countries'] = [];
+
+		$countries = $this->model_localisation_country->getCountries();
+
+		foreach ($countries as $key => $country) {
+			$country_data = $rinvex->getData($country['iso_code_2']);
+
+			if (!empty($country_data['valid'])) {
+				$data['countries'][$key]            = $country_data;
+				$data['countries'][$key]['name']    = $country['name'];
+			}
+		}
+
+
 		$data['back'] = $this->url->link('account/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');

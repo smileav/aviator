@@ -388,7 +388,7 @@
                 <div class="modal-in">
                     <div class="modal-form">
                         <div class="form-group required">
-                            <input type="text" name="name" required/>
+                            <input type="text" name="name" value="{{ name }}" class="{% if name %}focus{% endif %}" required/>
                             <div class="float-label">{{ text_form_name }} <span>*</span></div>
                             <div class="form-error"></div>
                         </div>
@@ -413,9 +413,9 @@
                                 </ul>
                             </div>
                             {% if iso_code_2 == 'ua' %}
-                            <input type="text" name="phone" class="focus" placeholder="+380 (XX) XXX-XX-XX" required/>
+                            <input type="text" name="phone" value="{{ telephone }}" class="focus" placeholder="+380 (XX) XXX-XX-XX" required/>
                             {% else %}
-                            <input type="text" name="phone" class="focus" placeholder="+{{ calling_code}} {{ number_lengths_mask }}" required/>
+                            <input type="text" name="phone" value="{{ telephone }}" class="focus" placeholder="+{{ calling_code}} {{ number_lengths_mask }}" required/>
                             {% endif %}
                             <svg width="18" height="13" class="check" style="display: none;"><use xlink:href="image/icons.svg#check" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
                             <input type="text" name="sms_code" value="" placeholder="XXXX" class="hidden" autocomplete="off" im-insert="true"/>
@@ -424,7 +424,7 @@
                             <div class="form-error"></div>
                         </div>
                         <div class="form-group required">
-                            <input type="text" name="email"/>
+                            <input type="text" name="email" class="{% if email %}focus{% endif %}" value="{{ email }}"/>
                             <div class="float-label">E-mail <span>*</span></div>
                             <div class="form-error"></div>
                         </div>

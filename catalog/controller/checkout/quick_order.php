@@ -67,7 +67,15 @@ class ControllerCheckoutQuickOrder extends Controller {
                 $data['countries'][$key]['name']    = $country['name'];
             }
         }
+		$data['name']='';
+		$data['email'] = '';
+		$data['telephone'] = '';
 
+		if($this->customer->isLogged()) {
+			$data['name']=$this->customer->getFirstname().' '.$this->customer->getLastname();
+			$data['email']=$this->customer->getEmail();
+			$data['telephone']=$this->customer->getTelephone();
+		}
         // Remarketing All in One Quick Order
         if (isset($this->request->get['product_id']) && $this->config->get('remarketing_status')) {
             $this->load->model('catalog/product');

@@ -25,7 +25,7 @@
 
               </div>
 
-              <div class="form-group form-group-error{% if customer_field['status'] == 'required' %} required{% endif %}">
+              <div class="form-group form-group-error  required">
                   {#<label for="input-opc-telephone" class="control-label opc-label">{{ entry_telephone }}</label>#}
                   <div class="flag-container">
                       <div id="dropdownFlags" data-iso-code="{{ iso_code_2 }}">
@@ -46,7 +46,7 @@
                   <svg width="18" height="13" class="check" style="display: none;"><use xlink:href="image/icons.svg#check" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
                   <input type="text" name="sms_code" value="" placeholder="XXXX" class="hidden" autocomplete="off" im-insert="true"/>
                   <button type="button" id="btn-send-sms" class="hidden">{{ text_sms_confirm }}</button>
-                  <div class="float-label">{{ entry_telephone }}{% if customer_field['status'] == 'required' %} <span>*</span>{% endif %}</div>
+                  <div class="float-label">{{ entry_telephone }} <span>*</span></div>
                   <div class="form-error"></div>
               </div>
               <div class="form-group form-group-error required">

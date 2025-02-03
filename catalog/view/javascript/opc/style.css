@@ -1325,6 +1325,18 @@
 	-webkit-align-items: center;
 	align-items: center;
 }
+@media (min-width: 1200px) {
+	.account #onepcheckout #btn-send-sms{
+		height: 50px;
+		top: 8px;
+		right: 8px;
+		padding: 10px;
+	}
+	.account #onepcheckout input[name="sms_code"] {
+		top: 7px;
+		right: 7px;
+	}
+}
 #onepcheckout #btn-send-sms {
 	position: absolute;
 	right: 3px;

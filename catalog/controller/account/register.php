@@ -369,7 +369,7 @@ class ControllerAccountRegister extends Controller {
 		}
 
 		if (isset($this->request->post['email'])&&$this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-			$this->error['warning'] = $this->language->get('error_exists');
+			$this->error['email'] = $this->language->get('error_exists');
 		}
 
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
