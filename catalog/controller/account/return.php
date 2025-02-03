@@ -635,13 +635,26 @@ class ControllerAccountReturn extends Controller {
 
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
-		}else{
-			$pattern = '/^\+380 \(\d{2}\) \d{3}-\d{2}-\d{2}$/';
+		}
+		$this->load->language('checkout/sms_validator');
+		$iso_code_2 = 'UA';
+		$rinvex = new rinvex\country;
 
-			if (!preg_match($pattern, $this->request->post['telephone'])) {
-				$this->error['telephone'] = $this->language->get('error_telephone');
+		$country_data = $rinvex->getData($iso_code_2, $this->request->post['telephone'], true);
+
+		if ($country_data['valid']) {
+			$telephone = $country_data['telephone'];
+
+			if ($country_data['iso_code_2'] == 'ua') {
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sms_validator` WHERE `telephone` = '" . $this->db->escape($telephone) . "'");
+
+				if (!$query->num_rows) {
+					$this->error['telephone'] = $this->language->get('error_sms_please');
+				}
 			}
 
+		} else {
+			$this->error['telephone'] =  $this->language->get('error_telephone');
 		}
 
 		if (empty($this->request->post['products'])) {
