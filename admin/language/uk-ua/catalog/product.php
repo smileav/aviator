@@ -31,6 +31,7 @@ $_['column_quantity']        = 'Кількість';
 $_['column_status']          = 'Статус';
 $_['column_noindex']         = 'Індексація';
 $_['column_action']          = 'Дія';
+	$_['column_sort_order']          = 'Сортування';
 
 // Entry
 $_['entry_name']             = 'Назва товару';

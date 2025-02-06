@@ -208,6 +208,17 @@
               
               </select>
             </div>
+
+            <div class="form-group">
+              <label class="control-label" for="input-sort">{{ entry_sort_order }}</label>
+              <div class="input-group">
+                <input type="text" name="filter_sort_order" value="{{ filter_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort" class="form-control" />
+                <div class="input-group-btn">
+                  <button type="button" id="button-clear-input-sort_order" class="btn btn-default"><i class="fa fa-times"></i></button>
+                </div>
+              </div>
+            </div>
+
 			<div class="form-group">
               <label class="control-label" for="input-noindex">{{ entry_noindex }}</label>
               <select name="filter_noindex" id="input-noindex" class="form-control">
@@ -249,6 +260,7 @@
                       <td class="text-right">{% if sort == 'p.price' %} <a href="{{ sort_price }}" class="{{ order|lower }}">{{ column_price }}</a> {% else %} <a href="{{ sort_price }}">{{ column_price }}</a> {% endif %}</td>
                       <td class="text-right">{% if sort == 'p.quantity' %} <a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a> {% else %} <a href="{{ sort_quantity }}">{{ column_quantity }}</a> {% endif %}</td>
                       <td class="text-left">{% if sort == 'p.status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
+                      <td class="text-left">{% if sort == 'p.sort_order' %} <a href="{{ sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a> {% else %} <a href="{{ sort_order }}">{{ column_sort_order }}</a> {% endif %}</td>
                       <td class="text-left">{% if sort == 'p.noindex' %} <a href="{{ sort_noindex }}" class="{{ order|lower }}">{{ column_noindex }}</a> {% else %} <a href="{{ sort_noindex }}">{{ column_noindex }}</a> {% endif %}</td>
 					  <td class="text-right">{{ column_action }}</td>
                     </tr>
@@ -273,7 +285,8 @@
                       {% endif %}</td>
                     <td class="text-right">{% if product.quantity <= 0 %} <span class="label label-warning">{{ product.quantity }}</span> {% elseif product.quantity <= 5 %} <span class="label label-danger">{{ product.quantity }}</span> {% else %} <span class="label label-success">{{ product.quantity }}</span> {% endif %}</td>
                     <td class="text-left">{{ product.status }}</td>
-					<td class="text-left">{{ product.noindex }}</td>
+                    <td class="text-left">{{ product.sort_order }}</td>
+                    <td class="text-left">{{ product.noindex }}</td>
                     <td class="text-right">
 						<a target="_blank" href="{{ product.href_shop }}" data-toggle="tooltip" title="{{ button_shop }}" class="btn btn-success"><i class="fa fa-eye"></i></a>
 						<a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
@@ -314,6 +327,11 @@ $('#button-filter').on('click', function() {
 	if (filter_model) {
 		url += '&filter_model=' + encodeURIComponent(filter_model);
 	}
+  var filter_sort_order = $('input[name=\'filter_sort_order\']').val();
+
+  if (filter_sort_order) {
+    url += '&filter_sort_order=' + encodeURIComponent(filter_sort_order);
+  }
 
 	var filter_price_min = $('input[name=\'filter_price_min\']').val();
 	if (filter_price_min) {
@@ -396,6 +414,10 @@ $('#button-clear-input-name').on('click',function(){
 	$('input[name=\'filter_name\']').val('');
 	$('#button-filter').trigger('click');
 });
+    $('#button-clear-input-sort_order').on('click',function(){
+      $('input[name=\'filter_sort_order\']').val('');
+      $('#button-filter').trigger('click');
+    });
 
 $('input[name=\'filter_model\']').autocomplete({
 	'source': function(request, response) {
