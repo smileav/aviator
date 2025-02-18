@@ -128,7 +128,7 @@ $_['button_wisthlist']='В избранное';
 $_['button_main']='В каталог';
 $_['button_already_have']='Уже есть акканут? Войти';
 $_['button_create_account']='Создать аккаунт';
-
+	$_['text_sms_send']='Отправить пароль';
 // Error
 $_['error_exception']       = 'Ошибка кода(%s): %s в %s на строке %s';
 $_['error_upload_1']        = 'Размер загружаемого файла превышает значение upload_max_filesize в php.ini!';

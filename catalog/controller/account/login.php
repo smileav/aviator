@@ -303,11 +303,38 @@ class ControllerAccountLogin extends Controller {
 			$data['email'] = '';
 		}
 
-		if (isset($this->request->post['password'])) {
-			$data['password'] = $this->request->post['password'];
+		if (isset($this->request->post['telephone'])) {
+			$data['telephone'] = $this->request->post['telephone'];
 		} else {
-			$data['password'] = '';
+			$data['telephone'] = '';
 		}
+
+		//if (isset($this->request->post['password'])) {
+		//	$data['password'] = $this->request->post['password'];
+		//} else {
+			$data['password'] = '';
+		//}
+
+		if(!empty($this->config->get('config_country_id'))){
+			$this->load->model('localisation/country');
+			$data['countries'] = $this->model_localisation_country->getCountries();
+			$country_info = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
+			$data['iso_code_2']=$country_info ? $country_info['iso_code_2'] : '';
+
+			//$shipping_address['country'] = $this->session->data['shipping_address']['country'] = $country_info ? $country_info['name'] : '';
+
+		}
+		$iso_code_2 = 'UA';
+		$this->load->language('checkout/sms_validator');
+
+		$rinvex = new rinvex\country;
+
+		$country_data = $rinvex->getData($iso_code_2);
+
+		$data['iso_code_2']             = $country_data['iso_code_2'];
+		$data['calling_code']           = $country_data['calling_code'];
+		$data['number_lengths_mask']    = $country_data['number_lengths_mask'];
+		$data['flag']                   = $country_data['flag'];
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -319,28 +346,119 @@ class ControllerAccountLogin extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function validateNumber() {
+		$step = 1;
+
+		if (isset($this->request->get['tel'])) {
+			$this->session->data['customer_login']['telephone'] = $this->request->get['tel'];
+
+			$telephone = $this->clearTelephoneMask($this->request->get['tel']);
+
+			if (utf8_strlen($telephone) == 12 && substr($telephone, 0, 3) == '380' && substr($telephone, 3, 1) > 0) {
+				$step = 2;
+			} else {
+				$step = 1;
+			}
+
+			if ($step == 2) {
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sms_validator` WHERE `telephone` = '" . $this->db->escape($telephone) . "'");
+
+				if (!$query->num_rows) {
+					$step = 2;
+				} else {
+					$step = 3;
+				}
+			}
+		}
+
+		$this->response->setOutput($step);
+	}
+
+	public function clearTelephoneMask($telephone) {
+		return preg_replace(['/\+/', '/-/', '/_/', '/\ /', '/\(/', '/\)/', '/X/', '/x/'], '', trim($telephone));
+	}
+
+	public function sendSMS() {
+		$json = [];
+
+		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+			$code =  rand(1000, 9999);
+
+			$telephone = $this->clearTelephoneMask($this->session->data['customer_login']['telephone']);
+
+			$this->log->write('Send SMS to: ' . $telephone);
+			$this->log->write('Code: ' . $code);
+
+			$client = new SoapClient('http://turbosms.in.ua/api/wsdl.html');
+
+			$auth = [
+				'login' => 'BlackinWhite',
+				'password' => '7460079'
+			];
+
+			$client->Auth($auth);
+
+			$sms = [
+				'sender'        => 'AVIATOR',
+				'destination'   => '+' . $telephone,
+				'text'          => $code
+			];
+
+			$this->log->write('SMS_Array:');
+			$this->log->write($sms);
+
+			$result = $client->SendSMS($sms);
+
+			$this->log->write('SMS result:');
+			$this->log->write($result);
+
+			if (!empty($result->SendSMSResult->ResultArray[1])) {
+				$this->log->write('SMS SUCCESS!');
+				$json['success']    = 1;
+			} else {
+				$this->log->write('SMS ERROR!');
+				$json['error']      = 1;
+			}
+
+			//$json['sms_code'] = $code;
+		}
+
+		if(isset($json['success'])){
+			//write temp sms to customer
+			$this->load->model('account/customer');
+			$this->model_account_customer->addSms($telephone,$code,time()+120);
+
+		}
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	protected function validate() {
 		// Check how many login attempts have been made.
-		$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
+		$telephone=$this->clearTelephoneMask($this->request->post['telephone']);
+		$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['telephone']);
 
 		if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
 			$this->error['warning'] = $this->language->get('error_attempts');
 		}
 
 		// Check if customer has been approved.
-		$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+		//$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+		$customer_info = $this->model_account_customer->getCustomerByTelephone($telephone);
+
 
 		if ($customer_info && !$customer_info['status']) {
 			$this->error['warning'] = $this->language->get('error_approved');
 		}
 
 		if (!$this->error) {
-			if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
-				$this->error['warning'] = $this->language->get('error_login');
+			//if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
+			if (!$this->customer->loginByTel($telephone, $this->request->post['sms_password'])) {
+				$this->error['warning'] = $this->language->get('error_login_tel');
 
-				$this->model_account_customer->addLoginAttempt($this->request->post['email']);
+				$this->model_account_customer->addLoginAttempt($this->request->post['telephone']);
 			} else {
-				$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
+				$this->model_account_customer->deleteLoginAttempts($this->request->post['telephone']);
 			}
 		}
 

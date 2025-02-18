@@ -3544,6 +3544,9 @@ body .show-scroll::-webkit-scrollbar-track {
 	width: 100%;
 	max-width: unset;
 }
+#modal-account .modal-dialog .buttons .opc-btn:disabled{
+	opacity: 0.5;
+}
 #modal-account .modal-dialog .buttons * + *{
 	border-top:1px solid var(--border-color);
 	margin-top: 24px;

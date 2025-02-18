@@ -38,6 +38,10 @@ class ModelAccountCustomer extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET code = '" . $this->db->escape($code) . "' WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 
+	public function addSms($telephone,$code,$time){
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET sms_code = '" . $this->db->escape($code) . "', sms_date='".(int)$time."' WHERE telephone = '" . $this->db->escape($telephone) . "'");
+	}
+
 	public function editNewsletter($newsletter) {
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET newsletter = '" . (int)$newsletter . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 	}
@@ -50,6 +54,12 @@ class ModelAccountCustomer extends Model {
 
 	public function getCustomerByEmail($email) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+
+		return $query->row;
+	}
+
+	public function getCustomerByTelephone($telephone) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE telephone = '" . $this->db->escape($telephone) . "'");
 
 		return $query->row;
 	}

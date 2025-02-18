@@ -495,6 +495,7 @@ $(document).on('submit','#login_form',function(e){
 				$('#modal-account').modal('hide');
 
 				$('#customer_in_header').html($(json.success).find('#customer_in_header'));
+				document.location=document.location.href;
 			}
 
 		}

@@ -19,8 +19,10 @@ $_['text_forgotten']               = 'Forgotten Password';
 // Entry
 $_['entry_email']                  = 'E-Mail Address';
 $_['entry_password']               = 'Password';
+	$_['entry_telephone']='Phone';
 
 // Error
 $_['error_login']                  = 'Warning: No match for E-Mail Address and/or Password.';
 $_['error_attempts']               = 'Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.';
 $_['error_approved']               = 'Warning: Your account requires approval before you can login.';
+	$_['error_login_tel']                  = 'Not found phone or incorrectly specified password';

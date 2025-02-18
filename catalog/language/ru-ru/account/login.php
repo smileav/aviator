@@ -22,6 +22,8 @@ $_['text_forgotten']               = 'Забыли пароль?';
 // Entry
 $_['entry_email']                  = 'E-Mail адрес';
 $_['entry_password']               = 'Пароль';
+	$_['entry_telephone']='Телефон';
+	$_['error_login_tel']                  = 'Не найден телефон или неправильно указанный пароль';
 
 // Error
 $_['error_login']                  = 'Не найден введённый адрес E-Mail и/или пароль указан неправильно.';
