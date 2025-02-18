@@ -564,6 +564,10 @@ class ModelCatalogProduct extends Model {
 			$sql .= " AND p.quantity = '" . (int)$data['filter_quantity'] . "'";
 		}
 
+		if (isset($data['filter_sort_order']) && $data['filter_sort_order'] !== '') {
+			$sql .= " AND p.sort_order = '" . (int)$data['filter_sort_order'] . "'";
+		}
+
 		if (isset($data['filter_quantity_min']) && !is_null($data['filter_quantity_min'])) {
 			$sql .= " AND p.quantity >= '" . (int)$data['filter_quantity_min'] . "'";
 		}
@@ -961,6 +965,10 @@ class ModelCatalogProduct extends Model {
 
 		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {
 			$sql .= " AND p.quantity = '" . (int)$data['filter_quantity'] . "'";
+		}
+
+		if (isset($data['filter_sort_order']) && $data['filter_sort_order'] !== '') {
+			$sql .= " AND p.sort_order = '" . (int)$data['filter_sort_order'] . "'";
 		}
 
 		if (isset($data['filter_quantity_min']) && !is_null($data['filter_quantity_min'])) {

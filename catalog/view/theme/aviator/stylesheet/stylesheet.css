@@ -1614,9 +1614,23 @@ footer .row > div:first-child h5 {
 }
 
 
-.p-options {
+.p-options{
 	/*margin: 16px 0 0;*/
+	/*overflow-x: scroll;*/
+	width: 100%;
+	padding-bottom: 10px;
+	overflow: auto;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 }
+
+.p-options::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+}
+
+
+
 .p-options > div {
 	display: -webkit-flex;
 	display: flex;

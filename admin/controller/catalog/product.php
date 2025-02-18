@@ -492,6 +492,12 @@ class ControllerCatalogProduct extends Controller {
 			$filter_model = '';
 		}
 
+		if (isset($this->request->get['filter_sort_order'])) {
+			$filter_sort_order = $this->request->get['filter_sort_order'];
+		} else {
+			$filter_sort_order = '';
+		}
+
 		if (isset($this->request->get['filter_price'])) {
 			$filter_price = $this->request->get['filter_price'];
 		} else {
@@ -643,6 +649,10 @@ class ControllerCatalogProduct extends Controller {
 			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 		}
 
+		if (isset($this->request->get['filter_sort_order'])) {
+			$url .= '&filter_sort_order=' . $this->request->get['filter_sort_order'];
+		}
+
 		if (isset($this->request->get['filter_price'])) {
 			$url .= '&filter_price=' . $this->request->get['filter_price'];
 		}
@@ -729,6 +739,7 @@ class ControllerCatalogProduct extends Controller {
 			'filter_sub_category'	=> $filter_sub_category,
 			'filter_manufacturer_id'=> $filter_manufacturer_id,
 			'filter_noindex' 		=> $filter_noindex,
+			'filter_sort_order'		=> $filter_sort_order,
 			'sort'            		=> $sort,
 			'order'           		=> $order,
 			'start'           		=> ($page - 1) * $this->config->get('config_limit_admin'),
@@ -769,6 +780,7 @@ class ControllerCatalogProduct extends Controller {
 				'price'      => $this->currency->format($result['price'], $this->config->get('config_currency')),
 				'special'    => $special,
 				'quantity'   => $result['quantity'],
+				'sort_order' => $result['sort_order'],
 				'status'     => $result['status'] ? $this->language->get('text_enabled_short') : $this->language->get('text_disabled_short'),
 				'noindex'    => $result['noindex'] ? $this->language->get('text_enabled_short') : $this->language->get('text_disabled_short'),
 				'href_shop'  => HTTP_CATALOG . 'index.php?route=product/product&product_id=' . $result['product_id'],
@@ -806,6 +818,10 @@ class ControllerCatalogProduct extends Controller {
 
 		if (isset($this->request->get['filter_model'])) {
 			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_sort_order'])) {
+			$url .= '&filter_sort_order=' . $this->request->get['filter_sort_order'];
 		}
 
 		if (isset($this->request->get['filter_price'])) {
@@ -877,6 +893,10 @@ class ControllerCatalogProduct extends Controller {
 
 		if (isset($this->request->get['filter_model'])) {
 			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_sort_order'])) {
+			$url .= '&filter_sort_order=' . $this->request->get['filter_sort_order'];
 		}
 
 		if (isset($this->request->get['filter_price'])) {
@@ -955,6 +975,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['filter_manufacturer_name'] = $filter_manufacturer_name;
 		$data['filter_manufacturer_id'] = $filter_manufacturer_id;
 		$data['filter_noindex'] = $filter_noindex;
+		$data['filter_sort_order'] = $filter_sort_order;
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -1013,6 +1034,10 @@ class ControllerCatalogProduct extends Controller {
 
 		if (isset($this->request->get['filter_model'])) {
 			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_sort_order'])) {
+			$url .= '&filter_sort_order=' . $this->request->get['filter_sort_order'];
 		}
 
 		if (isset($this->request->get['filter_price'])) {

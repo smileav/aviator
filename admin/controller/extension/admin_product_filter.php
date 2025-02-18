@@ -138,6 +138,11 @@ class ControllerExtensionAdminProductFilter extends Controller {
                 $json['model'] = trim($this->model_extension_admin_product_filter->getProductModel($product_id));
             }
 
+			// get sort
+			if ($action == 'productSort') {
+				$json['sort_order'] = trim($this->model_extension_admin_product_filter->getProductSort($product_id));
+			}
+
             // get Sku
             if ($action == 'productSku') {
                 $json['sku'] = trim($this->model_extension_admin_product_filter->getProductSku($product_id));
@@ -298,6 +303,13 @@ class ControllerExtensionAdminProductFilter extends Controller {
 
                 $this->model_extension_admin_product_filter->editProductModel($product_id, $model);
             }
+
+			// edit Product Sort
+			if ($action == 'productSort') {
+				$json['sort_order'] = $sort = trim($this->request->post['sort']);
+
+				$this->model_extension_admin_product_filter->editProductSort($product_id, $sort);
+			}
 
             // edit Product Sku
             if ($action == 'productSku') {

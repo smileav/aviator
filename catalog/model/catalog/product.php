@@ -63,8 +63,8 @@ class ModelCatalogProduct extends Model {
 	}
 
 	public function getProducts($data = array()) {
-        $config_language_id = (int)$this->config->get('config_language_id');
-        $NOW = date('Y-m-d H:i') . ':00';
+		$config_language_id = (int)$this->config->get('config_language_id');
+		$NOW = date('Y-m-d H:i') . ':00';
 		$cache = md5(http_build_query($data));
 
 		$product_data = $this->cache->get('product.products.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . $cache);
