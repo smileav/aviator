@@ -7,6 +7,11 @@ class ControllerCheckoutOnepcheckout extends Controller {
 			unset($this->session->data['shipping_address_id']);
 		}
 
+		if($this->request->get['guest']){
+			$this->session->data['is_guest']=true;
+			$this->response->redirect($this->url->link('checkout/onepcheckout'));
+
+		}
 		$this->document->addScript('catalog/view/javascript/opc/select2.min.js');
 		$this->document->addStyle('catalog/view/javascript/opc/select2.min.css');
 
@@ -77,6 +82,7 @@ class ControllerCheckoutOnepcheckout extends Controller {
 				unset($this->session->data['payment_method']);
 				unset($this->session->data['payment_methods']);
 
+				unset($this->session->data['is_guest']);
 				unset($this->session->data['guest']);
 				unset($this->session->data['account']);
 				unset($this->session->data['customer']);
@@ -157,6 +163,16 @@ class ControllerCheckoutOnepcheckout extends Controller {
 			$data['opc_cl_width'] = $opc_cl_width;
 		}
 
+		$data['is_show_login']=true;
+		$data['guest_session_link']=$this->url->link('checkout/onepcheckout','guest=1');
+		if($this->customer->isLogged()){
+			$data['is_show_login']=false;
+		}
+		if(isset($this->session->data['is_guest'])){
+			$data['is_show_login']=false;
+		}
+
+		$data['login_block']=$this->load->controller('account/login/page');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');

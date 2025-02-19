@@ -157,7 +157,7 @@ class ControllerAccountEdit extends Controller {
 		if (isset($this->request->post['telephone'])) {
 			$data['telephone'] = $this->request->post['telephone'];
 		} elseif (!empty($customer_info)) {
-			$data['telephone'] = $customer_info['telephone'];
+			$data['telephone'] = $this->customer->formatTelephone($customer_info['telephone']);
 		} else {
 			$data['telephone'] = '';
 		}
@@ -269,14 +269,14 @@ class ControllerAccountEdit extends Controller {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 
-        if ($this->request->post['confirm'] && $this->request->post['password']) {
+        /*if ($this->request->post['confirm'] && $this->request->post['password']) {
             if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
                 $this->error['password'] = $this->language->get('error_password');
             }
         }
         if ($this->request->post['confirm'] != $this->request->post['password']) {
             $this->error['confirm'] = $this->language->get('error_confirm');
-        }
+        }*/
 
 		// Custom field validation
 		$this->load->model('account/custom_field');

@@ -47,7 +47,7 @@
                   <input type="text" name="sms_code" value="" placeholder="XXXX" class="hidden" autocomplete="off" im-insert="true"/>
                   <button type="button" id="btn-send-sms" class="hidden">{{ text_sms_confirm }}</button>
                   <div class="float-label">{{ entry_telephone }} <span>*</span></div>
-                  <div class="form-error"></div>
+                  <div class="form-error">{{ error_telephone }}</div>
               </div>
               <div class="form-group form-group-error required">
                   <input type="text" name="email" value="{{ email }}"  id="input-opc-email" class="form-checkout focus" />
@@ -57,7 +57,7 @@
                   </div>
 
               </div>
-              <div class="form-group form-group-error required">
+             {#  <div class="form-group form-group-error required">
                   <input type="password" name="password" value="{{ password }}"  id="input-opc-password" class="form-checkout focus" />
                   <div class="float-label">{{ entry_password }} <span>*</span></div>
                   <div class="form-error">
@@ -72,7 +72,7 @@
                       {% if error_confirm %}{{ error_confirm }}{% endif %}
                   </div>
 
-              </div>
+              </div>#}
               <div class="buttons">
                   <input type="submit" value="{{ heading_title }}" class="opc-btn" />
                   <span data-href="{{ login }}"   class="opc-btn btn-gray" >{{ button_already_have }}</span>

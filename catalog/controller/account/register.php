@@ -234,12 +234,13 @@ class ControllerAccountRegister extends Controller {
 
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$this->request->post['telephone']=$this->clearTelephoneMask($this->request->post['telephone']);
 			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
 			// Clear any previous login attempts for unregistered accounts.
 			//$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 
-			$this->customer->login($this->request->post['email'], $this->request->post['password']);
+			$this->customer->loginByTel($this->request->post['telephone'], $this->request->post['password'],true);
 
 			unset($this->session->data['guest']);
 
@@ -397,6 +398,13 @@ class ControllerAccountRegister extends Controller {
 			$this->error['telephone'] =  $this->language->get('error_telephone');
 		}
 
+		$telephone=$this->clearTelephoneMask($this->request->post['telephone']);
+		$customer_info = $this->model_account_customer->getCustomerByTelephone($telephone);
+
+		if($customer_info){
+			$this->error['telephone'] = $this->language->get('error_exists_tel');
+		}
+
 		// Customer Group
 		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $this->request->post['customer_group_id'];
@@ -419,13 +427,13 @@ class ControllerAccountRegister extends Controller {
 			}
 		}
 
-		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+		/*if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 
 		if ($this->request->post['confirm'] != $this->request->post['password']) {
 			$this->error['confirm'] = $this->language->get('error_confirm');
-		}
+		}*/
 
 		// Captcha
 		/*if ($this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
@@ -448,6 +456,9 @@ class ControllerAccountRegister extends Controller {
 		}*/
 		
 		return !$this->error;
+	}
+	public function clearTelephoneMask($telephone) {
+		return preg_replace(['/\+/', '/-/', '/_/', '/\ /', '/\(/', '/\)/', '/X/', '/x/'], '', trim($telephone));
 	}
 
 	public function customfield() {

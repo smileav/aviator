@@ -472,7 +472,7 @@ class ControllerAccountReturn extends Controller {
 		if (isset($this->request->post['telephone'])) {
 			$data['telephone'] = $this->request->post['telephone'];
 		} elseif (!empty($order_info)) {
-			$data['telephone'] = $order_info['telephone'];
+			$data['telephone'] = $this->customer->formatTelephone($order_info['telephone']);
 		} else {
 			$data['telephone'] = $this->customer->getTelephone();
 		}

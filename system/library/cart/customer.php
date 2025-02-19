@@ -69,11 +69,14 @@ class Customer {
 		}
 	}
 
-	public function loginByTel($telephone, $password) {
-
+	public function loginByTel($telephone, $password,$override=false) {
+		if ($override) {
 			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE telephone = '" . $this->db->escape($telephone) . "' 
-			AND (sms_code='".$this->db->escape($password)."' and sms_code!='') and sms_date>='".(int)time()."' AND status = '1'");
-
+			 AND status = '1'");
+		}else {
+			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE telephone = '" . $this->db->escape($telephone) . "' 
+			AND (sms_code='" . $this->db->escape($password) . "' and sms_code!='') and sms_date>='" . (int)time() . "' AND status = '1'");
+		}
 		if ($customer_query->num_rows) {
 			$this->session->data['customer_id'] = $customer_query->row['customer_id'];
 
@@ -132,7 +135,7 @@ class Customer {
 	}
 
 	public function getTelephone() {
-		return $this->telephone;
+		return $this->formatTelephone($this->telephone);
 	}
 
 	public function getNewsletter() {
@@ -153,5 +156,20 @@ class Customer {
 		$query = $this->db->query("SELECT SUM(points) AS total FROM " . DB_PREFIX . "customer_reward WHERE customer_id = '" . (int)$this->customer_id . "'");
 
 		return $query->row['total'];
+	}
+
+	public function formatTelephone($number){
+		// Видаляємо всі непотрібні символи
+		$digits = preg_replace('/[^0-9]/', '', $number);
+
+		// Перевіряємо, чи номер починається з 380, якщо ні — додаємо
+		if (strlen($digits) == 9) {
+			$digits = '380' . $digits;
+		} elseif (strlen($digits) == 10 && $digits[0] == '0') {
+			$digits = '38' . $digits;
+		}
+
+		// Форматуємо номер у вигляді +380 (XX) XXX-XX-XX
+		return preg_replace('/^380(\d{2})(\d{3})(\d{2})(\d{2})$/', '+380 ($1) $2-$3-$4', $digits);
 	}
 }

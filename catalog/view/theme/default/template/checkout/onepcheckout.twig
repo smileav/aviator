@@ -27,6 +27,11 @@
 
 				<div class="row dflex checkout-col-center">
 					<div class="checkout-col-left" style="width:{{ opc_cl_width }}%">
+						{% if is_show_login %}
+							<div class="col-xs-12 col-sm-12 col-md-12 mb-30 opc_block_login">
+								{{ login_block }}
+							</div>
+						{% else %}
 						{% if (opc_blocks['top_left'] is defined) %}
 							{% for block_name in opc_blocks['top_left'] %}
 								<div class="col-xs-12 col-sm-12 col-md-12 mb-30 opc_block_{{ block_name }}">
@@ -64,6 +69,7 @@
 									{{ opc_block[block_name] }}
 								</div>
 							{% endfor %}
+						{% endif %}
 						{% endif %}
 					</div><!--<div class="checkout-col-left">-->
 					{% if (opc_blocks['fix_right'] is defined) %}

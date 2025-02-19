@@ -23,6 +23,7 @@ $_['entry_confirm']        = 'Password Confirm';
 
 // Error
 $_['error_exists']         = 'Warning: E-Mail Address is already registered!';
+	$_['error_exists_tel']         = 'Such a phone is already registered';
 $_['error_firstname']      = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']       = 'Last Name must be between 1 and 32 characters!';
 $_['error_email']          = 'E-Mail Address does not appear to be valid!';

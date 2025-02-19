@@ -433,6 +433,15 @@ class ControllerAccountLogin extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function page(){
+		$this->load->model('account/customer');
+		$this->load->language('account/login');
+
+		$data['register'] = $this->url->link('account/register/mini', '', true);
+		$data['login'] = $this->url->link('account/login/mini', '', true);
+		$data['guest_session_link']=$this->url->link('checkout/onepcheckout','guest=1');
+		return $this->load->view('checkout/login', $data);
+	}
 	protected function validate() {
 		// Check how many login attempts have been made.
 		$telephone=$this->clearTelephoneMask($this->request->post['telephone']);
