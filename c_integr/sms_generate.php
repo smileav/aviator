@@ -167,7 +167,26 @@ echo("SEND");
 
 }
 
+//tth connect to shop db
+	define('DIR_ADMIN', dirname(__FILE__) . '/../admin/');
 
+// Config file
+	if ( file_exists(DIR_ADMIN . 'config.php') ) {
+		require_once (DIR_ADMIN . 'config.php');
+	} else {
+		die("ERROR: cli cannot access to config.php");
+	}
+	$shopDb=mysqli_connect(DB_HOSTNAME,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+
+	$shopDb = new \mysqli(DB_HOSTNAME,DB_USERNAME,DB_PASSWORD,DB_DATABASE, '3306');
+
+	if ($shopDb->connect_error) {
+		throw new \Exception('Error: ' . $shopDb->connect_error . '<br />Error No: ' . $shopDb->connect_errno);
+	}
+
+	$shopDb->set_charset("utf8");
+	$shopDb->query("SET SQL_MODE = ''");
+	$shopDb->query("SET SESSION sql_mode = 'NO_ENGINE_SUBSTITUTION'");
 
 
 
@@ -324,7 +343,8 @@ echo("SEND");
 						$SMS_VALS['OKPO']=$v['organization']['okpo'];
 
 
-
+						$query=$shopDb->query("UPDATE ".DB_PREFIX."order set ttn='".addslashes($TTN)."' ms_id='".addslashes($v['id'])."' where order_id='".(int)$SMS_VALS['ORDER_NUMBER']."'");
+						$query->close();
                                       		$result_sms=send_sms($phone,$text,$SMS_VALS);
 						if($_GET['debug']==1){
 							var_dump($SMS_VALS);
@@ -352,6 +372,7 @@ echo("SEND");
 
 	
 }
+	$shopDb->close();
 
 
 

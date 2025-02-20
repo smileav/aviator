@@ -201,6 +201,7 @@ class ControllerAccountOrder extends Controller {
             $data['status'] = $this->model_localisation_order_status->getOrderStatus($order_info['order_status_id']);
             $data['shipping_city'] = $order_info['shipping_city'];
             $data['shipping_address_1'] = $order_info['shipping_address_1'];
+			$data['ttn']=$order_info['ttn'];
 
 			if ($order_info['payment_address_format']) {
 				$format = $order_info['payment_address_format'];

@@ -28,6 +28,7 @@ $_['text_shipping_address_1'] = 'Department/Address:';
 $_['text_sub_total']     = 'Sub Total:';
 $_['text_head_no_orders'] = 'You have no orders';
 $_['text_no_orders'] = "Check if you have any items in your wishlist - make sure you don't miss them!";
+	$_['text_ttn']='TTN';
 
 // Column
 $_['column_order_id']       = 'Order ID';
