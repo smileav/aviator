@@ -3713,3 +3713,24 @@ body .show-scroll::-webkit-scrollbar-track {
 		top:8px
 	}
 }
+
+#onepcheckout .opc_block_login{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 38px;
+}
+#onepcheckout .opc_block_login > *{
+	width: 100%;
+}
+#onepcheckout .opc_block_login > * + *{
+	margin-top: 10px;
+}
+#onepcheckout .opc_block_login .btn-href{
+	background: none;
+	color: #000;
+	text-decoration: underline;
+}
+#onepcheckout .opc_block_login .btn-href:hover{
+	text-decoration: none;
+ }
