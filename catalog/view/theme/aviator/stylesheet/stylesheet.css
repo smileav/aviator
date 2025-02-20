@@ -3703,3 +3703,13 @@ body .show-scroll::-webkit-scrollbar-track {
 	.h-search {margin-right: 10px;}
 	.h-account {margin-left: 10px;}
 }
+
+#modal-account #onepcheckout input[name="sms_code"]{
+	border-color:#000;
+}
+@media (min-width: 768px) {
+	#modal-account #onepcheckout input[name="sms_code"]{
+		border: none;
+		top:8px
+	}
+}
