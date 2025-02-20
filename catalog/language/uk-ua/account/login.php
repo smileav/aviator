@@ -6,7 +6,9 @@ $_['heading_title']                = 'Увійти';
 //Button
 $_['button_login']                 = 'Увійти';
 $_['button_create_account']                 = 'Створити аккаунт';
-$_['button_create_account']                 = 'Створити аккаунт';
+$_['button_account']                 = 'Особистий кабінет';
+$_['button_register']='Реєстрація';
+$_['button_guest']='Продовжити як гість';
 
 // Text
 $_['text_account']                 = 'Обліковий запис';

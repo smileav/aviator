@@ -5,6 +5,9 @@ $_['heading_title']                = 'Account';
 //Button
 $_['button_login']                 = 'Login';
 $_['button_create_account']                 = 'Register Account';
+	$_['button_account']                 = 'Account';
+	$_['button_register']='Registration';
+	$_['button_guest']='Continue as a guest';
 
 // Text
 $_['text_account']                 = 'Account';

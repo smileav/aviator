@@ -8,6 +8,9 @@ $_['heading_title']                = 'Войти';
 //Button
 $_['button_login']                 = 'Войти';
 $_['button_create_account']                 = 'Создать аккаунт';
+	$_['button_account']                 = 'Личный кабинет';
+	$_['button_register']='Регистрация';
+	$_['button_guest']='Продолжить как гость';
 
 // Text
 $_['text_account']                 = 'Аккаунт';
