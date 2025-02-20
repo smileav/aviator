@@ -16,32 +16,41 @@
           <h1>{{ heading_title }}</h1>
         </div>
         <div class="list_orders">
-          {% for return in returns %}
-            <a href="{{ return.href  }}" class="order">
-              <div class="order_info">
-                <div class="head">
-                  <div class="order_id">{{ text_my_returs }}: {{ return.return_id }}</div>
-                  <div class="count">{{ text_my_orders }}: {{ return.order_id }}</div>
-                </div>
-                <div class="wrap_totals">
-                  <div class="totals">
-                    <div class="total">{{ return.total }}</div>
-                    <div class="date">{{ return.date_added }}</div>
+          {% if returns %}
+            {% for return in returns %}
+              <a href="{{ return.href  }}" class="order">
+                <div class="order_info">
+                  <div class="head">
+                    <div class="order_id">{{ text_my_returs }}: {{ return.return_id }}</div>
+                    <div class="count">{{ text_my_orders }}: {{ return.order_id }}</div>
                   </div>
-                  <div class="status" style="background:#787878;color: #ffffff">{{ return.status }}</div>
-                </div>
-              </div>
-
-                <div class="products">
-                  {% for product in return.return_products %}
-                  <div class="product">
-                    <img src="{{ product.image }}" />
+                  <div class="wrap_totals">
+                    <div class="totals">
+                      <div class="total">{{ return.total }}</div>
+                      <div class="date">{{ return.date_added }}</div>
+                    </div>
+                    <div class="status" style="background:#787878;color: #ffffff">{{ return.status }}</div>
                   </div>
-                  {% endfor %}
                 </div>
 
-            </a>
-          {% endfor %}
+                  <div class="products">
+                    {% for product in return.return_products %}
+                    <div class="product">
+                      <img src="{{ product.image }}" />
+                    </div>
+                    {% endfor %}
+                  </div>
+
+              </a>
+            {% endfor %}
+          {% else %}
+            <div class="orders_empty">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14.85 15.6C14.85 16.0142 15.1858 16.35 15.6 16.35C16.0142 16.35 16.35 16.0142 16.35 15.6H14.85ZM8.4 10.2L7.98397 9.57596C7.63933 9.80573 7.5462 10.2714 7.77596 10.616L8.4 10.2ZM9.57596 13.316C9.80573 13.6607 10.2714 13.7538 10.616 13.524C10.9607 13.2943 11.0538 12.8286 10.824 12.484L9.57596 13.316ZM11.516 9.02404C11.8607 8.79427 11.9538 8.32862 11.724 7.98397C11.4943 7.63933 11.0286 7.5462 10.684 7.77596L11.516 9.02404ZM16.35 15.6C16.35 13.5091 15.2889 11.9412 13.766 10.926C12.2654 9.92554 10.3113 9.45 8.4 9.45V10.95C10.0887 10.95 11.7346 11.3745 12.934 12.174C14.1111 12.9588 14.85 14.0909 14.85 15.6H16.35ZM7.77596 10.616L9.57596 13.316L10.824 12.484L9.02404 9.78397L7.77596 10.616ZM8.81602 10.824L11.516 9.02404L10.684 7.77596L7.98397 9.57596L8.81602 10.824ZM6.6 3.75H17.4V2.25H6.6V3.75ZM20.25 6.6V17.4H21.75V6.6H20.25ZM17.4 20.25H6.6V21.75H17.4V20.25ZM3.75 17.4V6.6H2.25V17.4H3.75ZM6.6 20.25C5.02599 20.25 3.75 18.974 3.75 17.4H2.25C2.25 19.8024 4.19756 21.75 6.6 21.75V20.25ZM20.25 17.4C20.25 18.974 18.974 20.25 17.4 20.25V21.75C19.8024 21.75 21.75 19.8024 21.75 17.4H20.25ZM17.4 3.75C18.974 3.75 20.25 5.02599 20.25 6.6H21.75C21.75 4.19756 19.8024 2.25 17.4 2.25V3.75ZM6.6 2.25C4.19756 2.25 2.25 4.19756 2.25 6.6H3.75C3.75 5.02599 5.02599 3.75 6.6 3.75V2.25Z" fill="#1A2540"></path>
+              </svg>
+              <div class="head">{{ text_empty }}</div>
+            </div>
+          {% endif %}
         </div>
         <div class="row">
           <div class="col-sm-12">{{ pagination }}</div>

@@ -3165,6 +3165,7 @@ body .show-scroll::-webkit-scrollbar-track {
 .account .list_orders .order .products{
 	display: flex;
 	flex-wrap: wrap;
+	margin-top: 5px;
 }
 .account .list_orders .order .products .product{
 	margin-right: 8px;
@@ -3326,9 +3327,13 @@ body .show-scroll::-webkit-scrollbar-track {
 
 .account .block_order_info .btn-return{
 	margin-top: 10px;
-	color: #00000066;
-	text-transform: uppercase;
-	font-weight: 500;
+	color: #fff;
+	background: #000;
+	display: block;
+	width: 150px;
+	text-align: center;
+	line-height: 40px;
+	cursor: pointer;
 }
 .account .form-horizontal .form-group{
 	margin-right: 0;
