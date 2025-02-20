@@ -3076,6 +3076,28 @@ body .show-scroll::-webkit-scrollbar-track {
 	background: var(--bg-color);
 	color: var(--black-color);
 }
+.account_menu .discont{
+	margin-bottom: 30px;
+	background: #D17A28;
+	padding:20px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.account_menu .discont .text{
+	margin-left: 16px;
+	display: flex;
+	flex-direction: column;
+	color: #fff;
+}
+.account_menu .discont .text .head{
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 23px;
+	text-transform: uppercase;
+	margin: 0;
+}
+
 .account .alert{background: #fff;}
 .account .alert .close{right: 12px;}
 
@@ -3681,10 +3703,11 @@ body .show-scroll::-webkit-scrollbar-track {
 	.account .col-left + .col-right{width: 100%;}
 	.account .col-left{margin-bottom: 5px;padding: 0;}
 	.account_menu {padding: 15px;}
-	.account_menu .head {margin-bottom: 20px;}
+	.account_menu .head, .account_menu .discont {margin-bottom: 20px;}
 	.account_menu .head .name{font-size: 13px;line-height: 16px}
 	.account_menu .head .contact{font-size: 12px;line-height: 16px}
 	.account_menu .head .logout{margin-left: 10px;}
+
 	.h-account{margin-left:18px}
 
 }

@@ -1,6 +1,8 @@
 <?php
 class ControllerExtensionModuleAccount extends Controller {
 	public function index() {
+
+        $data['discont'] = 0;
         if ($this->customer->isLogged()) {
             $this->load->language('extension/module/account');
             $this->load->model('account/customer');
@@ -25,6 +27,7 @@ class ControllerExtensionModuleAccount extends Controller {
                 $data['order_total'] = $this->model_account_order->getTotalOrders();
                 $data['order_total_wishlist'] = $this->model_account_wishlist->getTotalWishlist();
                 $data['return_total'] = $this->model_account_return->getTotalReturns();
+                $data['discont'] = $customer_info['discont'];
             }
 
             $data['customer_name'] = trim($data['customer_name']);

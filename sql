@@ -20,3 +20,8 @@ SET telephone = CONCAT(
     9)
 )
 WHERE telephone REGEXP '^(\\+?380|0)?[0-9]{9}$' and customer_id>0;
+
+
+/*Personal discont */
+ALTER TABLE `aviator`.`oc_customer`
+ADD COLUMN `discont` INT NOT NULL AFTER `sms_date`;

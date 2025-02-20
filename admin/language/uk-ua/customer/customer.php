@@ -29,6 +29,7 @@ $_['text_ip']                   = 'IP-адреси';
 $_['text_option']               = 'Опції';
 $_['text_login']                = 'Увійти в магазин';
 $_['text_unlock']               = 'Розблокувати';
+$_['text_discont']               = 'Знижки';
 
 // Column
 $_['column_name']           = 'Ім’я покупця';
@@ -72,6 +73,7 @@ $_['entry_points']          = 'Бонусні бали';
 $_['entry_name']            = 'Ім’я покупця';
 $_['entry_ip']              = 'IP';
 $_['entry_date_added']      = 'Дата додавання';
+$_['entry_discont']               = 'Персональна знижка (%)';
 
 $_['entry_affiliate']           = 'Партнер';
 $_['entry_tracking']            = 'Код відстеження';

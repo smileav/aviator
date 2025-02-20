@@ -729,6 +729,14 @@ class ControllerCustomerCustomer extends Controller {
 			$data['email'] = '';
 		}
 
+		if (isset($this->request->post['discont'])) {
+			$data['discont'] = $this->request->post['discont'];
+		} elseif (!empty($customer_info)) {
+			$data['discont'] = $customer_info['discont'];
+		} else {
+			$data['discont'] = '';
+		}
+
 		if (isset($this->request->post['telephone'])) {
 			$data['telephone'] = $this->request->post['telephone'];
 		} elseif (!empty($customer_info)) {
