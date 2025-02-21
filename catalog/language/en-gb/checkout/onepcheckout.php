@@ -19,7 +19,8 @@ $_['text_quantity']							= 'Quantity: %s pcs';
 $_['text_delivery']							= 'Delivery';
 $_['text_delivery_np']							= 'at Nova Poshta tariffs';
 $_['text_delivery_pickup']							= 'free';
-
+$_['text_head_discont'] = 'Loyal customer discount!';
+$_['text_discont'] = 'Loyal customer discount amount: ';
 $_['text_pick_up_in_AVIATOR_stores'] = 'Pick up in AVIATOR stores – free:';
 
 $_['text_login']                   		= 'Login';

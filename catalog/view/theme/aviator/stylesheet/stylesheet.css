@@ -3076,7 +3076,7 @@ body .show-scroll::-webkit-scrollbar-track {
 	background: var(--bg-color);
 	color: var(--black-color);
 }
-.account_menu .discont{
+.block_discont{
 	margin-bottom: 30px;
 	background: #D17A28;
 	padding:20px;
@@ -3084,18 +3084,21 @@ body .show-scroll::-webkit-scrollbar-track {
 	flex-direction: row;
 	align-items: center;
 }
-.account_menu .discont .text{
+.block_discont .text{
 	margin-left: 16px;
 	display: flex;
 	flex-direction: column;
 	color: #fff;
 }
-.account_menu .discont .text .head{
+.block_discont .text .head{
 	font-weight: 500;
 	font-size: 16px;
 	line-height: 23px;
 	text-transform: uppercase;
 	margin: 0;
+}
+#onepcheckout .block_discont{
+	margin-bottom: 0;
 }
 
 .account .alert{background: #fff;}
@@ -3762,3 +3765,7 @@ body .show-scroll::-webkit-scrollbar-track {
 #onepcheckout .opc_block_login .btn-href:hover{
 	text-decoration: none;
  }
+
+.cart-coupon{
+	margin-bottom: 24px;
+}

@@ -2047,6 +2047,16 @@ class ControllerCheckoutOnepcheckout extends Controller {
 			}
 		}
 
+        if ($this->customer->isLogged()) {
+            $customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
+        }
+
+        if ($customer_info) {
+            $data['discont'] = $customer_info['discont'];
+        }else{
+            $data['discont'] = 0;
+        }
+
 		if ($render !== false){
 			$this->response->setOutput($this->load->view('checkout/onepcheckout_cart', $data));
 		} else {

@@ -19,6 +19,8 @@ $_['text_quantity']							= 'Кількість: %s шт';
 $_['text_delivery']							= 'Доставка';
 $_['text_delivery_np']							= 'по тарифам Нової Пошти';
 $_['text_delivery_pickup']							= 'безкоштовно';
+$_['text_head_discont']   = 'Знижка постійного клієнта!';
+$_['text_discont']   = 'Для вас активовано знижку постійного клієнта в розмірі ';
 
 $_['text_pick_up_in_AVIATOR_stores'] = 'Забрати в магазинах AVIATOR – безкоштовно:';
 
