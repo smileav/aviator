@@ -1899,6 +1899,7 @@ class ControllerCheckoutOnepcheckout extends Controller {
 
 		$this->load->model('tool/image');
 		$this->load->model('tool/upload');
+		$this->load->model('account/customer');
 
 		$data['text_model'] = $this->language->get('text_model');
 		$data['column_price'] = $this->language->get('column_price');

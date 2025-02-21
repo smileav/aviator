@@ -19,7 +19,7 @@ SET telephone = CONCAT(
         'x', ''),
     9)
 )
-WHERE telephone REGEXP '^(\\+?380|0)?[0-9]{9}$' and customer_id>0;
+WHERE telephone not REGEXP '^(\\+?380|0)?[0-9]{9}$' and customer_id>0;
 
 -- ttn
 ALTER TABLE `oc_order`
@@ -27,6 +27,6 @@ ADD COLUMN `ttn` VARCHAR(100) NOT NULL DEFAULT '' AFTER `date_modified`,
 ADD COLUMN `ms_id` VARCHAR(100) NOT NULL DEFAULT '' AFTER `ttn`;
 
 
-/*Personal discont */
-ALTER TABLE `aviator`.`oc_customer`
+-- Personal discont
+ALTER TABLE `oc_customer`
 ADD COLUMN `discont` INT NOT NULL AFTER `sms_date`;
