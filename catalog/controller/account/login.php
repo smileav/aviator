@@ -164,50 +164,10 @@ class ControllerAccountLogin extends Controller {
 	public function mini() {
 		$this->load->model('account/customer');
 
-		// Login override for admin users
-		if (!empty($this->request->get['token'])) {
-			$this->customer->logout();
-			$this->cart->clear();
 
-			unset($this->session->data['order_id']);
-			unset($this->session->data['payment_address']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
-			unset($this->session->data['shipping_address']);
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['comment']);
-			unset($this->session->data['coupon']);
-			unset($this->session->data['reward']);
-			unset($this->session->data['voucher']);
-			unset($this->session->data['vouchers']);
-
-			$customer_info = $this->model_account_customer->getCustomerByToken($this->request->get['token']);
-
-			if ($customer_info && $this->customer->login($customer_info['email'], '', true)) {
-				// Default Addresses
-				$this->load->model('account/address');
-
-				if ($this->config->get('config_tax_customer') == 'payment') {
-					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
-				}
-
-				if ($this->config->get('config_tax_customer') == 'shipping') {
-					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
-				}
-
-				//$this->response->redirect($this->url->link('account/account', '', true));
-			}
-		}
-
-		//if ($this->customer->isLogged()) {
-		//	$this->response->redirect($this->url->link('account/account', '', true));
-		//}
 
 		$this->load->language('account/login');
 
-		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->setRobots('noindex,follow');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			// Unset guest
@@ -264,15 +224,7 @@ class ControllerAccountLogin extends Controller {
 			'href' => $this->url->link('account/login', '', true)
 		);
 
-		if (isset($this->session->data['error'])) {
-			$data['error_warning'] = $this->session->data['error'];
-
-			unset($this->session->data['error']);
-		} elseif (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
+		$data['error_warning']=$this->language->get('error_telephone');
 
 		$data['action'] = $this->url->link('account/login/mini', '', true);
 		$data['register'] = $this->url->link('account/register/mini', '', true);
@@ -353,14 +305,14 @@ class ControllerAccountLogin extends Controller {
 			$this->session->data['customer_login']['telephone'] = $this->request->get['tel'];
 
 			$telephone = $this->clearTelephoneMask($this->request->get['tel']);
-
+//var_dump($telephone);
 			if (utf8_strlen($telephone) == 12 && substr($telephone, 0, 3) == '380' && substr($telephone, 3, 1) > 0) {
-				$step = 2;
+				$step = 3;
 			} else {
 				$step = 1;
 			}
 
-			if ($step == 2) {
+			/*if ($step == 2) {
 				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sms_validator` WHERE `telephone` = '" . $this->db->escape($telephone) . "'");
 
 				if (!$query->num_rows) {
@@ -368,7 +320,7 @@ class ControllerAccountLogin extends Controller {
 				} else {
 					$step = 3;
 				}
-			}
+			}*/
 		}
 
 		$this->response->setOutput($step);
@@ -380,11 +332,28 @@ class ControllerAccountLogin extends Controller {
 
 	public function sendSMS() {
 		$json = [];
-
+		$this->load->model('account/customer');
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$code =  rand(1000, 9999);
 
-			$telephone = $this->clearTelephoneMask($this->session->data['customer_login']['telephone']);
+			$telephone = $this->clearTelephoneMask($this->request->post['telephone']);
+
+			//check customer
+			$customer_info = $this->model_account_customer->getCustomerByTelephone($telephone);
+
+			if(!$customer_info){
+				//customer not found -  make
+				$this->request->post['telephone']=$this->clearTelephoneMask($this->request->post['telephone']);
+				$this->request->post['firstname']='';
+				$this->request->post['lastname']='';
+				$this->request->post['email']='';
+				$this->request->post['password']='';
+				$customer_id = $this->model_account_customer->addCustomer($this->request->post);
+				$customer_info=$this->model_account_customer->getCustomer($customer_id);
+			}
+
+
+
 
 			$this->log->write('Send SMS to: ' . $telephone);
 			$this->log->write('Code: ' . $code);
@@ -419,7 +388,8 @@ class ControllerAccountLogin extends Controller {
 				$this->log->write('SMS ERROR!');
 				$json['error']      = 1;
 			}
-
+			$this->load->language('account/login');
+			$json['help']=$this->language->get('text_enter_code').$this->request->post['telephone'];
 			//$json['sms_code'] = $code;
 		}
 
@@ -427,6 +397,7 @@ class ControllerAccountLogin extends Controller {
 			//write temp sms to customer
 			$this->load->model('account/customer');
 			$this->model_account_customer->addSms($telephone,$code,time()+120);
+			$this->session->data['telephone']=$telephone;
 
 		}
 		$this->response->addHeader('Content-Type: application/json');
@@ -437,15 +408,96 @@ class ControllerAccountLogin extends Controller {
 		$this->load->model('account/customer');
 		$this->load->language('account/login');
 
-		$data['register'] = $this->url->link('account/register/mini', '', true);
-		$data['login'] = $this->url->link('account/login/mini', '', true);
-		$data['guest_session_link']=$this->url->link('checkout/onepcheckout','guest=1');
+
+		$data['error_warning']=$this->language->get('error_telephone');
+
+		if (isset($this->request->post['telephone'])) {
+			$data['telephone'] = $this->request->post['telephone'];
+		} else {
+			$data['telephone'] = '';
+		}
+
+		//if (isset($this->request->post['password'])) {
+		//	$data['password'] = $this->request->post['password'];
+		//} else {
+		$data['password'] = '';
+		//}
+
+		if(!empty($this->config->get('config_country_id'))){
+			$this->load->model('localisation/country');
+			$data['countries'] = $this->model_localisation_country->getCountries();
+			$country_info = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
+			$data['iso_code_2']=$country_info ? $country_info['iso_code_2'] : '';
+
+			//$shipping_address['country'] = $this->session->data['shipping_address']['country'] = $country_info ? $country_info['name'] : '';
+
+		}
+		$iso_code_2 = 'UA';
+		$this->load->language('checkout/sms_validator');
+
+		$rinvex = new rinvex\country;
+
+		$country_data = $rinvex->getData($iso_code_2);
+
+		$data['iso_code_2']             = $country_data['iso_code_2'];
+		$data['calling_code']           = $country_data['calling_code'];
+		$data['number_lengths_mask']    = $country_data['number_lengths_mask'];
+		$data['flag']                   = $country_data['flag'];
+
+		$data['action']=$this->url->link('account/login/sendSMS', '', true);
+		$data['action2']=$this->url->link('account/login/code', '', true);
+
+		//$data['register'] = $this->url->link('account/register/mini', '', true);
+		//$data['login'] = $this->url->link('account/login/mini', '', true);
+		//$data['guest_session_link']=$this->url->link('checkout/onepcheckout','guest=1');
 		return $this->load->view('checkout/login', $data);
+	}
+
+	public function code(){
+		$this->load->model('account/customer');
+		$this->load->language('account/login');
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			// Unset guest
+			unset($this->session->data['guest']);
+
+			// Default Shipping Address
+			$this->load->model('account/address');
+
+			if ($this->config->get('config_tax_customer') == 'payment') {
+				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+			}
+
+			if ($this->config->get('config_tax_customer') == 'shipping') {
+				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+			}
+
+			// Wishlist
+			if (isset($this->session->data['wishlist']) && is_array($this->session->data['wishlist'])) {
+				$this->load->model('account/wishlist');
+
+				foreach ($this->session->data['wishlist'] as $key => $product_id) {
+					$this->model_account_wishlist->addWishlist($product_id);
+
+					unset($this->session->data['wishlist'][$key]);
+				}
+			}
+
+		}
+
+		if($this->error['warning']){
+			$json['error'] = $this->error['warning'];
+		}else{
+			$json['success'] = 1;
+		}
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+
 	}
 	protected function validate() {
 		// Check how many login attempts have been made.
-		$telephone=$this->clearTelephoneMask($this->request->post['telephone']);
-		$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['telephone']);
+		$telephone=$this->clearTelephoneMask($this->session->data['telephone']);
+		$login_info = $this->model_account_customer->getLoginAttempts($this->session->data['telephone']);
 
 		if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
 			$this->error['warning'] = $this->language->get('error_attempts');
@@ -455,6 +507,14 @@ class ControllerAccountLogin extends Controller {
 		//$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
 		$customer_info = $this->model_account_customer->getCustomerByTelephone($telephone);
 
+
+		if($customer_info) {
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sms_validator` WHERE `telephone` = '" . $this->db->escape($telephone) . "'");
+
+			if (!$query->num_rows) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "sms_validator` SET `telephone` = '" . $this->db->escape($telephone) . "', status = '1', date_added = NOW()");
+			}
+		}
 
 		if ($customer_info && !$customer_info['status']) {
 			$this->error['warning'] = $this->language->get('error_approved');

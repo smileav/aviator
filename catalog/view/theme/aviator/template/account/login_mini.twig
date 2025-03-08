@@ -5,42 +5,43 @@
   </div>
   <div class="modal-body">
 
-    <form action="{{ action }}" id="login_form" method="post" enctype="multipart/form-data" >
-        <div class="form-group form-group-error  required">
-            {#\<label for="input-opc-telephone" class="control-label opc-label">{{ entry_telephone }}</label>#}
-            <div class="flag-container">
-                <div id="dropdownFlags" data-iso-code="{{ iso_code_2 }}">
-                    <div class="flag"><img src="{{ flag }}" alt="" width="24" height="16"/></div>
-                    {#<span class="caret"></span>#}
-                </div>
-                {#<ul class="dropdown-menu scroll" aria-labelledby="dropdownFlags">
+
+      <form action="{{ action }}" id="dialog_step1" method="post" enctype="multipart/form-data" >
+          <div class="form-group form-group-error  required">
+              {#\<label for="input-opc-telephone" class="control-label opc-label">{{ entry_telephone }}</label>#}
+              <div class="flag-container">
+                  <div id="dropdownFlags" data-iso-code="{{ iso_code_2 }}">
+                      <div class="flag"><img src="{{ flag }}" alt="" width="24" height="16"/></div>
+                      {#<span class="caret"></span>#}
+                  </div>
+                  {#<ul class="dropdown-menu scroll" aria-labelledby="dropdownFlags">
 								{% for key, country in countries_t %}
 									<li data-iso-code="{{ country.iso_code_2 }}" data-calling-code="{{ country.calling_code }}" data-number-mask="{{ country.number_lengths_mask }}" aria-selected="{% if country.iso_code_2 == iso_code_2 %}true{% else %}false{% endif %}"><img src="{{ country.flag }}" alt="" width="24" height="16"/><span>{{ country.name }}</span><span>+{{ country.calling_code }}</span></li>
 								{% endfor %}
 							</ul>#}
-            </div>
-            {% if iso_code_2 == 'ua' %}
-                <input id="input-opc-telephone" type="text" name="telephone" value="{% if telephone is defined %}{{ telephone }}{% endif %}" placeholder="+380 (XX) XXX-XX-XX" class="form-checkout focus" required/>
-            {% else %}
-                <input id="input-opc-telephone" type="text" name="telephone" value="{% if telephone is defined %}{{ telephone }}{% endif %}" placeholder="+{{ calling_code}} {{ number_lengths_mask }}" class="form-checkout focus" required/>
-            {% endif %}
-            <svg width="18" height="13" class="check" style="display: none;"><use xlink:href="image/icons.svg#check" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
-            {# <input type="text" name="sms_code" value="" placeholder="XXXX" class="hidden" autocomplete="off" im-insert="true"/>#}
-            <button type="button" id="btn-send-sms" class="hidden">{{ text_sms_send }}</button>
-            <div class="float-label">{{ entry_telephone }} <span>*</span></div>
-            <div class="form-error">{{ error_warning }}</div>
-        </div>
+              </div>
+              {% if iso_code_2 == 'ua' %}
+                  <input id="input-opc-telephone" type="text" name="telephone" value="{% if telephone is defined %}{{ telephone }}{% endif %}" placeholder="+380 (XX) XXX-XX-XX" class="form-checkout focus" required/>
+              {% else %}
+                  <input id="input-opc-telephone" type="text" name="telephone" value="{% if telephone is defined %}{{ telephone }}{% endif %}" placeholder="+{{ calling_code}} {{ number_lengths_mask }}" class="form-checkout focus" required/>
+              {% endif %}
+              <svg width="18" height="13" class="check" style="display: none;"><use xlink:href="image/icons.svg#check" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+              {# <input type="text" name="sms_code" value="" placeholder="XXXX" class="hidden" autocomplete="off" im-insert="true"/>#}
+              {# <button type="button" id="btn-send-sms" class="hidden">{{ text_sms_send }}</button>#}
+              <div class="float-label">{{ entry_telephone }} <span>*</span></div>
+              <div class="form-error hidden">{{ error_warning }}</div>
+          </div>
 
-        <div class="form-group form-group-error required hidden" >
-            <input id="input-opc-password" type="text" placeholder="XXXX" name="sms_password" value="" class="form-checkout focus" autocomplete="off" im-insert="true">
-            <div class="float-label">{{ entry_password }} <span>*</span></div>
-            {# <div class="right"><span data-href="{{ forgotten }}" class="btn-href" >{{ text_forgotten }}</span></div>#}
-            <div class="form-error">
-                {% if error_password %}{{ error_password }}{% endif %}
-            </div>
-        </div>
+          {#  <div class="form-group form-group-error required hidden" >
+        <input id="input-opc-password" type="text" placeholder="XXXX" name="sms_password" value="" class="form-checkout focus" autocomplete="off" im-insert="true">
+        <div class="float-label">{{ entry_password }} <span>*</span></div>
 
-{#         <div class="form-group form-group-error required">
+        <div class="form-error">
+            {% if error_password %}{{ error_password }}{% endif %}
+        </div>
+    </div>#}
+
+          {#         <div class="form-group form-group-error required">
             <input id="input-opc-password" type="password" name="password" value="{{ password }}" class="form-checkout focus">
             <div class="float-label">{{ entry_password }} <span>*</span></div>
             <div class="right"><span data-href="{{ forgotten }}" class="btn-href" >{{ text_forgotten }}</span></div>
@@ -48,107 +49,134 @@
                 {% if error_password %}{{ error_password }}{% endif %}
             </div>
         </div>#}
-        <div class="buttons">
-            <input type="submit" value="{{ button_login }}" class="opc-btn" disabled="disabled"/>
-            <div class="border"></div>
-            <span data-href="{{ register }}"   class="opc-btn btn-gray" >{{ button_create_account }}</span>
-        </div>
-    </form>
+          <div class="buttons">
+              <input type="submit" value="{{ button_continue }}" class="opc-btn" />
+              <div class="border"></div>
+
+          </div>
+      </form>
+
+
+      <form action="{{ action2 }}" id="dialog_step2" method="post" enctype="multipart/form-data" class="hidden" >
+          <span class="help"></span>
+          <div class="form-group form-group-error" >
+              <input id="input-opc-password" type="text" placeholder="XXXX" name="sms_password" value="" class="form-checkout focus" autocomplete="off" im-insert="true">
+              <div class="float-label">{{ entry_password }} <span>*</span></div>
+
+              <div class="help">
+
+              </div>
+              <div class="form-error"></div>
+          </div>
+
+          <div class="buttons">
+              <input type="submit" value="{{ button_continue }}" class="opc-btn" />
+              <div class="border"></div>
+
+          </div>
+      </form>
+
+
   </div>
 </div>
 <script type="text/javascript">
+
 	$(document).ready(function() {
 		var iso_code = '{{ iso_code_2 }}';
 		var calling_code = '{{ calling_code }}';
-		var opc_telephone = $('#login_form input[name="telephone"]').closest('.form-group');
+		var opc_telephone = $('#dialog_step1 input[name="telephone"]').closest('.form-group');
 
 		if (iso_code === 'ua') {
-			$('#login_form #dropdownFlags').addClass('disabled');
-			$('#login_form input[name="telephone"]').inputmask({
+			$('#dialog_step1 #dropdownFlags').addClass('disabled');
+			$('#dialog_step1 input[name="telephone"]').inputmask({
 				mask: '+380 (99) 999-99-99',
 				placeholder: 'X'
 			}).addClass('tel-ua');
 		} else {
-			$('#login_form #dropdownFlags').removeClass('disabled');
-			$('#login_form input[name="telephone"]').inputmask({
+			$('#dialog_step1 #dropdownFlags').removeClass('disabled');
+			$('#dialog_step1 input[name="telephone"]').inputmask({
 				mask: '+' + calling_code.replace(/9/g, "\\9") + ' {{ number_lengths_mask }}',
 				placeholder: 'X'
 			}).removeClass('tel-ua');
 		}
 
-		$('#login_form input[name="sms_password"]').inputmask({
-				mask: '9999',
-				placeholder: 'X'
-        })
+		$('#dialog_step2 input[name="sms_password"]').inputmask({
+			mask: '9999',
+			placeholder: 'X'
+		})
 
-		$('#login_form').on('keyup', 'input[name="telephone"]', function() {
-			var iso_code = $('#login_form #dropdownFlags').attr('data-iso-code');
-
+		$('#dialog_step1').on('submit', function(e) {
+			var iso_code = $('#dialog_step1 #dropdownFlags').attr('data-iso-code');
+			e.preventDefault();
 			if (iso_code == 'ua') {
-				$.get('index.php?route=account/login/validateNumber&tel=' + encodeURIComponent($(this).val()), function(step) {
+				$.get('index.php?route=account/login/validateNumber&tel=' + encodeURIComponent($(this).find('input[name="telephone"]').val()), function(step) {
 					switch(step) {
 						case '1':
 							opc_telephone.find('.check').hide();
 							opc_telephone.find('input[name="telephone"]').addClass('error');
-							opc_telephone.find('#btn-send-sms').addClass('hidden');
-							opc_telephone.find('.form-error').text('');
+							opc_telephone.find('.form-error').removeClass('hidden');
 							break;
 						case '2':
 							opc_telephone.find('.check').hide();
 							opc_telephone.find('input[name="telephone"]').addClass('error');
 							opc_telephone.find('#btn-send-sms').addClass('hidden');
-							opc_telephone.find('.form-error').text('{{ error_telephone_not_exists }}');
-							//opc_telephone.find('input[name="telephone"]').addClass('error');
-							//opc_telephone.find('#btn-send-sms').removeClass('hidden');
-							//opc_telephone.find('.form-error').text('{{ error_sms_please }}');
+
 							break;
 						case '3':
 							opc_telephone.find('input[name="telephone"]').removeClass('error');
-							opc_telephone.find('#btn-send-sms').removeClass('hidden');
 							opc_telephone.find('.form-error').text('');
-							//opc_telephone.find('.check').show();
+							opc_telephone.find('.form-error').addClass('hidden');
+							$('#dialog_step2').find('.form-error').addClass('hidden');
+
+							$.ajax({
+								url: 'index.php?route=account/login/sendSMS',
+								type: 'post',
+								dataType: 'json',
+								data:$('#dialog_step1').serialize(),
+								success: function(json) {
+									$('#dialog_step1').hide();
+									$('#dialog_step2').show().removeClass('hidden');
+									$('#dialog_step2 span.help').html(json.help);
+
+									var _Seconds = 120;
+									clearInterval(int);
+									int = setInterval(function() {
+										if (_Seconds > 0) {
+											_Seconds--;
+											$('#dialog_step2 div.help').text('{{ text_sms_wait }} ' + _Seconds + ' {{ text_sms_wait_sec }}!');
+										} else {
+											clearInterval(int);
+										}
+									},1000);
+
+								}
+							});
+
 							break;
 					}
 				});
 			}
 		});
-
 		var int;
-		$('#login_form').on('click', '#btn-send-sms', function() {
-			var _Seconds = 120;
 
-			//opc_telephone.find('input[name="telephone"]').prop('disabled', true);
-			opc_telephone.find('#btn-send-sms').addClass('hidden');
-			$('input[name="sms_password"]').parent().removeClass('hidden');
-			$('input[name="sms_password"]').focus();
-			opc_telephone.find('.form-error').text('{{ text_sms_wait }} ' + _Seconds + ' {{ text_sms_wait_sec }}!');
 
-			clearInterval(int);
-			int = setInterval(function() {
-				if (_Seconds > 0) {
-					_Seconds--;
-					opc_telephone.find('.form-error').text('{{ text_sms_wait }} ' + _Seconds + ' {{ text_sms_wait_sec }}!');
-				} else {
-					clearInterval(int);
 
-					$('input[name="sms_password"]').parent().addClass('hidden').val('');
-					opc_telephone.find('#btn-send-sms').removeClass('hidden');
-					//opc_telephone.find('.form-error').text('{{ error_sms_please }}');
-					// opc_telephone.find('#dropdownFlags').prop('disabled', false);
-					opc_telephone.find('input[name="telephone"]').prop('disabled', false);
-				}
-			}, 1000);
-
+		$('#dialog_step2').on('submit',function(e) {
+			e.preventDefault();
 			$.ajax({
-				url: 'index.php?route=account/login/sendSMS',
+				url: 'index.php?route=account/login/code',
 				type: 'post',
 				dataType: 'json',
-				success: function(json) {
-					//console.log(json);
-					$('#login_form input[type="submit"]').prop('disabled', false);
+				data: $('#dialog_step2').serialize(),
+				success: function (json) {
+					if(json.success){
+						document.location=document.location.href;
+					}
+					if(json.error){
+						$('#dialog_step2 .form-error').html(json.error).removeClass('hidden');
+					}
 				}
-			});
-
-        });
+			})
+		});
 	});
 </script>

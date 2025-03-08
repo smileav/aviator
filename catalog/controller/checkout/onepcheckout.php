@@ -164,13 +164,13 @@ class ControllerCheckoutOnepcheckout extends Controller {
 		}
 
 		$data['is_show_login']=true;
-		$data['guest_session_link']=$this->url->link('checkout/onepcheckout','guest=1');
+		//$data['guest_session_link']=$this->url->link('checkout/onepcheckout','guest=1');
 		if($this->customer->isLogged()){
 			$data['is_show_login']=false;
 		}
-		if(isset($this->session->data['is_guest'])){
-			$data['is_show_login']=false;
-		}
+		//if(isset($this->session->data['is_guest'])){
+		//	$data['is_show_login']=false;
+		//}
 
 		$data['login_block']=$this->load->controller('account/login/page');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -445,7 +445,7 @@ class ControllerCheckoutOnepcheckout extends Controller {
 			$data['firstname'] =  (!empty($this->session->data['firstname'])) ? $this->session->data['firstname'] : $this->customer->getFirstName();
 			$data['lastname'] = (!empty($this->session->data['lastname'])) ? $this->session->data['lastname'] : $this->customer->getLastName();
 			$data['email'] =  $this->customer->getEmail();
-			$data['telephone'] = (!empty($this->session->data['telephone'])) ? $this->session->data['telephone'] : $this->customer->getTelephone();
+			$data['telephone'] = $this->customer->formatTelephone((!empty($this->session->data['telephone'])) ? $this->session->data['telephone'] : $this->customer->getTelephone());
 			$data['payment_address_id'] = $this->customer->getAddressId();
 			$data['address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 		}

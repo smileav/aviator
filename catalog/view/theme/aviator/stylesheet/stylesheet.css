@@ -3574,6 +3574,12 @@ body .show-scroll::-webkit-scrollbar-track {
 	width: 100%;
 	max-width: unset;
 }
+
+#step1 .buttons .opc-btn, #step2 .buttons .opc-btn{
+	width: 100%;
+	max-width: unset;
+}
+
 #modal-account .modal-dialog .buttons .opc-btn:disabled{
 	opacity: 0.5;
 }
@@ -3768,4 +3774,29 @@ body .show-scroll::-webkit-scrollbar-track {
 
 .cart-coupon{
 	margin-bottom: 24px;
+}
+
+
+
+.page-checkout-item__title{
+	position: relative;
+	top: -1px;
+	font-size: 26px;
+	line-height: 20px;
+	color: #1c1c1b;
+	margin-top: 23px;
+	margin-bottom: 20px;
+	-webkit-transition: .5s;
+	-o-transition: .5s;
+	transition: .5s;
+
+
+	.add-padding{
+
+	}
+}
+
+.help{
+	font-size: 12px;
+		color: rgba(0, 0, 0, 0.32);
 }

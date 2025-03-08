@@ -36,7 +36,7 @@
 							</ul>#}
 						</div>
 						{% if iso_code_2 == 'ua' %}
-						<input id="input-opc-telephone" type="text" name="telephone" value="{% if telephone is defined %}{{ telephone }}{% endif %}" placeholder="+380 (XX) XXX-XX-XX" class="form-checkout focus" required/>
+						<input readonly="true" id="input-opc-telephone" type="text" name="telephone" value="{% if telephone is defined %}{{ telephone }}{% endif %}" placeholder="+380 (XX) XXX-XX-XX" class="form-checkout focus" required/>
 						{% else %}
 						<input id="input-opc-telephone" type="text" name="telephone" value="{% if telephone is defined %}{{ telephone }}{% endif %}" placeholder="+{{ calling_code}} {{ number_lengths_mask }}" class="form-checkout focus" required/>
 						{% endif %}

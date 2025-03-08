@@ -476,7 +476,8 @@ $(document).on('submit','#register_form',function(e){
 	});
 
 })
-$(document).on('submit','#login_form',function(e){
+
+/*$(document).on('submit','#login_form',function(e){
 	e.preventDefault();
 	$.ajax({
 		url: $(this).attr('action'),
@@ -502,7 +503,7 @@ $(document).on('submit','#login_form',function(e){
 		}
 	});
 
-})
+})*/
 
 $(document).on('submit','#forgotten_form',function(e){
 	e.preventDefault();
