@@ -18,6 +18,7 @@ $_['text_register_account']        = 'By creating an account you will be able to
 $_['text_returning_customer']      = 'Returning Customer';
 $_['text_i_am_returning_customer'] = 'I am a returning customer';
 $_['text_forgotten']               = 'Forgotten Password';
+	$_['text_enter_code']='Enter the code with SMS sent to the room ';
 
 // Entry
 $_['entry_email']                  = 'E-Mail Address';
@@ -25,6 +26,7 @@ $_['entry_password']               = 'Password';
 	$_['entry_telephone']='Phone';
 
 // Error
+	$_['error_telephone']='Not the right phone';
 $_['error_login']                  = 'Warning: No match for E-Mail Address and/or Password.';
 $_['error_attempts']               = 'Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.';
 $_['error_approved']               = 'Warning: Your account requires approval before you can login.';
