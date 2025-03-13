@@ -3101,7 +3101,7 @@ body .show-scroll::-webkit-scrollbar-track {
 	margin-bottom: 0;
 }
 
-.account .alert{background: #fff;}
+.account .alert{background: #bfbfc1;}
 .account .alert .close{right: 12px;}
 
 .account .col-right{
