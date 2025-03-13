@@ -214,7 +214,7 @@ var wishlist = {
 				}
 
 				if (json['success']) {
-					$('#content').parent().before('<div class="alert warning"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content').parent().before('<div class="alert "><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 					setTimeout(function () {
 						$('.alert').slideUp(1500);
 					}, 5000);
@@ -222,6 +222,10 @@ var wishlist = {
 				}
 				if(typeof json['product_id'] != 'undefined') {
 					$('#button-wish'+product_id+' svg').attr('fill', 'black');
+				}
+
+				if(typeof json['remove']!='undefined'){
+					$('#button-wish'+product_id+' svg').attr('fill', 'none');
 				}
 
 				$('#wishlist-total span').html(json['total']);

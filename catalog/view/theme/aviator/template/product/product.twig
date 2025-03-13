@@ -45,7 +45,7 @@
 						{{ button_cart }}</button>
 					<button type="button" id="button-cart-quick" class="btn-w">{{ button_quick }}</button>
 
-					<button type="button" data-toggle="tooltip" class="btn-w" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');">
+					<button id="button-wish{{ product_id }}" type="button" data-toggle="tooltip" class="btn-w" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');">
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M21.25 8.72156C21.25 9.88156 20.81 11.0516 19.92 11.9416L18.44 13.4216L12.07 19.7916C12.04 19.8216 12.03 19.8316 12 19.8516C11.97 19.8316 11.96 19.8216 11.93 19.7916L4.08 11.9416C3.19 11.0516 2.75 9.89156 2.75 8.72156C2.75 7.55156 3.19 6.38156 4.08 5.49156C5.86 3.72156 8.74 3.72156 10.52 5.49156L11.99 6.97156L13.47 5.49156C15.25 3.72156 18.12 3.72156 19.9 5.49156C20.81 6.38156 21.25 7.54156 21.25 8.72156Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 						</svg>

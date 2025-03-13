@@ -25,6 +25,7 @@ $_['text_empty']         = 'У Вас не было ранее возврата 
 $_['text_agree']         = 'Я прочитал <a href="%s" class="agree"><b>%s</b></a>  и согласен с условиями';
 $_['text_my_orders']         = 'Заказ';
 $_['text_my_returs']         = 'Возврат';
+	$_['entry_comment']='Дополнительная информация';
 // Column
 $_['column_return_id']   = '№ Запроса на возврат';
 $_['column_order_id']    = '№ Заказа';

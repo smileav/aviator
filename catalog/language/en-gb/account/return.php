@@ -22,6 +22,7 @@ $_['text_empty']         = 'You have not made any previous returns!';
 $_['text_agree']         = 'I have read and agree to the <a href="%s" class="agree"><b>%s</b></a>';
 $_['text_my_returs']         = 'Return';
 $_['text_my_orders']         = 'Order';
+	$_['entry_comment']='Additional information';
 
 // Column
 $_['column_return_id']   = 'Return ID';

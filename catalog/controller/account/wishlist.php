@@ -150,9 +150,15 @@ class ControllerAccountWishList extends Controller {
 				// Edit customers cart
 				$this->load->model('account/wishlist');
 
-				$this->model_account_wishlist->addWishlist($this->request->post['product_id']);
+				if($this->model_account_wishlist->checkProductInWishlist($this->request->post['product_id'])){
+					$this->model_account_wishlist->deleteWishlist($this->request->post['product_id']);
+					$json['success'] = sprintf($this->language->get('text_success_remove'), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+					$json['remove']=true;
+				}else {
+					$this->model_account_wishlist->addWishlist($this->request->post['product_id']);
 
-				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+					$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+				}
 				$json['product_id']=$this->request->post['product_id'];
 				$json['total'] = sprintf($this->language->get('text_wishlist'), $this->model_account_wishlist->getTotalWishlist());
 			} else {

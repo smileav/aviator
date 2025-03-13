@@ -115,7 +115,7 @@
 
               </div>
             </fieldset>
-            <h4>{{ entry_opened }}</h4>
+          {#   <h4>{{ entry_opened }}</h4>
             <fieldset>
               <div class="form-group">
                 <div class="row">
@@ -139,11 +139,12 @@
                   </div>
                 </div>
               </div>
-            </fieldset>
+            </fieldset>#}
+            <h4>{{ entry_comment }}</h4>
             <fieldset>
               <div class="form-group">
                 <textarea name="comment" rows="3" class="form-checkout">{{ comment }}</textarea>
-                <div class="float-label">{{ entry_fault_detail }}</div>
+                <div class="float-label">{{ entry_comment }}</div>
               </div>
             </fieldset>
             <h4>{{ text_receiver }}</h4>
@@ -189,6 +190,15 @@
 
 <script type="text/javascript"><!--
 
+  $(document).ready(function() {
+    let firstError = $(".form-error").filter(function() {
+      return $(this).text().trim() !== "";
+    }).first(); // Знайти перший блок, який містить текст
+
+    if (firstError.length) {
+      $("html, body").animate({ scrollTop: firstError.offset().top -250 }, 500);
+    }
+  });
 
   var iso_code = '{{ iso_code_2 }}';
   var calling_code = '{{ calling_code }}';

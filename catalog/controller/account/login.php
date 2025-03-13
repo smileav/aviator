@@ -333,6 +333,7 @@ class ControllerAccountLogin extends Controller {
 	public function sendSMS() {
 		$json = [];
 		$this->load->model('account/customer');
+		$this->load->language('account/login');
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$code =  rand(1000, 9999);
 
@@ -370,7 +371,7 @@ class ControllerAccountLogin extends Controller {
 			$sms = [
 				'sender'        => 'AVIATOR',
 				'destination'   => '+' . $telephone,
-				'text'          => $code
+				'text'          => sprintf($this->language->get('code'),$code)
 			];
 
 			$this->log->write('SMS_Array:');
@@ -388,7 +389,7 @@ class ControllerAccountLogin extends Controller {
 				$this->log->write('SMS ERROR!');
 				$json['error']      = 1;
 			}
-			$this->load->language('account/login');
+
 			$json['help']=$this->language->get('text_enter_code').$this->request->post['telephone'];
 			//$json['sms_code'] = $code;
 		}
