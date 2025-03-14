@@ -486,7 +486,7 @@ class ControllerAccountLogin extends Controller {
 
 		}
 
-		if($this->error['warning']){
+		if(isset($this->error['warning'])&&$this->error['warning']){
 			$json['error'] = $this->error['warning'];
 		}else{
 			$json['success'] = 1;
@@ -526,9 +526,9 @@ class ControllerAccountLogin extends Controller {
 			if (!$this->customer->loginByTel($telephone, $this->request->post['sms_password'])) {
 				$this->error['warning'] = $this->language->get('error_login_tel');
 
-				$this->model_account_customer->addLoginAttempt($this->request->post['telephone']);
+				$this->model_account_customer->addLoginAttempt($telephone);
 			} else {
-				$this->model_account_customer->deleteLoginAttempts($this->request->post['telephone']);
+				$this->model_account_customer->deleteLoginAttempts($telephone);
 			}
 		}
 

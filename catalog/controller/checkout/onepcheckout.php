@@ -7,7 +7,7 @@ class ControllerCheckoutOnepcheckout extends Controller {
 			unset($this->session->data['shipping_address_id']);
 		}
 
-		if($this->request->get['guest']){
+		if(isset($this->request->get['guest'])&&$this->request->get['guest']){
 			$this->session->data['is_guest']=true;
 			$this->response->redirect($this->url->link('checkout/onepcheckout'));
 
@@ -2047,7 +2047,7 @@ class ControllerCheckoutOnepcheckout extends Controller {
 				);
 			}
 		}
-
+		$customer_info=null;
         if ($this->customer->isLogged()) {
             $customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
         }
