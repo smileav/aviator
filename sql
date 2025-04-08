@@ -30,3 +30,8 @@ ADD COLUMN `ms_id` VARCHAR(100) NOT NULL DEFAULT '' AFTER `ttn`;
 -- Personal discont
 ALTER TABLE `oc_customer`
 ADD COLUMN `discont` INT NOT NULL AFTER `sms_date`;
+
+ALTER TABLE `oc_return`
+ADD COLUMN `receiver` VARCHAR(255) NOT NULL AFTER `date_modified`,
+ADD COLUMN `inn` VARCHAR(20) NOT NULL AFTER `receiver`,
+ADD COLUMN `iban` VARCHAR(50) NOT NULL AFTER `inn`;
