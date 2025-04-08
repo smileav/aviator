@@ -50,7 +50,7 @@
 				{% if field_name == 'email' %}
 					<div class="form-group form-group-error{% if customer_field['status'] == 'required' %} required{% endif %}">
 						{#<label for="input-opc-email" class="control-label opc-label">{{ entry_email }}</label>#}
-						<input autocomplete="off" id="input-opc-email" type="text" name="email" value="{% if email is defined %}{{ email }}{% endif %}" class="form-checkout{% if email is not empty %} focus{% endif %}" {% if email is defined %}readonly{% endif %}/>
+						<input autocomplete="off" id="input-opc-email" type="text" name="email" value="{% if email is defined %}{{ email }}{% endif %}" class="form-checkout{% if email is not empty %} focus{% endif %}" />
 						<div class="float-label">{{ entry_email }}{% if customer_field['status'] == 'required' %} <span>*</span>{% endif %}</div>
 						<div class="form-error"></div>
 					</div>
