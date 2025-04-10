@@ -22,7 +22,7 @@ $_['text_returning_customer']      = 'Постоянный покупатель'
 $_['text_i_am_returning_customer'] = 'Я совершал здесь покупки ранее и регистрировался';
 $_['text_forgotten']               = 'Забыли пароль?';
 	$_['text_enter_code']='Введите код с SMS, отправленным на номер ';
-	$_['code']='Код авторизации: %s';
+	$_['code']='Код авторизации: %s "\n" @test.aviator.shop #%s';
 
 // Entry
 $_['entry_email']                  = 'E-Mail адрес';
