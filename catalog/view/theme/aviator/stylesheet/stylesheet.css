@@ -2958,6 +2958,8 @@ body .show-scroll::-webkit-scrollbar-track {
 	--bg-color: #F5F7F8;
 	--border-color: #EBEDEE;
 	--black-color: #000000;
+	--back-color: #ffffff;
+
 }
 .account{
 	background: var(--bg-color);
@@ -3022,7 +3024,7 @@ body .show-scroll::-webkit-scrollbar-track {
 	display: flex;
 	flex-direction: column;
 }
-.account_menu .list .item{
+.account_menu .item{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -3033,10 +3035,10 @@ body .show-scroll::-webkit-scrollbar-track {
 	line-height: 20px;
 	color: #1A2540;
 }
-.account_menu .list .item + .item{
+.account_menu .item + .item{
 	margin-top:12px
 }
-.account_menu .list .item:after{
+.account_menu .item:after{
 	content: '';
 	background: url('../image/arrow.svg') no-repeat center;
 	width: 18px;
@@ -3044,13 +3046,13 @@ body .show-scroll::-webkit-scrollbar-track {
 	display: flex;
 	margin-left: 15px;
 }
-.account_menu .list .item svg{
+.account_menu .item svg{
 	margin-right: 12px;
 }
-.account_menu .list .item .text{
+.account_menu .item .text{
 	flex: 1;
 }
-.account_menu .list .item .count{
+.account_menu .item .count{
 	color: var(--bg-color);
 	background: var(--black-color);
 	width: 20px;
@@ -3062,17 +3064,17 @@ body .show-scroll::-webkit-scrollbar-track {
 	font-size: 12px;
 	line-height: 14px;
 }
-.account_menu .list .item.active{
+.account_menu .item.active{
 	color: var(--bg-color);
 	background: var(--black-color);
 }
-.account_menu .list .item.active svg path{
+.account_menu .item.active svg path{
 	fill: var(--bg-color);
 }
-.account_menu .list .item.active:after{
+.account_menu .item.active:after{
 	background: url('../image/arrow_white.svg') no-repeat center;
 }
-.account_menu .list .item.active .count{
+.account_menu .item.active .count{
 	background: var(--bg-color);
 	color: var(--black-color);
 }
@@ -3711,7 +3713,7 @@ body .show-scroll::-webkit-scrollbar-track {
 	.account .col-left,.account .col-right{width: 100%;}
 	.account .col-left + .col-right{width: 100%;}
 	.account .col-left{margin-bottom: 5px;padding: 0;}
-	.account_menu {padding: 15px;}
+	.account_menu {padding: 15px;display: none;}
 	.account_menu .head, .account_menu .discont {margin-bottom: 20px;}
 	.account_menu .head .name{font-size: 13px;line-height: 16px}
 	.account_menu .head .contact{font-size: 12px;line-height: 16px}
@@ -3799,4 +3801,18 @@ body .show-scroll::-webkit-scrollbar-track {
 .help{
 	font-size: 12px;
 		color: rgba(0, 0, 0, 0.32);
+}
+
+.wrap_account_top .account_menu{position: absolute;top: 76px;right: 0;width: 250px;display: flex;flex-direction: column;padding: 0px;border: 1px solid var(--border-color);}
+.wrap_account_top .account_menu{display:none;}
+.wrap_account_top .account_menu{}
+.wrap_account_top .account_menu .item{border: none;padding:20px}
+.wrap_account_top .account_menu .item:after{content: unset}
+.wrap_account_top .account_menu .item + .item{margin-top:0px;border-top: 1px solid var(--border-color);}
+.wrap_account_top .account_menu .item:hover{background: var(--black-color);color:var(--back-color)}
+.wrap_account_top .account_menu .item:hover svg path {fill: var(--bg-color);}
+.wrap_account_top .account_menu .item:hover .count{background: var(--bg-color);color: var(--black-color);}
+
+@media (max-width: 991px) {
+	.wrap_account_top .account_menu{position: fixed;width: 100%;margin: auto;top: 93px;height:calc(100vh - 93px)}
 }

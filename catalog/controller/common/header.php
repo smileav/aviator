@@ -77,11 +77,21 @@ class ControllerCommonHeader extends Controller {
         $this->load->model('design/banner');
         $data['top_lines'] = $this->model_design_banner->getBanner(6);
 
+        if (isset($this->request->get['route']) && $this->request->get['route']) {
+            $data['route'] = $this->request->get['route'];
+        } else {
+            $data['route'] = '';
+        }
+
 		// Wishlist
 		if ($this->customer->isLogged()) {
 			$this->load->model('account/wishlist');
-
-			$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), $this->model_account_wishlist->getTotalWishlist());
+            $this->load->model('account/customer');
+            $this->load->model('account/order');
+            $this->load->model('account/wishlist');
+            $this->load->model('account/return');
+            $customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
+            $data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), $this->model_account_wishlist->getTotalWishlist());
 		} else {
 			$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
 		}
@@ -97,11 +107,23 @@ class ControllerCommonHeader extends Controller {
             $data['text_account'] = '';
         }
 
+        if ($customer_info) {
+            $data['customer_name'] = $customer_info['firstname'] . ' ' . $customer_info['lastname'];
+            $data['contact'] = implode('<br>', [$this->customer->formatTelephone($customer_info['telephone']), $customer_info['email']]);
+            $data['order_total'] = $this->model_account_order->getTotalOrders();
+            $data['order_total_wishlist'] = $this->model_account_wishlist->getTotalWishlist();
+            $data['return_total'] = $this->model_account_return->getTotalReturns();
+            $data['discont'] = $customer_info['discont'];
+        }
+
 		$data['account'] = $this->url->link('account/account', '', true);
 		$data['register'] = $this->url->link('account/register/mini', '', true);
 		$data['login'] = $this->url->link('account/login/mini', '', true);
 		$data['order'] = $this->url->link('account/order', '', true);
-		$data['transaction'] = $this->url->link('account/transaction', '', true);
+        $data['return'] = $this->url->link('account/return', '', true);
+        $data['edit'] = $this->url->link('account/edit', '', true);
+
+        $data['transaction'] = $this->url->link('account/transaction', '', true);
 		$data['download'] = $this->url->link('account/download', '', true);
 		$data['logout'] = $this->url->link('account/logout', '', true);
 		$data['shopping_cart'] = $this->url->link('checkout/cart');
