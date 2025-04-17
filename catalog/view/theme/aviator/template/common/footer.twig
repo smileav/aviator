@@ -80,9 +80,11 @@
         signal: new AbortController().signal
       }).then(otp => {
         const input=document.querySelector('input[name="sms_password"]');
-        //const form = input.closest('form');
+        const form = input.closest('form');
         input.value = otp.code;
-        $('#dialog_step2').submit();
+        if(form) {
+          form.submit();
+        }
       });
     });
   }
