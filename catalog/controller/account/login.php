@@ -446,7 +446,7 @@ class ControllerAccountLogin extends Controller {
 		$data['flag']                   = $country_data['flag'];
 
 		$data['action']=$this->url->link('account/login/sendSMS', '', true);
-		$data['action2']=$this->url->link('account/login/code', '', true);
+		$data['action2']=$this->url->link('account/login/code', '&part=checkout', true);
 
 		//$data['register'] = $this->url->link('account/register/mini', '', true);
 		//$data['login'] = $this->url->link('account/login/mini', '', true);
@@ -490,6 +490,14 @@ class ControllerAccountLogin extends Controller {
 			$json['error'] = $this->error['warning'];
 		}else{
 			$json['success'] = 1;
+			if(isset($this->request->get['part'])&&$this->request->get['part']=='checkout'){
+
+			}else {
+				$data['wishlist'] = $this->url->link('account/wishlist');
+				$data['order'] = $this->url->link('account/order', '', true);
+				$json['auth_welcome_header']=$this->language->get('auth_welcome_header');
+				$json['template'] = $this->load->view('account/welcome_login', $data);
+			}
 		}
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

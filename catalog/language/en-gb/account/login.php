@@ -25,6 +25,11 @@ $_['text_forgotten']               = 'Forgotten Password';
 $_['entry_email']                  = 'E-Mail Address';
 $_['entry_password']               = 'Password';
 	$_['entry_telephone']='Phone';
+	$_['auth_welcome_header']='Welcome!';
+	$_['auth_welcome_text']='<p style="font-weight: 600;">Congratulations in your account</p>
+		<p>Convenient navigation by personal account will help you find what you need.</p>';
+	$_['text_wishlist']    = 'Wishlist';
+	$_['text_order']       = 'Order';
 
 // Error
 	$_['error_telephone']='Not the right phone';

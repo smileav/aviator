@@ -170,7 +170,16 @@
 				data: $('#dialog_step2').serialize(),
 				success: function (json) {
 					if(json.success){
-						document.location=document.location.href;
+						//
+                        if(json.template){
+							$('#onepcheckout .modal-body').html(json.template);
+							$('#onepcheckout .modal-title').html(json.auth_welcome_header);
+							$('#onepcheckout .close').on('click',function(){
+								document.location=document.location.href;
+                            })
+                        }else{
+							document.location=document.location.href;
+                        }
 					}
 					if(json.error){
 						$('#dialog_step2 .form-error').html(json.error).removeClass('hidden');
