@@ -188,9 +188,9 @@ class OpenMinifyMinifier {
             return $url;
         }
         if (strpos($url, '?') === false) {
-            return $url . '?cs2v=' . OPENMINIFY_VERSION;
+            return $url . '?cs2v=' . time();//OPENMINIFY_VERSION;
         }
-        return $url . '&amp;cs2v=' . OPENMINIFY_VERSION;
+        return $url . '&amp;cs2v=' . time();//OPENMINIFY_VERSION;
     }
 
 }
