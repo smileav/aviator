@@ -541,7 +541,8 @@ class ControllerAccountReturn extends Controller {
 
 		$this->load->model('localisation/return_reason');
 
-		$data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
+		$data_return=['return'=>'ASC'];
+		$data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons($data_return);
 
 		if (isset($this->request->post['comment'])) {
 			$data['comment'] = $this->request->post['comment'];
@@ -742,8 +743,11 @@ class ControllerAccountReturn extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('account/return', '', true)
 		);
-
-		$data['continue'] = $this->url->link('common/home');
+		if(!$this->customer->isLogged()) {
+			$data['continue'] = $this->url->link('common/home');
+		}else{
+			$data['continue'] = $this->url->link('account/return', '', true);
+		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

@@ -151,6 +151,8 @@ $_['tab_extra_tab']          		= 'Додаткова вкладка';
 $_['tab_module']          	 		= 'Вкладка';
 $_['tab_related']          	 		= 'Рекомендуємо';
 
+	$_['column_sort_order']          = 'Сортування';
+
 // Error
 $_['error_exception']               = 'Помилка коду (%s): %s в %s на рядку %s';
 $_['error_upload_1']                = 'Розмір завантажуваного файлу перевищує значення параметру upload_max_filesize в php.ini';

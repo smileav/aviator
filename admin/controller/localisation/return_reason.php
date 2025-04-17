@@ -175,6 +175,7 @@ class ControllerLocalisationReturnReason extends Controller {
 			$data['return_reasons'][] = array(
 				'return_reason_id' => $result['return_reason_id'],
 				'name'             => $result['name'],
+				'sort_order'=>$result['sort_order'],
 				'edit'             => $this->url->link('localisation/return_reason/edit', 'user_token=' . $this->session->data['user_token'] . '&return_reason_id=' . $result['return_reason_id'] . $url, true)
 			);
 		}
@@ -212,6 +213,7 @@ class ControllerLocalisationReturnReason extends Controller {
 		}
 
 		$data['sort_name'] = $this->url->link('localisation/return_reason', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url, true);
+		$data['sort_sort_order'] = $this->url->link('localisation/return_reason', 'user_token=' . $this->session->data['user_token'] . '&sort=sort_order' . $url, true);
 
 		$url = '';
 
