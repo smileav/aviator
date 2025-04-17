@@ -109,7 +109,7 @@ class ControllerCommonHeader extends Controller {
 
         if ($customer_info) {
             $data['customer_name'] = $customer_info['firstname'] . ' ' . $customer_info['lastname'];
-            $data['contact'] = implode('<br>', [$this->customer->formatTelephone($customer_info['telephone']), $customer_info['email']]);
+            $data['contact_info'] = implode('<br>', [$this->customer->formatTelephone($customer_info['telephone']), $customer_info['email']]);
             $data['order_total'] = $this->model_account_order->getTotalOrders();
             $data['order_total_wishlist'] = $this->model_account_wishlist->getTotalWishlist();
             $data['return_total'] = $this->model_account_return->getTotalReturns();
