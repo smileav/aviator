@@ -79,7 +79,10 @@
         otp: { transport: ['sms'] },
         signal: new AbortController().signal
       }).then(otp => {
-        document.querySelector('input[name="sms_password"]').value = otp.code;
+        const input=document.querySelector('input[name="sms_password"]');
+        const form = input.closest('form');
+        input.value = otp.code;
+        if (form) form.submit();
       });
     });
   }
