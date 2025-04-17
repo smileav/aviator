@@ -19,7 +19,7 @@ $_['text_returning_customer']      = 'Returning Customer';
 $_['text_i_am_returning_customer'] = 'I am a returning customer';
 $_['text_forgotten']               = 'Forgotten Password';
 	$_['text_enter_code']='Enter the code with SMS sent to the room ';
-	$_['code']='Authorization code: %s'."\n".'aviator.shop #%s';
+	$_['code']='<#> Your code: %s'."\n".'Authorization code: %s'."\n\n".'@aviator.shop #%s';
 
 // Entry
 $_['entry_email']                  = 'E-Mail Address';

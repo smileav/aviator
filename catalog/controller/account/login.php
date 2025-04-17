@@ -371,7 +371,7 @@ class ControllerAccountLogin extends Controller {
 			$sms = [
 				'sender'        => 'AVIATOR',
 				'destination'   => '+' . $telephone,
-				'text'          => sprintf($this->language->get('code'),$code,$code)
+				'text'          => sprintf($this->language->get('code'),$code,$code,$code)
 			];
 
 			$this->log->write('SMS_Array:');
