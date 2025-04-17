@@ -3835,7 +3835,7 @@ body .show-scroll::-webkit-scrollbar-track {
 	.wrap_account_top .account_menu .block_discont{display: none;}
 }
 
-.welcome_button > div + div{
+.welcome_button .success-button{
 	margin-top: 10px;
 }
 .welcome_button .success-button .btn-b{
