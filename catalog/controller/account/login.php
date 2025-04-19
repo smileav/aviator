@@ -504,6 +504,9 @@ class ControllerAccountLogin extends Controller {
 
 	}
 	protected function validate() {
+		$this->log->write($this->request->post);
+		$this->log->write($this->session->data['telephone']);
+
 		// Check how many login attempts have been made.
 		$telephone=$this->clearTelephoneMask($this->session->data['telephone']);
 		$login_info = $this->model_account_customer->getLoginAttempts($this->session->data['telephone']);
