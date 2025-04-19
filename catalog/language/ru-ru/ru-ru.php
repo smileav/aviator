@@ -82,6 +82,9 @@ $_['text_social_networks']  = 'Социальные сети';
 $_['text_am_ukraine']       = 'Aeronautica Militare Украина';
 $_['text_multi_brand']      = 'AVIATOR – мультибрендовый аккаунт';
 
+	$_['text_head_discont'] = 'Скидка постоянного клиента!';
+	$_['text_discont'] = 'Для вас активирована скидка постоянного клиента в размере';
+
 // Buttons
 $_['button_address_add']    = 'Добавить адрес';
 $_['button_back']           = 'Назад';

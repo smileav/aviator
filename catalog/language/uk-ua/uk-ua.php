@@ -80,6 +80,8 @@ $_['text_address_odessa_']  = 'ТРЦ "KADORR City Mall", вул. Генуезь
 $_['text_social_networks']  = 'Соціальні мережі';
 $_['text_am_ukraine']       = 'Aeronautica Militare Україна';
 $_['text_multi_brand']      = 'AVIATOR – мультибрендовий акаунт';
+	$_['text_head_discont']   = 'Знижка постійного клієнта!';
+	$_['text_discont']   = 'Для вас активовано знижку постійного клієнта в розмірі ';
 
 // Buttons
 $_['button_address_add']    = 'Додати адресу';

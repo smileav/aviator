@@ -78,6 +78,8 @@ $_['text_address_odessa_']  = 'Shopping Mall "KADORR City Mall", st. Genuezskaya
 $_['text_social_networks']  = 'Social Networks';
 $_['text_am_ukraine']       = 'Aeronautica Militare Ukraine';
 $_['text_multi_brand']      = 'AVIATOR – Multibrand Account';
+	$_['text_head_discont'] = 'Loyal customer discount!';
+	$_['text_discont'] = 'Loyal customer discount amount: ';
 
 // Buttons
 $_['button_address_add']    = 'Add Address';
