@@ -52,6 +52,7 @@
 <div class="top-in d-f ai-c"><div class="container"><div class="top-owl-container">{% set top_length = top_lines|length %}<div class="top-owl{% if top_length > 1 %} owl-carousel{% endif %} d-f ai-c">{% for key, line in top_lines %}<div class="top-item" data-key="{{ key }}">{% if line.link %}<a href="{{ line.link }}">{{ line.title }}</a>{% else %}{{ line.title }}{% endif %}</div>{% endfor %}</div>{% if top_length > 1 %}<div class="o-owl-nav top-nav d-f ai-c"><div class="top-owl-count"></div></div>{% endif %}</div></div></div>
 {% if top_length > 1 %}
 <script>$(".top-owl").owlCarousel({items:1,loop:!0,mouseDrag:!0,autoplay:!0,autoPlaySpeed:5e3,autoPlayTimeout:5e3,nav:!0,navContainer:".top-nav",navText:['<svg width="12" height="11"><use xlink:href="image/icons.svg#top-arrow" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>','<svg width="12" height="11"><use xlink:href="image/icons.svg#top-arrow" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>'],dots:!1,onInitialized:owlTopCounter,onTranslated:owlTopCounter});function owlTopCounter(o){o.target;var t=o.item.count,e=$(".top-owl .owl-item.active .top-item").data("key")+1;e>t&&(e-=t),e<10&&(e="0"+e),t<10&&(t="0"+t),$(".top-owl-count").html(e+" <span>/ "+t+"</span>")}</script>
+
 {#<script>
     $('.top-owl').owlCarousel({
         items: 1,
@@ -86,6 +87,13 @@
     }
 </script>#}
 {% endif %}
+<script>
+    {% if require_login %}
+	$(document).ready(function(){
+		$('span[data-href]').trigger('click');
+	});
+    {% endif %}
+</script>
 <header>
   <div class="container">
     <div class="header-in{% if home == og_url %} common-home{% endif %}">

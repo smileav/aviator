@@ -12,8 +12,10 @@ class ControllerCommonHeader extends Controller {
                 }
             }
         }
-
-
+		$data['require_login']=false;
+		if(isset($this->session->data['redirect'])){
+			$data['require_login']=true;
+		}
 		// Analytics
 		$this->load->model('setting/extension');
 

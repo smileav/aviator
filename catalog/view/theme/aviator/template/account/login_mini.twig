@@ -172,13 +172,19 @@
 					if(json.success){
 						//
                         if(json.template){
+                            {% if redirect %}
+							document.location='{{ redirect }}';
+                            {% else %}
 							$('#onepcheckout .modal-body').html(json.template);
 							$('#onepcheckout .modal-title').html(json.auth_welcome_header);
 							$('#onepcheckout .close').on('click',function(){
 								document.location=document.location.href;
                             })
+							{% endif %}
                         }else{
+
 							document.location=document.location.href;
+
                         }
 					}
 					if(json.error){

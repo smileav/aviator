@@ -7,6 +7,7 @@ class ControllerAccountOrder extends Controller {
 
         $this->document->addStyle('catalog/view/javascript/opc/style.css');
 		if (!$this->customer->isLogged()) {
+			var_dump($this->request);exit();
 			$this->session->data['redirect'] = $this->url->link('account/order', '', true);
 
 			$this->response->redirect($this->url->link('account/login', '', true));
@@ -401,7 +402,8 @@ class ControllerAccountOrder extends Controller {
 
 			$this->response->setOutput($this->load->view('account/order_info', $data));
 		} else {
-			return new Action('error/not_found');
+			$this->response->redirect($this->url->link('account/order', '', true));
+			//return new Action('error/not_found');
 		}
 	}
 

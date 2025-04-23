@@ -48,6 +48,7 @@ class ControllerAccountLogin extends Controller {
 			$this->response->redirect($this->url->link('account/account', '', true));
 		}else{
             $this->response->redirect($this->url->link('common/home', '', true));
+			exit();
         }
 
 		$this->load->language('account/login');
