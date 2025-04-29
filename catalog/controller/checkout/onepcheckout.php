@@ -85,7 +85,7 @@ class ControllerCheckoutOnepcheckout extends Controller {
 				unset($this->session->data['is_guest']);
 				unset($this->session->data['guest']);
 				unset($this->session->data['account']);
-				unset($this->session->data['customer']);
+				//unset($this->session->data['customer']);
 				unset($this->session->data['shipping_country_id']);
 				unset($this->session->data['shipping_zone_id']);
 				unset($this->session->data['payment_country_id']);
@@ -432,7 +432,7 @@ class ControllerCheckoutOnepcheckout extends Controller {
 			$data['fax'] = '';
 		}
 
-		if(isset($this->request->post['email'])) {
+		if(isset($this->request->post['email'])&&$this->request->post['email']!='') {
 			$data['email'] = $this->session->data['customer']['email'] = $this->request->post['email'];
 		} elseif (isset($this->session->data['customer']['email'])) {
 			$data['email'] = $this->session->data['customer']['email'];
@@ -444,7 +444,7 @@ class ControllerCheckoutOnepcheckout extends Controller {
 			$this->load->model('account/address');
 			$data['firstname'] =  (!empty($this->session->data['firstname'])) ? $this->session->data['firstname'] : $this->customer->getFirstName();
 			$data['lastname'] = (!empty($this->session->data['lastname'])) ? $this->session->data['lastname'] : $this->customer->getLastName();
-			$data['email'] =  $this->customer->getEmail();
+			$data['email'] =  (!empty($data['email']))?$data['email']:$this->customer->getEmail();
 			$data['telephone'] = $this->customer->formatTelephone((!empty($this->session->data['telephone'])) ? $this->session->data['telephone'] : $this->customer->getTelephone());
 			$data['payment_address_id'] = $this->customer->getAddressId();
 			$data['address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
@@ -2323,10 +2323,13 @@ class ControllerCheckoutOnepcheckout extends Controller {
 			$order_data['customer_group_id'] = $customer_info['customer_group_id'];
 			$order_data['firstname'] = (!empty($this->session->data['customer']['firstname'])) ? $this->session->data['customer']['firstname'] : '';
 			$order_data['lastname'] = (!empty($this->session->data['customer']['lastname'])) ? $this->session->data['customer']['lastname'] : '';
-			$order_data['email'] = $customer_info['email'];
+			$order_data['email'] = (!empty($this->session->data['customer']['email']))?$this->session->data['customer']['email']:$customer_info['email'];
 			$order_data['telephone'] = (!empty($this->session->data['customer']['telephone'])) ? $this->session->data['customer']['telephone'] : '';
 			$order_data['fax'] = (!empty($this->session->data['customer']['fax'])) ? $this->session->data['customer']['fax'] : '';
 			$order_data['custom_field'] = json_decode($customer_info['custom_field']);
+
+			$this->model_account_customer->editTelephone($this->customer->getId(),$this->customer->clearTelephoneMask($order_data['telephone']));
+
 		} elseif (isset($this->session->data['guest'])) {
 			$order_data['customer_id'] = 0;
 			$order_data['customer_group_id'] = isset($this->session->data['guest']['customer_group_id'])?$this->session->data['guest']['customer_group_id']:$this->config->get('config_customer_group_id');

@@ -37,6 +37,7 @@ class ControllerAccountEdit extends Controller {
 		$this->load->model('account/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$this->request->post['telephone']=$this->customer->clearTelephoneMask($this->request->post['telephone']);
 			$this->model_account_customer->editCustomer($this->customer->getId(), $this->request->post);
 
 
@@ -155,7 +156,7 @@ class ControllerAccountEdit extends Controller {
 		}
 
 		if (isset($this->request->post['telephone'])) {
-			$data['telephone'] = $this->request->post['telephone'];
+			$data['telephone'] = $this->customer->formatTelephone($this->request->post['telephone']);
 		} elseif (!empty($customer_info)) {
 			$data['telephone'] = $this->customer->formatTelephone($customer_info['telephone']);
 		} else {

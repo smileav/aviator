@@ -172,4 +172,8 @@ class Customer {
 		// Форматуємо номер у вигляді +380 (XX) XXX-XX-XX
 		return preg_replace('/^380(\d{2})(\d{3})(\d{2})(\d{2})$/', '+380 ($1) $2-$3-$4', $digits);
 	}
+
+	public function clearTelephoneMask($telephone) {
+		return preg_replace(['/\+/', '/-/', '/_/', '/\ /', '/\(/', '/\)/', '/X/', '/x/'], '', trim($telephone));
+	}
 }

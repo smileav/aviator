@@ -38,6 +38,10 @@ class ModelAccountCustomer extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET code = '" . $this->db->escape($code) . "' WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 
+	public function editTelephone($customer_id,$telephone){
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET  telephone = '" . $this->db->escape($telephone) . "' WHERE customer_id = '" . (int)$customer_id . "'");
+	}
+
 	public function addSms($telephone,$code,$time){
 		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET sms_code = '" . $this->db->escape($code) . "', sms_date='".(int)$time."' WHERE telephone = '" . $this->db->escape($telephone) . "'");
 	}
