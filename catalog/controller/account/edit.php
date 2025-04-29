@@ -168,7 +168,7 @@ class ControllerAccountEdit extends Controller {
 		} elseif (!empty($customer_info)) {
 			$data['newsletter'] = $customer_info['newsletter'];
 		} else {
-			$data['newsletter'] = '';
+			$data['newsletter'] = '1';
 		}
 
         if (isset($this->request->post['password'])) {
