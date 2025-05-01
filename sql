@@ -41,3 +41,7 @@ ADD COLUMN `iban` VARCHAR(50) NOT NULL AFTER `inn`;
 ALTER TABLE oc_return_reason`
 ADD COLUMN `sort_order` INT NOT NULL DEFAULT 0 AFTER `name`;
 
+ALTER TABLE `oc_customer`
+CHANGE COLUMN `newsletter` `newsletter` TINYINT(1) NOT NULL DEFAULT '1' ;
+
+
