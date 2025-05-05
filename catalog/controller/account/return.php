@@ -29,6 +29,11 @@ class ControllerAccountReturn extends Controller {
 			'href' => $this->url->link('account/account', '', true)
 		);
 
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', true)
+		);
+
 		$url = '';
 
 		if (isset($this->request->get['page'])) {
@@ -251,6 +256,11 @@ class ControllerAccountReturn extends Controller {
 			);
 
 			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('text_account'),
+				'href' => $this->url->link('account/account', '', true)
+			);
+
+			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('account/return', '', true)
 			);
@@ -320,6 +330,12 @@ class ControllerAccountReturn extends Controller {
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
 		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', true)
+		);
+
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
