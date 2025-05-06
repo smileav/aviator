@@ -34,7 +34,7 @@ class ControllerMailReturn extends Controller {
 			//$prefix=isset($lang_mark['langmark_multi']['name'])?strtolower($lang_mark['langmark_multi']['name']).'/':'';
 
 			//$data['link'] = $data['store_url'] .$prefix. 'index.php?route=account/return/info&order_id=' . $return_id;
-			$data['link'] = $this->url->link('account/return/info','order_id=' . $return_id);
+			$data['link'] = $this->url->link('account/return/info','return_id=' . $return_id);
 
 			$data['text_return_detail'] = $language->get('text_return_detail');
 			$data['text_return_id'] = $language->get('text_return_id');
