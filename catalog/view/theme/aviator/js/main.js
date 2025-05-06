@@ -366,6 +366,11 @@ $(document).ready(function() {
         }
     });
 
+    $('.account-breadcrumb ul.breadcrumb > li:nth-child(3)').on('click', function(e) {
+        e.preventDefault();
+        $('.wrap_account_top .h-account').trigger('click');
+    });
+
         // product thumb swap image
     $('body').delegate('.product-thumb .image img', 'mouseenter mouseleave', function(e) {
         var el = $(this), img = el.attr('src'), alt = el.attr('data-alt'), id = el.closest('.product-thumb').data('id');
